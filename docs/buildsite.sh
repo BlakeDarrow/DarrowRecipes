@@ -13,8 +13,11 @@ export SOURCE_DATE_EPOCH=$(git log -1 --pretty=%ct)
  
 # Python Sphinx, configured with source/conf.py
 # See https://www.sphinx-doc.org/
+
 make clean
+echo "Cleaned"
 make html
+echo "Making HTML"
 
 #######################
 # Update GitHub Pages #
