@@ -1,13 +1,37 @@
-name: "Pull Request Docs Check"
+name: build-sphinx-to-gh-pages
+
+env:
+  GITHUB_ACTOR: BlakeDarrow
+  GITHUB_REPOSITORY: BlakeDarrow/DarrowTools
+  GITHUB_TOKEN: ${{ secrets.CREATE_SITE_SECRET }}
+
 on: 
-- push
+  push:
+    branches: [ main ]
+
+
 
 jobs:
-  docs:
+
+  build_sphinx_job:
     runs-on: ubuntu-latest
+    container: debian:buster-slim
+
     steps:
-    - uses: actions/checkout@v1
-    - uses: ammaraskar/sphinx-action@master
-      with:
-        docs-folder: "docs/"
-        build-command: "sphinx-build -b html . _build"
+    
+      - name: Get prerequisites and clone repository
+        env:
+          GITHUB_TOKEN: ${{ secrets.CREATE_SITE_SECRET }}
+        run: |
+          set -x
+          apt-get update
+          apt-get install -y git
+          git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
+        shell: bash
+
+      - name: Run build script for Sphinx pages
+        env:
+          GITHUB_TOKEN: ${{ secrets.CREATE_SITE_SECRET }}
+        run: chmod +x "docs/buildsite.sh"
+        
+        shell: bash
