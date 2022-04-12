@@ -12,19 +12,19 @@ DarrowTools is a free and open source library of addons developed for Blender 2.
    :glob:
    :caption: Addons
 
-   EasyExport/*
-   ModelingTools/*
-   SceneOrganizer/*
+   EasyExport
+   ModelingTools
+   SceneOrganizer
 
 .. raw:: html
    
    <hr> 
 
-.. _EasyExport: EasyExport/EasyExport.html
+.. _EasyExport: EasyExport
 
-.. _ModelingTools: ModelingTools/ModelingTools.html
+.. _ModelingTools: ModelingTools
 
-.. _SceneOrganizer: ModelingTools/ModelingTools.html
+.. _SceneOrganizer: SceneOrganizer
 
 `EasyExport`_
 -----------------------

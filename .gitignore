@@ -4,3 +4,4 @@ build/
 .venv
 source/.vs/*
 source/.vscode/*
+make.bat
