@@ -7,7 +7,18 @@ extensions = [
     'sphinx.ext.autosectionlabel',
 ]
 
+htmlhelp_basename = 'DarrowTools'
+
+html_short_title = "DarrowTools"
+
 html_theme = "sphinx_rtd_theme"
+
+html_theme_options = {
+    'style_external_links': False,
+    'navigation_depth': -1,
+    'sticky_navigation' : True,
+    'prev_next_buttons_location' : "bottom",
+    }
 
 project = 'DarrowTools'
 copyright = '2022, Blake Darrow'
@@ -22,6 +33,7 @@ html_theme = 'sphinx_rtd_theme'
 html_show_sourcelink = False
 
 language = None
+
 html_static_path = ['_static']
 
-htmlhelp_basename = 'DarrowTools'
+html_link_suffix = ""
