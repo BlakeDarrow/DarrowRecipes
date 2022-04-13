@@ -35,3 +35,11 @@ html_show_sourcelink = False
 language = None
 
 html_link_suffix = ""
+
+html_static_path = [
+    '_static',
+]
+
+html_js_files = [
+    'logo_link.js',
+]
