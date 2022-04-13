@@ -43,3 +43,7 @@ html_static_path = [
 html_js_files = [
     'logo_link.js',
 ]
+
+html_css_files = [
+    'css/text_decoration.css',
+]
