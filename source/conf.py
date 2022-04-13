@@ -7,7 +7,7 @@ extensions = [
     'sphinx.ext.autosectionlabel',
 ]
 
-htmlhelp_basename = 'DarrowTools'
+html_title = 'DarrowTools'
 
 html_short_title = "DarrowTools"
 
