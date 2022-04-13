@@ -17,7 +17,7 @@ html_theme_options = {
     'style_external_links': False,
     'navigation_depth': -1,
     'sticky_navigation' : True,
-    'prev_next_buttons_location' : "bottom",
+    'prev_next_buttons_location' : "none",
     }
 
 project = 'DarrowTools'
@@ -33,7 +33,5 @@ html_theme = 'sphinx_rtd_theme'
 html_show_sourcelink = False
 
 language = None
-
-html_static_path = ['_static']
 
 html_link_suffix = ""
