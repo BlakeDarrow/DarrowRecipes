@@ -26,6 +26,6 @@ $(document).ready(function(){
     var home_elements = $('.icon-home');
     var logo_element = home_elements[0];
     var breadcrumb_home_element = home_elements[1];
-    breadcrumb_home_element.href=my_custom_icon_url;
+    breadcrumb_home_element.href= "https://darrow.tools";
     logo_element.href=my_custom_logo_url;
 });
