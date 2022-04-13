@@ -1,3 +1,6 @@
 @import 'theme.css';
 
-a:visited{color:#2980b9} 
+a:visited{
+    text-decoration: none!important;
+    color:#2980b9
+} 
