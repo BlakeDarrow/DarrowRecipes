@@ -5,3 +5,4 @@ build/
 source/.vs/*
 source/.vscode/*
 make.bat
+.vscode/settings.json

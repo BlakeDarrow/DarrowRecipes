@@ -45,5 +45,7 @@ html_js_files = [
 ]
 
 html_css_files = [
-    'css/text_decoration.css',
+    'css/custom.css',
 ]
+
+html_style = 'css/theme.css'
