@@ -1,10 +1,10 @@
-.. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport?color=2980b9
+.. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/releases/latest
 .. image:: https://img.shields.io/github/workflow/status/BlakeDarrow/DarrowTools/build-sphinx-to-gh-pages?label=docs
     :target: https://github.com/BlakeDarrow/DarrowTools/actions/workflows/pages/pages-build-deployment
 .. image:: https://img.shields.io/github/last-commit/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/commits/main
-.. image:: https://img.shields.io/github/downloads/BlakeDarrow/EasyExport/total?color=9b9b9b
+.. image:: https://img.shields.io/github/downloads/BlakeDarrow/EasyExport/total
 
 .. raw:: html
 
@@ -28,6 +28,7 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
       <iframe src="https://www.youtube-nocookie.com/embed/TDyYM4R-OYI" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
    </div>
    <hr> 
+
 
 
 .. _downloadExporterTag:
