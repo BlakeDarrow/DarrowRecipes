@@ -173,7 +173,3 @@ Don't worry, getting the mesh back into a blend scene is just as easy!
 3. Select your desired mesh!
 
 .. note:: To navigate to the thumbnail and object folders, hit the cogwheel in the panel, and select the corresponding button.
-
-.. raw:: html
-    
-   <hr>  

@@ -49,3 +49,5 @@ html_css_files = [
 ]
 
 html_style = 'css/theme.css'
+
+html_show_sphinx = False
