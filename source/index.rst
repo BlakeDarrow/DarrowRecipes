@@ -1,6 +1,15 @@
 #########################
 Introduction
 #########################
+.. raw:: html
+
+    <script type="text/javascript">
+        <!-- Adds target=_blank to external links -->
+
+        $(document).ready(function () {
+        $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
+        });
+    </script>
 
 DarrowTools is a free and open source library of addons developed for Blender 2.8+, written and maintained by `BlakeDarrow`_. Addon features include promptless FBX exporting, circular arrays, and much more!
 
@@ -29,7 +38,10 @@ DarrowTools is a free and open source library of addons developed for Blender 2.
 `EasyExport`_
 -----------------------
 
-Blender addon for easy promptless FBX exporting.
+.. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport
+    :target: https://github.com/BlakeDarrow/EasyExport/releases/latest
+
+Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
 
 .. raw:: html
    
@@ -41,6 +53,9 @@ Blender addon for easy promptless FBX exporting.
 
 `ModelingTools`_
 -----------------------
+
+.. image:: https://img.shields.io/github/v/release/BlakeDarrow/ModelingTools
+    :target: https://github.com/BlakeDarrow/ModelingTools/releases/latest
 
 Blender addon for useful modeling tools.
 
@@ -54,6 +69,9 @@ Blender addon for useful modeling tools.
 
 `SceneOrganizer`_
 -----------------------
+
+.. image:: https://img.shields.io/github/v/release/BlakeDarrow/SceneOrganizer
+    :target: https://github.com/BlakeDarrow/SceneOrganizer/releases/latest
 
 Blender addon for managing your viewport and outliner.
 
