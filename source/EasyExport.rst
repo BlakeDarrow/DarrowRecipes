@@ -14,16 +14,6 @@
 EasyExport
 ##########
 
-.. raw:: html
-
-    <script type="text/javascript">
-        <!-- Adds target=_blank to external links -->
-
-        $(document).ready(function () {
-        $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
-        });
-    </script>
-
 Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
 
 :ref:`fbxTag` |
@@ -138,19 +128,19 @@ Unreal and Unity "standard" export options. The exported models imported into Un
 Multi-Object Naming
 -------------------
 
-| **--Found under advanced settings--** 
+| **-Found under advanced settings-** 
 | When exporting multiple objects as one mesh, the final name will be the active collections name. Make sure to set the correct collection as active when this bool is enabled.
 
 Separate All Actions
 --------------------
 
-| **--Found under advanced settings--**
+| **-Found under advanced settings-**
 | Blender's export setting for exporting all animations separately.
 
 Use Leaf Bones
 --------------
 
-| **--Found under advanced settings--**
+| **-Found under advanced settings-**
 | Add a leaf bone to the end of the chain on export.
 
 .. raw:: html
@@ -162,7 +152,7 @@ Use Leaf Bones
 Mesh Library
 ++++++++++++++++++++++
 
-Managing you objects(currently mesh data only) has never been easier. With a click of the button, your mesh is stored in a local folder, for easy importing.
+Managing your objects has never been easier. With a click of the button, your mesh is stored in a local folder, for easy importing.
 
 Adding objects
 --------------------

@@ -1,15 +1,6 @@
 #########################
 Introduction
 #########################
-.. raw:: html
-
-    <script type="text/javascript">
-        <!-- Adds target=_blank to external links -->
-
-        $(document).ready(function () {
-        $('a[href^="http://"], a[href^="https://"]').not('a[class*=internal]').attr('target', '_blank');
-        });
-    </script>
 
 DarrowTools is a free and open source library of addons developed for Blender 2.8+, written and maintained by `BlakeDarrow`_. Addon features include promptless FBX exporting, circular arrays, and much more!
 
