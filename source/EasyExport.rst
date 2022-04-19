@@ -1,10 +1,7 @@
 .. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/releases/latest
-.. image:: https://img.shields.io/github/workflow/status/BlakeDarrow/DarrowTools/build-sphinx-to-gh-pages?label=docs
-    :target: https://github.com/BlakeDarrow/DarrowTools/actions/workflows/pages/pages-build-deployment
 .. image:: https://img.shields.io/github/last-commit/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/commits/main
-.. image:: https://img.shields.io/github/downloads/BlakeDarrow/EasyExport/total
 
 .. raw:: html
 
@@ -76,7 +73,7 @@ Reference :ref:`Export Path`
 
 1. **Select mesh(s)** (will be combined on export)
 2. **Input desired export path** in required path field (only first time)
-3. **Hit *Export Selection***
+3. **Hit Export Selection**
 
 .. note:: Under the hood, the button in the UI is actual changing, so if you add the *Export Selection* button to your quick favorites, it will be linked to whatever state the promptless bool is in.
 
@@ -86,9 +83,9 @@ Prompt
 If the *Promptless Export* boolean is **NOT** checked, the *Export Selection* button will prompt the user for a file path to export every time.
 
 1. **Select mesh(s)** (will be combined on export)
-2. **Hit *Export Selection***
+2. **Hit Export Selection**
 3. Navigate to folder destination
-4. **Select *Export Selection*** in the pop-up
+4. **Select Export Selection** in the pop-up
 
 .. note:: Please do not attempt to change the export name in the file browser. Whatever name you type in will be added to the output name on export, leaving you with an incorrect .fbx file name.
 
@@ -129,19 +126,19 @@ Unreal and Unity "standard" export options. The exported models imported into Un
 Multi-Object Naming
 -------------------
 
-| **-Found under advanced settings-** 
+| **Found under advanced settings** 
 | When exporting multiple objects as one mesh, the final name will be the active collections name. Make sure to set the correct collection as active when this bool is enabled.
 
 Separate All Actions
 --------------------
 
-| **-Found under advanced settings-**
+| **Found under advanced settings**
 | Blender's export setting for exporting all animations separately.
 
 Use Leaf Bones
 --------------
 
-| **-Found under advanced settings-**
+| **Found under advanced settings**
 | Add a leaf bone to the end of the chain on export.
 
 .. raw:: html

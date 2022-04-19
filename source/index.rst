@@ -2,7 +2,9 @@
 Introduction
 #########################
 
-DarrowTools is a free and open source library of addons developed for Blender 2.8+, written and maintained by `BlakeDarrow`_. Addon features include promptless FBX exporting, circular arrays, and much more!
+DarrowTools is a free and open source library containing custom tools I have created for my workflow. Currently released tool features include: easy FBX exporting, circular arrays, outliner sorting, collections by type, and much more!
+All Blender addons are written for versions above 2.80+ and are free forever.
+Written and maintained by `BlakeDarrow`_. 
 
 .. _BlakeDarrow: https://linktr.ee/blakedarrow
 
@@ -10,7 +12,7 @@ DarrowTools is a free and open source library of addons developed for Blender 2.
    :hidden:
    :maxdepth: 1
    :glob:
-   :caption: Addons
+   :caption: Blender Addons
 
    EasyExport
    ModelingTools
