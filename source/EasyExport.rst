@@ -77,6 +77,11 @@ Reference :ref:`Export Path`
 
 .. note:: Under the hood, the button in the UI is actual changing, so if you add the *Export Selection* button to your quick favorites, it will be linked to whatever state the promptless bool is in.
 
+.. raw:: html
+
+   <hr>  
+
+
 Prompt
 ------
 
@@ -88,6 +93,11 @@ If the *Promptless Export* boolean is **NOT** checked, the *Export Selection* bu
 4. **Select Export Selection** in the pop-up
 
 .. note:: Please do not attempt to change the export name in the file browser. Whatever name you type in will be added to the output name on export, leaving you with an incorrect .fbx file name.
+
+.. raw:: html
+
+   <hr>  
+
 
 Auto Naming
 -----------
@@ -107,7 +117,6 @@ Auto Naming
 
 .. _ExportSettings:
 
-
 Settings
 ++++++++
 
@@ -118,10 +127,20 @@ Export Path
 
 Found underneath the *Prefix* and *Suffix* options, selecting the folder icon next to the string will prompt the user for a destination path. This path is shared between blender scene.
 
+.. raw:: html
+
+   <hr>  
+
+
 Presets
 -------
 
 Unreal and Unity "standard" export options. The exported models imported into Unity/Unreal will have correct orientations and scale. Animations "should" also work, but additional animation settings will be available soon. If you encounter problems with exporting (animation included) please reach out and let me know. 
+
+
+.. raw:: html
+
+   <hr>  
 
 Multi-Object Naming
 -------------------
@@ -129,11 +148,21 @@ Multi-Object Naming
 | **Found under advanced settings** 
 | When exporting multiple objects as one mesh, the final name will be the active collections name. Make sure to set the correct collection as active when this bool is enabled.
 
+
+.. raw:: html
+
+   <hr>  
+
 Separate All Actions
 --------------------
 
 | **Found under advanced settings**
 | Blender's export setting for exporting all animations separately.
+
+
+.. raw:: html
+
+   <hr>  
 
 Use Leaf Bones
 --------------
@@ -158,6 +187,11 @@ Adding objects
 1. Select "Add"
 
 2. Hit "Add to Library"
+
+
+.. raw:: html
+
+   <hr>  
 
 Retrieving objects
 -----------------------

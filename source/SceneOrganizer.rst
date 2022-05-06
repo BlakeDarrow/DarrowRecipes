@@ -65,39 +65,51 @@ Usage
 
 .. _Sorting:
 
-Scene Object Sorting
----------------------
+Object Sorting by Type
+-----------------------
 
-**Booleans and/or Empties**
+**Booleans** // **Empties**
 
-* Selecting either button option will grab all objects by selected type, and move them into a new collection for ease of access and outliner sorting.
+Selecting either button option will grab all objects by selected type, and move them into a new collection for ease of access and outliner sorting.
+
+The new collection name will either be "Darrow_Booleans" or "Darrow_Empties"
+
+.. note:: This tools will work recursively! New collections will not be created, objects will be added to the existing collection after first run.
+
+.. note:: Additional type sorting will be added soon! If you have any suggestions please contact me at, support@darrow.tools.
+
+.. raw:: html
+
+   <hr>  
 
 .. _Viewport:
 
 Viewport Display Options
 -------------------------
 
-.. note:: All viewport display options are toggleable. Selecting a button will either hide or un-hide by desired type.
+**Empties** // **Booleans**   
 
-
-**Empties and/or Booleans**
-
-Selecting either booleans or empties will change the desired visibility of those objects by type.
+Selecting either "booleans" or "empties" will change the desired visibility of those objects by type within the viewport. 
+"Empties" will work with anything created under the object type of empty. And "Booleans" will work with any object set to to display visibility of "BOUNDS"
    
-**Random and/or Material**
-   
+**Random** // **Material**    
+
 Random or material will either show a random color by mesh, or the mesh's material. Either/or operation, both cannot be true.
    
 **Wireframe**
 
 Wireframe operation will hide all viewport overlays, and only show the mesh's' with their respective wireframes.
 
+.. note:: All viewport display options are toggleable. Selecting a button will either hide or un-hide by desired type.
+
+.. raw:: html
+
+   <hr>  
 
 .. _Outliner:
 
 Outliner Options
 ---------------------
-
 
 **Collapse**
 
