@@ -4,5 +4,6 @@ build/
 .venv
 source/.vs/*
 source/.vscode/*
-make.bat
 .vscode/settings.json
+builddir/*
+source/BUILDDIR/*
