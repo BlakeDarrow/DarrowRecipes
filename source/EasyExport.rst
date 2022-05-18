@@ -15,7 +15,6 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
 
 :ref:`fbxTag` |
 :ref:`ExportSettings` |
-:ref:`libraryTag` |
 :ref:`downloadExporterTag` |
 :ref:`Install`
 
