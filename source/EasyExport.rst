@@ -127,6 +127,8 @@ Export Path
 
 Found underneath the *Prefix* and *Suffix* options, selecting the folder icon next to the string will prompt the user for a destination path. This path is shared between blender scene.
 
+Once a path is selected, "Open Export Folder" will allow you to navigate directly to the folder in Windows Explorer. 
+
 .. raw:: html
 
    <hr>  
@@ -169,39 +171,3 @@ Use Leaf Bones
 
 | **Found under advanced settings**
 | Add a leaf bone to the end of the chain on export.
-
-.. raw:: html
-    
-   <hr>  
-
-.. _libraryTag:
-
-Mesh Library
-++++++++++++++++++++++
-
-Managing your objects has never been easier. With a click of the button, your mesh is stored in a local folder, for easy importing.
-
-Adding objects
---------------------
-
-1. Select "Add"
-
-2. Hit "Add to Library"
-
-
-.. raw:: html
-
-   <hr>  
-
-Retrieving objects
------------------------
-
-Don't worry, getting the mesh back into a blend scene is just as easy!
-
-1. Select "Get"
-
-2. Navigate the drop down panel titled "Get from library"
-
-3. Select your desired mesh!
-
-.. note:: To navigate to the thumbnail and object folders, hit the cogwheel in the panel, and select the corresponding button.
