@@ -39,7 +39,7 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
 .. raw:: html
    
    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube-nocookie.com/embed/TDyYM4R-OYI" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+      <iframe src="https://www.youtube.com/embed/TDyYM4R-OYI" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
    </div>
    <hr> 
 
@@ -55,7 +55,7 @@ Blender addon for useful modeling tools.
 .. raw:: html
 
    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube-nocookie.com/embed/tlj1V0yBON4" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+      <iframe src="https://www.youtube.com/embed/tlj1V0yBON4" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
    </div>
    <hr>  
 
@@ -71,5 +71,5 @@ Blender addon for managing your viewport and outliner.
 .. raw:: html
 
    <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube-nocookie.com/embed/EOLpj38DQwU" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+      <iframe src="https://www.youtube.com/embed/EOLpj38DQwU" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
    </div>
