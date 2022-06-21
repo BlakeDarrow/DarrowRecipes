@@ -34,4 +34,3 @@ jobs:
       with:
         github_token: ${{ secrets.CREATE_SITE_SECRET }}
         branch: gh-pages
-        force: true
