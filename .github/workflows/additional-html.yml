@@ -3,6 +3,8 @@ on:
  workflow_run:
     workflows:
       - build Sphinx
+    types: 
+      - completed
 
 jobs:
   build:
