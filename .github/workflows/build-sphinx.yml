@@ -1,41 +1,23 @@
-name: build-sphinx-to-gh-pages
-
-env:
-  GITHUB_ACTOR: BlakeDarrow
-  GITHUB_REPOSITORY: BlakeDarrow/DarrowTools
-  GITHUB_TOKEN: ${{ secrets.CREATE_SITE_SECRET }}
-
-on: 
+name: Build Sphinx v2
+on:
   push:
-    branches: [ main ]
-
-
-
+    branches:
+    - master
 jobs:
-
-  build_sphinx_job:
+  build:
     runs-on: ubuntu-latest
-    container: debian:buster-slim
-
     steps:
-    
-      - name: Get prerequisites and clone repository
-        env:
-          GITHUB_TOKEN: ${{ secrets.CREATE_SITE_SECRET }}
-        run: |
-          set -x
-          apt-get update
-          apt-get install -y git
-          git clone "https://token:${GITHUB_TOKEN}@github.com/${GITHUB_REPOSITORY}.git" .
-        shell: bash
-  
-      - name: Sphinx Pages 
-        # You may pin to the exact commit or the version.
-        # uses: seanzhengw/sphinx-pages@70dd0557fc226cfcd41c617aec5e9ee4fce4afe2
-        uses: seanzhengw/sphinx-pages@v1
-        with:
-          documentation_path: ./source/sphinx
-          # Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}
-          github_token: ${{ secrets.CREATE_SITE_SECRET }}
-          # Auto create a README.md file at branch gh-pages root with repo/branch/commit links
-        
+    - uses: actions/setup-python@v2
+    - uses: actions/checkout@master
+      with:
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: Build and Commit
+      uses: sphinx-notes/pages@v2
+      with:
+        documentation_path: ./source/sphinx
+      
+    - name: Push changes
+      uses: ad-m/github-push-action@master
+      with:
+        github_token: ${{ secrets.CREATE_SITE_SECRET }}
+        branch: gh-pages
