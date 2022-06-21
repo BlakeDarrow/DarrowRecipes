@@ -1,0 +1,19 @@
+name: Deploy non Sphinx HTML to GitHub Page
+on:
+  push:	
+    branches:	
+      - master
+
+jobs:
+  deploy:
+    name: Deploy non Sphinx HTML to GitHub Page
+    runs-on: ubuntu-latest    
+    steps:
+    
+    - name: Deploy additional HTML
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: gh-pages
+        FOLDER: source/html
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
