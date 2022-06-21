@@ -1,8 +1,7 @@
 name: Build Sphinx v2
-on:
+on: 
   push:
-    branches:
-    - master
+    branches: [ main ]
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -14,8 +13,9 @@ jobs:
     - name: Build and Commit
       uses: sphinx-notes/pages@v2
       with:
-        documentation_path: ./source/sphinx
-      
+        documentation_path: /source/sphinx
+        requirements_path: ./requirements.txt
+        
     - name: Push changes
       uses: ad-m/github-push-action@master
       with:
