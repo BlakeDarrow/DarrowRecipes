@@ -8,6 +8,9 @@ jobs:
     runs-on: ubuntu-latest
     name: Push html
     steps:
+      - name: git-checkout
+        uses: actions/checkout@v2
+
       - name: Push
         uses: s0/git-publish-subdir-action@develop
         env:
