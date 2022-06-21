@@ -34,8 +34,8 @@ jobs:
         # uses: seanzhengw/sphinx-pages@70dd0557fc226cfcd41c617aec5e9ee4fce4afe2
         uses: seanzhengw/sphinx-pages@v1
         with:
+          documentation_path: ./source/sphinx
           # Token for the repo. Can be passed in using $\{{ secrets.GITHUB_TOKEN }}
           github_token: ${{ secrets.CREATE_SITE_SECRET }}
           # Auto create a README.md file at branch gh-pages root with repo/branch/commit links
-        
         
