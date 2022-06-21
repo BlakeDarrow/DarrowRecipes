@@ -1,4 +1,4 @@
-name: Build Sphinx v2
+name: build Sphinx
 on: 
   push:
     branches: [ main ]
@@ -6,18 +6,6 @@ jobs:
   build:
     runs-on: ubuntu-latest
     steps:
-    - name: git-checkout
-      uses: actions/checkout@v2
-
-    - name: Push html
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: gh-pages # The branch name where you want to push the assets
-        FOLDER: source/html # The directory where your assets are generated
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-        MESSAGE: "Build: ({sha}) {msg}" # The commit message
-        
     - uses: actions/setup-python@v2
     - uses: actions/checkout@master
       with:
