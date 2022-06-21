@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Basic Web Page</title>
+    </head>
+    <body>
+      <body>
+        <div id="firebaseui-auth-container">
+          <!-- This is where the Login ui will load -->
+        </div>
+        <!-- The core Firebase JS SDK is always required and must be listed first -->
+        <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-app.js"></script>
+    
+        <script src="https://www.gstatic.com/firebasejs/6.3.3/firebase-auth.js"></script>
+
+        <script>
+          // Your web app's Firebase configuration
+          var firebaseConfig = {
+            apiKey: "AIzaSyASbVIyfhKASRIjQ7tshE08eOesyLO-8Pg",
+            authDomain: "darrow-tools.firebaseapp.com",
+            projectId: "darrow-tools",
+            storageBucket: "darrow-tools.appspot.com",
+            messagingSenderId: "422772929193",
+            appId: "1:422772929193:web:170dbb6094950752e32fb8",
+            measurementId: "G-81LQXQ5TVX"
+          };
+          // Initialize Firebase
+          firebase.initializeApp(firebaseConfig);
+
+          //Handle Account Status
+          firebase.auth().onAuthStateChanged(user => {
+            if(!user) {
+              window.location = 'login.html'; //If User is not logged in, redirect to login page
+              }
+          });
+        </script>
+You are logged in 
+    </body>
+</html>
