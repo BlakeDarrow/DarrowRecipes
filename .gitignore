@@ -7,3 +7,4 @@ source/.vscode/*
 .vscode/settings.json
 builddir/*
 source/BUILDDIR/*
+make.bat
