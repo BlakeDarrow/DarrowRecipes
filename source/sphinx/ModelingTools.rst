@@ -22,12 +22,17 @@ ModelingTools is an addon developed for Blender 2.80+ that features numerous ope
 :ref:`installModelingtag`
 
 .. raw:: html
-   
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube.com/embed/tlj1V0yBON4" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
+   <!-- https://github.com/paulirish/lite-youtube-embed -->
+   <div>
+   <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
+   <script src="./_static/lite-yt-embed.js"></script>
+   <lite-youtube videoid="tlj1V0yBON4" style="background-image: url('https://img.youtube.com/vi/tlj1V0yBON4/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+   <span class="lyt-visually-hidden">ModelingTools</span>
+   </button>
    </div>
    <hr> 
-
 
 .. _downloadModelingTag:
 

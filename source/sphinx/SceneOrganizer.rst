@@ -21,11 +21,16 @@ SceneOrganizer is simple tool that allows the user to manage some display option
 
 .. raw:: html
    
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube.com/embed/EOLpj38DQwU" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+   <!-- https://github.com/paulirish/lite-youtube-embed -->
+   <div>
+   <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
+   <script src="./_static/lite-yt-embed.js"></script>
+   <lite-youtube videoid="EOLpj38DQwU" style="background-image: url('https://img.youtube.com/vi/EOLpj38DQwU/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+   <span class="lyt-visually-hidden">SceneOrganizer</span>
+   </button>
    </div>
    <hr> 
-
 
 .. _downloadSceneTag:
 

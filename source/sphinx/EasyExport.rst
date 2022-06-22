@@ -19,14 +19,18 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
 :ref:`Install`
 
 .. raw:: html
-   
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube-nocookie.com/embed/TDyYM4R-OYI" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
+   <!-- https://github.com/paulirish/lite-youtube-embed -->
+   <div>
+   <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
+   <script src="./_static/lite-yt-embed.js"></script>
+   <lite-youtube videoid="TDyYM4R-OYI" style="background-image: url('https://img.youtube.com/vi/TDyYM4R-OYI/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+      <span class="lyt-visually-hidden">EasyExport</span>
+   </button>
    </div>
    <hr> 
-
-
-
+   
 .. _downloadExporterTag:
 
 Download

@@ -19,7 +19,7 @@ Written and maintained by `BlakeDarrow`_.
    SceneOrganizer
 
 .. raw:: html
-   
+  
    <hr> 
 
 .. _EasyExport: EasyExport
@@ -37,12 +37,17 @@ Written and maintained by `BlakeDarrow`_.
 Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
 
 .. raw:: html
-   
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube.com/embed/TDyYM4R-OYI" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+
+   <!-- https://github.com/paulirish/lite-youtube-embed -->
+   <div>
+   <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
+   <script src="./_static/lite-yt-embed.js"></script>
+   <lite-youtube videoid="TDyYM4R-OYI" style="background-image: url('https://img.youtube.com/vi/TDyYM4R-OYI/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+      <span class="lyt-visually-hidden">EasyExport</span>
+   </button>
    </div>
    <hr> 
-
 
 `ModelingTools`_
 -----------------------
@@ -54,11 +59,13 @@ Blender addon for useful modeling tools.
 
 .. raw:: html
 
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube.com/embed/tlj1V0yBON4" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+   <div>
+   <lite-youtube videoid="tlj1V0yBON4" style="background-image: url('https://img.youtube.com/vi/tlj1V0yBON4/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+      <span class="lyt-visually-hidden">ModelingTools</span>
+   </button>
    </div>
    <hr>  
-
 
 `SceneOrganizer`_
 -----------------------
@@ -70,6 +77,10 @@ Blender addon for managing your viewport and outliner.
 
 .. raw:: html
 
-   <div style="position: relative; padding-bottom: 56.25%; height: 0; overflow: hidden; max-width: 100%; height: auto;">
-      <iframe src="https://www.youtube.com/embed/EOLpj38DQwU" frameborder="0" allowfullscreen style="position: absolute; top: 0; left: 0; width: 100%; height: 100%;"></iframe>
+   <div>
+   <lite-youtube videoid="EOLpj38DQwU" style="background-image: url('https://img.youtube.com/vi/EOLpj38DQwU/maxresdefault.jpg');">
+   <button type="button" class="lty-playbtn">
+      <span class="lyt-visually-hidden">ModelingTools</span>
+   </button>
    </div>
+
