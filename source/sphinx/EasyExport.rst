@@ -16,7 +16,8 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
 :ref:`fbxTag` |
 :ref:`ExportSettings` |
 :ref:`downloadExporterTag` |
-:ref:`Install`
+:ref:`Install` | 
+:ref:`HelpTag`
 
 .. raw:: html
 
@@ -71,7 +72,7 @@ Usage
 Promptless
 ----------
 
-If the *Promptless Export* boolean is checked, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
+If the *Promptless Export* button is selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
 Reference :ref:`Export Path`
 
 1. **Select mesh(s)** (will be combined on export)
@@ -101,6 +102,16 @@ If the *Promptless Export* boolean is **NOT** checked, the *Export Selection* bu
 
    <hr>  
 
+Use Object Origin
+-------------------
+
+| When this button is selected, at export, the object's origin will be used instead of the world origin. This is useful especially when there are multiple objects in the scene.
+| When exporting multiple objects with this button applied, the active objects origin will be used.
+
+.. raw:: html
+
+   <hr>  
+
 
 Auto Naming
 -----------
@@ -110,6 +121,13 @@ Auto Naming
 
 | **Prefix and suffix naming.**
 | Looking for different naming conventions? Try using the "Prefix" and "Suffix" options. These custom options include settings like mesh export counting and custom prefix words, like "assets".
+
+
+| When exporting with a suffix, you can either add a "high" or "low" tag, but not both. Additionally, if "high" or "low" is selected, you cannot choose a custom suffix. These are "either or" operations. Not both.
+| 
+| When utilizing the iterative suffix option, there will be an increased numerical value added to the end of the exported object name.
+|
+| If the ".blend" prefix is selected, the user will be prompted to save if the scene has not been saved already.
 
 .. warning:: Currently, selecting multiple objects will export them as one mesh, using the name of the *active* collection. This is not necessarily the parent collection of the objects. Make sure to select your parent collection when using this method.
 
@@ -128,7 +146,9 @@ Settings
 Export Path
 -----------
 
-Found underneath the *Prefix* and *Suffix* options, selecting the folder icon next to the string will prompt the user for a destination path. This path is shared between blender scene.
+| Found directly underneath the *Prefix* and *Suffix* panel options. Selecting the folder icon next to the string will prompt the user for a destination path. This path is shared between blender scene.
+| 
+| This path is absolute, not relative.
 
 Once a path is selected, "Open Export Folder" will allow you to navigate directly to the folder in Windows Explorer. 
 
@@ -147,11 +167,23 @@ Unreal and Unity "standard" export options. The exported models imported into Un
 
    <hr>  
 
-Multi-Object Naming
+Smart Naming
 -------------------
 
 | **Found under advanced settings** 
-| When exporting multiple objects as one mesh, the final name will be the active collections name. Make sure to set the correct collection as active when this bool is enabled.
+| When exporting multiple objects as one mesh, the final name will be the active collections name plus any prefix and suffix customizations. Make sure to set the correct collection as active when this bool is enabled. 
+| When exporting a singular object, the final name will be the selected objects name plus any prefix and suffix customizations.
+
+
+.. raw:: html
+
+   <hr>  
+
+Force Single User
+-------------------
+
+| **Found under advanced settings** 
+| When exporting, if any objects are linked, they will become single users.
 
 
 .. raw:: html
@@ -173,4 +205,21 @@ Use Leaf Bones
 --------------
 
 | **Found under advanced settings**
-| Add a leaf bone to the end of the chain on export.
+| Blender's export option to utilize leaf bones when exporting.
+
+.. raw:: html
+
+   <hr>  
+
+
+.. _helpTag:
+
+Help
+++++++++
+
+| **No module named "EasyExport" installed**
+1. Restart Blender
+2. Enable "EasyExport" in preferences -> addons
+
+| **Have any questions or comments?**
+1. Email me at support@darrow.tools
