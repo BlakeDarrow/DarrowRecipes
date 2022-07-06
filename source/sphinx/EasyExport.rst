@@ -11,7 +11,10 @@
 EasyExport
 ##########
 
-Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
+| Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
+| 
+| Check out the recently added **"Batch Export"** options!
+
 
 :ref:`fbxTag` |
 :ref:`ExportSettings` |
@@ -69,44 +72,37 @@ Installation
 Usage
 +++++
 
-Promptless
-----------
+Batch Export
+-------------
 
-If the *Promptless Export* button is selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
-Reference :ref:`Export Path`
-
-1. **Select mesh(s)** (will be combined on export)
-2. **Input desired export path** in required path field (only first time)
-3. **Hit Export Selection**
-
-.. note:: Under the hood, the button in the UI is actual changing, so if you add the *Export Selection* button to your quick favorites, it will be linked to whatever state the promptless bool is in.
+If the *Batch Export* button is selected, upon exporting, every object selected will be exported separately. This tool utilizes all the settings found in the *Easy Export* panel, thus giving the user many workflow options.
 
 .. raw:: html
 
    <hr>  
 
 
-Prompt
-------
+Singular Export
+----------------
 
-If the *Promptless Export* boolean is **NOT** checked, the *Export Selection* button will prompt the user for a file path to export every time.
+If the *Batch Export* boolean is **NOT** checked, when exported, all selected mesh's will be outputted as a single, combined object.
 
-1. **Select mesh(s)** (will be combined on export)
-2. **Hit Export Selection**
-3. Navigate to folder destination
-4. **Select Export Selection** in the pop-up
-
-.. note:: Please do not attempt to change the export name in the file browser. Whatever name you type in will be added to the output name on export, leaving you with an incorrect .fbx file name.
+.. note:: When exporting multiple objects as one combined output, *and* *Use Active Origin* is selected, the active object's origin will be used as the export location.
 
 .. raw:: html
 
    <hr>  
 
-Use Object Origin
--------------------
+Object's Export Location
+-------------------------
 
-| When this button is selected, at export, the object's origin will be used instead of the world origin. This is useful especially when there are multiple objects in the scene.
-| When exporting multiple objects with this button applied, the active objects origin will be used.
+Active Origin
+~~~~~~~~~~~~~~~~~~~~~~
+| If you have a button that reads "Use Active Origin", you are exporting as one object. If selected, at export, the *active object's* (generally the last object selected) *origin* will be used instead of the world origin.
+
+Individual Origins
+~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+| If that buttons label is "Use Individual Origins", you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
 
 .. raw:: html
 
@@ -117,7 +113,7 @@ Auto Naming
 -----------
 
 * If you are using the prompted exporter, don't worry about filling out the name in Blenders exporter. This tool will automatically use the name of your selected mesh.
-* If you are using the promptless method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
+* If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
 
 | **Prefix and suffix naming.**
 | Looking for different naming conventions? Try using the "Prefix" and "Suffix" options. These custom options include settings like mesh export counting and custom prefix words, like "assets".
@@ -129,7 +125,7 @@ Auto Naming
 |
 | If the ".blend" prefix is selected, the user will be prompted to save if the scene has not been saved already.
 
-.. warning:: Currently, selecting multiple objects will export them as one mesh, using the name of the *active* collection. This is not necessarily the parent collection of the objects. Make sure to select your parent collection when using this method.
+.. warning:: When exporting combined, and *"Smart Naming" is on, the outputted file name will use the name of the *active* collection. This is not necessarily the parent collection of the objects. Make sure to select your parent collection when using this method.
 
 .. raw:: html
     
@@ -178,6 +174,26 @@ Smart Naming
 .. raw:: html
 
    <hr>  
+
+
+Direct Export
+-------------------
+
+| **Found under advanced settings** 
+| If the *Direct Export* button is selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
+| Reference :ref:`Export Path`
+| If the *Direct Export* button is de-selected, the *Export Selection* button will prompt the user for a destination to export.
+
+1. **Select mesh(s)** (will be combined on export)
+2. **Input desired export path** in required path field (only first time)
+3. **Hit Export Selection**
+
+.. note:: Under the hood, the button in the UI is actual changing, so if you add the *Export Selection* button to your quick favorites, it will be linked to whatever state the promptless bool is in.
+
+.. raw:: html
+
+   <hr>  
+
 
 Force Single User
 -------------------
