@@ -16,7 +16,7 @@ EasyExport
 | Check out the recently added **"Batch Export"** options!
 
 
-:ref:`fbxTag` |
+:ref:`usageTag` |
 :ref:`ExportSettings` |
 :ref:`downloadExporterTag` |
 :ref:`Install` | 
@@ -60,14 +60,14 @@ Installation
 2. Under addon preferences in Blender, click 'install' and the select the recently downloaded zip file.
 3. Enable the addon
    
-.. warning:: Sometimes you might get an error when installing saying there isn't a module named "EasyExport", restart Blender and try enabling the addon again.
+.. caution :: Sometimes you might get an error when installing saying there isn't a module named "EasyExport", restart Blender and try enabling the addon again.
 
 .. raw:: html
     
    <hr>  
 
 
-.. _fbxTag:
+.. _usageTag:
 
 Usage
 +++++
@@ -75,7 +75,7 @@ Usage
 Batch Export
 -------------
 
-If the *Batch Export* button is selected, upon exporting, every object selected will be exported separately. This tool utilizes all the settings found in the *Easy Export* panel, thus giving the user many workflow options.
+If selected, upon exporting, every object selected will be exported separately. This tool also utilizes all the settings found in the *Easy Export* panel.
 
 .. raw:: html
 
@@ -96,36 +96,60 @@ If the *Batch Export* boolean is **NOT** checked, when exported, all selected me
 Object's Export Location
 -------------------------
 
+Depending on your exporting mode you will get two separate options.
+
 Active Origin
 ~~~~~~~~~~~~~~~~~~~~~~
-| If you have a button that reads "Use Active Origin", you are exporting as one object. If selected, at export, the *active object's* (generally the last object selected) *origin* will be used instead of the world origin.
+| If "Use Active Origin" is selected, you are exporting as a singular object. If checked, at export, the *active object's origin* will be used instead of the world origin.
 
 Individual Origins
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
-| If that buttons label is "Use Individual Origins", you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
+| If "Use Individual Origins", you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
+
+
+If left unselected, the output will be at world origin (0,0,0).
 
 .. raw:: html
 
    <hr>  
 
 
-Auto Naming
+Naming
 -----------
 
 * If you are using the prompted exporter, don't worry about filling out the name in Blenders exporter. This tool will automatically use the name of your selected mesh.
 * If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
 
-| **Prefix and suffix naming.**
-| Looking for different naming conventions? Try using the "Prefix" and "Suffix" options. These custom options include settings like mesh export counting and custom prefix words, like "assets".
+Singular Exporting
+~~~~~~~~~~~~~~~~~~~~~~~
 
+Depending on exporting mode you might not be able to select functionality. Batch Export locks the base naming to each objects corresponding Blender name.
 
-| When exporting with a suffix, you can either add a "high" or "low" tag, but not both. Additionally, if "high" or "low" is selected, you cannot choose a custom suffix. These are "either or" operations. Not both.
+| **"Smart Output Name"**
+| If more than one object is selected, the active collection's name will be used as the export name. If only one object is selected, the output name will be the selected objects.
+
+| **"Prompt Output Name"**
+| The user will be prompted for the export name.
+
+If none are selected, the object's selected name will be used as the output base name.
+
+Batch Exporting
+~~~~~~~~~~~~~~~~~~~~~~~
+
+When batch exporting, each output will be named its corresponding object name in Blender.
+
+.. raw:: html
+
+   <hr>  
+
+Prefix and Suffix
+~~~~~~~~~~~~~~~~~~
+
+| When exporting with a suffix, you can either add a "high, "low", or custom tag, but only one. Additionally, if "high" or "low" is selected, you cannot choose a custom suffix. These are "either or" operations. Not both.
 | 
 | When utilizing the iterative suffix option, there will be an increased numerical value added to the end of the exported object name.
 |
 | If the ".blend" prefix is selected, the user will be prompted to save if the scene has not been saved already.
-
-.. warning:: When exporting combined, and *"Smart Naming" is on, the outputted file name will use the name of the *active* collection. This is not necessarily the parent collection of the objects. Make sure to select your parent collection when using this method.
 
 .. raw:: html
     
@@ -157,18 +181,6 @@ Presets
 -------
 
 Unreal and Unity "standard" export options. The exported models imported into Unity/Unreal will have correct orientations and scale. Animations "should" also work, but additional animation settings will be available soon. If you encounter problems with exporting (animation included) please reach out and let me know. 
-
-
-.. raw:: html
-
-   <hr>  
-
-Smart Naming
--------------------
-
-| **Found under advanced settings** 
-| When exporting multiple objects as one mesh, the final name will be the active collections name plus any prefix and suffix customizations. Make sure to set the correct collection as active when this bool is enabled. 
-| When exporting a singular object, the final name will be the selected objects name plus any prefix and suffix customizations.
 
 
 .. raw:: html
