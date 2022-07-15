@@ -42,7 +42,7 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
    <div>
    <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
    <script src="./_static/lite-yt-embed.js"></script>
-   <lite-youtube videoid="TDyYM4R-OYI" style="background-image: url('https://img.youtube.com/vi/TDyYM4R-OYI/maxresdefault.jpg');">
+   <lite-youtube videoid="zLwUxIT3xiw" style="background-image: url('https://img.youtube.com/vi/zLwUxIT3xiw/maxresdefault.jpg');">
    <button type="button" class="lty-playbtn">
       <span class="lyt-visually-hidden">EasyExport</span>
    </button>

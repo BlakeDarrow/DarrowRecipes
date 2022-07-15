@@ -11,15 +11,15 @@
 EasyExport
 ##########
 
-| Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
+| Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard blender export presets, this tools allows you to easily export your selected objects.
 | 
 | Check out the recently added **"Batch Export"** options!
 
-
-:ref:`usageTag` |
-:ref:`ExportSettings` |
 :ref:`downloadExporterTag` |
 :ref:`Install` | 
+:ref:`pathSettings` |
+:ref:`presetsSettings` |
+:ref:`namingSettings` |
 :ref:`HelpTag`
 
 .. raw:: html
@@ -28,7 +28,7 @@ EasyExport
    <div>
    <link rel="stylesheet" href="./_static/css/lite-yt-embed.css" />  
    <script src="./_static/lite-yt-embed.js"></script>
-   <lite-youtube videoid="TDyYM4R-OYI" style="background-image: url('https://img.youtube.com/vi/TDyYM4R-OYI/maxresdefault.jpg');">
+   <lite-youtube videoid="zLwUxIT3xiw" style="background-image: url('https://img.youtube.com/vi/zLwUxIT3xiw/maxresdefault.jpg');">
    <button type="button" class="lty-playbtn">
       <span class="lyt-visually-hidden">EasyExport</span>
    </button>
@@ -45,7 +45,6 @@ Download
 .. _Latest Release: https://github.com/BlakeDarrow/EasyExport/releases/latest
 
 .. _Source: https://github.com/BlakeDarrow/EasyExport/tree/main/EasyExport
-
 
 .. raw:: html
     
@@ -66,46 +65,39 @@ Installation
     
    <hr>  
 
+Mode
+++++++++++++
 
-.. _usageTag:
+Batch
+-----
 
-Usage
-+++++
-
-Batch Export
--------------
-
-If selected, upon exporting, every object selected will be exported separately. This tool also utilizes all the settings found in the *Easy Export* panel.
+If *Batch Export* is selected, upon exporting, every object selected will be exported separately. This tool also utilizes all the settings found in the *Easy Export* panel.
 
 .. raw:: html
 
    <hr>  
 
-
-Singular Export
-----------------
+Singular
+----------
 
 If the *Batch Export* boolean is **NOT** checked, when exported, all selected mesh's will be outputted as a single, combined object.
 
-.. note:: When exporting multiple objects as one combined output, *and* *Use Active Origin* is selected, the active object's origin will be used as the export location.
-
 .. raw:: html
 
    <hr>  
 
-Object's Export Location
--------------------------
+Object Location
+++++++++++++++++
 
 Depending on your exporting mode you will get two separate options.
 
 Active Origin
-~~~~~~~~~~~~~~~~~~~~~~
+---------------
 | If "Use Active Origin" is selected, you are exporting as a singular object. If checked, at export, the *active object's origin* will be used instead of the world origin.
 
 Individual Origins
-~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+---------------------
 | If "Use Individual Origins", you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
-
 
 If left unselected, the output will be at world origin (0,0,0).
 
@@ -113,37 +105,60 @@ If left unselected, the output will be at world origin (0,0,0).
 
    <hr>  
 
+.. _pathSettings:
 
-Naming
------------
+Path
++++++
 
-* If you are using the prompted exporter, don't worry about filling out the name in Blenders exporter. This tool will automatically use the name of your selected mesh.
-* If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
+| Selecting the folder icon next to the string will prompt the user for a destination path. If **Direct Export** is enabled, when exporting, the object(s) will be directly exported to this path.
+| (This path is absolute, not relative)
 
-Singular Exporting
-~~~~~~~~~~~~~~~~~~~~~~~
-
-Depending on exporting mode you might not be able to select functionality. Batch Export locks the base naming to each objects corresponding Blender name.
-
-| **"Smart Output Name"**
-| If more than one object is selected, the active collection's name will be used as the export name. If only one object is selected, the output name will be the selected objects.
-
-| **"Prompt Output Name"**
-| The user will be prompted for the export name.
-
-If none are selected, the object's selected name will be used as the output base name.
-
-Batch Exporting
-~~~~~~~~~~~~~~~~~~~~~~~
-
-When batch exporting, each output will be named its corresponding object name in Blender.
+Once a path is selected, "Open Export Folder" will allow you to navigate directly to the folder in Windows Explorer. 
 
 .. raw:: html
 
    <hr>  
 
+.. _presetsSettings:
+
+Presets
+++++++++
+
+| These are the users Export Operator presets, built in Blender's the export pop-up. This allows the user to use a vast amount of different workflows with my tool.
+| The "default" preset is built by me with an emphasis for Unreal Engine. 
+
+.. raw:: html
+
+   <hr>  
+
+.. _namingSettings:
+
+Naming
++++++++
+
+Base Name
+---------------
+
+.. note:: Depending on exporting mode you might not be able to select functionality. Batch Export locks the base naming to each objects corresponding Blender name.
+
+| **Active Collection**
+| The active collection's name will be used as the export name.
+
+| **Active Object**
+| If selected, the active object will be used as the output base name.
+
+| **Prompt Output Name**
+| The user will be prompted for the base export name.
+
+When batch exporting, each output will be named its corresponding mesh name.
+
+| If you are using the prompted exporter, don't fill out the name in Blender's exporter. This tool will automatically use the name of your selected mesh.
+|
+| If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
+
+
 Prefix and Suffix
-~~~~~~~~~~~~~~~~~~
+-----------------
 
 | When exporting with a suffix, you can either add a "high, "low", or custom tag, but only one. Additionally, if "high" or "low" is selected, you cannot choose a custom suffix. These are "either or" operations. Not both.
 | 
@@ -156,51 +171,17 @@ Prefix and Suffix
    <hr>  
 
 
-.. _ExportSettings:
-
-Settings
-++++++++
+Advanced
+++++++++++
 
 *To show advanced options, toggle the cogwheel in the panel menu.*
-
-Export Path
------------
-
-| Found directly underneath the *Prefix* and *Suffix* panel options. Selecting the folder icon next to the string will prompt the user for a destination path. This path is shared between blender scene.
-| 
-| This path is absolute, not relative.
-
-Once a path is selected, "Open Export Folder" will allow you to navigate directly to the folder in Windows Explorer. 
-
-.. raw:: html
-
-   <hr>  
-
-
-Presets
--------
-
-Unreal and Unity "standard" export options. The exported models imported into Unity/Unreal will have correct orientations and scale. Animations "should" also work, but additional animation settings will be available soon. If you encounter problems with exporting (animation included) please reach out and let me know. 
-
-
-.. raw:: html
-
-   <hr>  
-
 
 Direct Export
 -------------------
 
-| **Found under advanced settings** 
-| If the *Direct Export* button is selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
-| Reference :ref:`Export Path`
-| If the *Direct Export* button is de-selected, the *Export Selection* button will prompt the user for a destination to export.
-
-1. **Select mesh(s)** (will be combined on export)
-2. **Input desired export path** in required path field (only first time)
-3. **Hit Export Selection**
-
-.. note:: Under the hood, the button in the UI is actual changing, so if you add the *Export Selection* button to your quick favorites, it will be linked to whatever state the promptless bool is in.
+| If selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
+| 
+| If **not** selected, the *Export Selection* button will prompt the user for a destination to export everytime.
 
 .. raw:: html
 
@@ -210,30 +191,44 @@ Direct Export
 Force Single User
 -------------------
 
-| **Found under advanced settings** 
 | When exporting, if any objects are linked, they will become single users.
 
+.. raw:: html
+
+   <hr>  
+
+Open Folder On Export
+----------------------
+
+| After exported, the destination folder will be opened.
 
 .. raw:: html
 
    <hr>  
 
-Separate All Actions
---------------------
+Open Docs
+----------------------
 
-| **Found under advanced settings**
-| Blender's export setting for exporting all animations separately.
-
+| Opens **darrow.tools/EasyExport** in the default web browser.
 
 .. raw:: html
 
    <hr>  
 
-Use Leaf Bones
---------------
+Open Presets
+----------------------
 
-| **Found under advanced settings**
-| Blender's export option to utilize leaf bones when exporting.
+| This opens the path to Blender's user preset files. These python files are editable, and offers a different method to edit export presets.
+
+.. raw:: html
+
+   <hr>  
+
+
+Edit Defaults
+----------------------
+
+| This opens my custom default preset in your default text-editor.
 
 .. raw:: html
 
@@ -245,9 +240,8 @@ Use Leaf Bones
 Help
 ++++++++
 
-| **No module named "EasyExport" installed**
 1. Restart Blender
 2. Enable "EasyExport" in preferences -> addons
 
 | **Have any questions or comments?**
-1. Email me at support@darrow.tools
+| Email me at support@darrow.tools
