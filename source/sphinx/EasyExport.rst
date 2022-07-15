@@ -71,17 +71,13 @@ Installation
 Mode
 +++++
 
-Batch
------
-
-If *"Batch Export"* is selected, upon exporting, every object selected will be exported separately and output with their corresponding mesh name.
-Reference :ref:`pathSettings`.
-
-Singular
-----------
-
-If the *"Batch Export"* boolean is **NOT** checked, when exported, all selected mesh's will be output as a single combined object. That singular output file will be named whichever preference the user selects.
-Reference :ref:`namingSettings` and :ref:`pathSettings`.
+| 1. **Batch Exporting**
+| If *"Batch Export"* is selected, upon exporting, every object selected will be exported separately and output with their corresponding mesh name.
+| Reference :ref:`pathSettings`.
+|
+| 2. **Combined Export**
+| If the *"Batch Export"* boolean is **NOT** checked, when exported, all selected mesh's will be output as a single combined object. That singular output file will be named whichever preference the user selects.
+| Reference :ref:`namingSettings` and :ref:`pathSettings`.
 
 .. raw:: html
 
@@ -139,7 +135,11 @@ Naming
 Base Name
 ---------------
 
+| When batch exporting, each objects base name will be its corresponding mesh name. Reference :ref:`ModeRef`.
+
 .. note:: Depending on exporting mode you might not be able to select functionality. Batch Export locks the base naming to each objects corresponding Blender name.
+
+| These three options only apply to the singular export mode.
 
 | 1. **Active Collection**
 | The active collection's name will be used as the export name.
@@ -149,13 +149,8 @@ Base Name
 
 | 3. **Prompt Output Name**
 | The user will be prompted for the base export name.
-
-When batch exporting, each output will be named its corresponding mesh name. Reference :ref:`ModeRef`.
-
-| If you are using the prompted exporter, don't fill out the name in Blender's exporter. This tool will automatically use the name of your selected mesh.
 |
-| If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.  Reference :ref:`direct`.
-
+| If you are not using the *"Direct Export"* method, don't fill out the name in Blender's exporter.
 
 Prefix and Suffix
 -----------------
@@ -174,7 +169,7 @@ Prefix and Suffix
 Advanced
 ++++++++++
 
-*To show advanced options, toggle the cogwheel in the panel menu.*
+*To show advanced options, toggle the cogwheel in the panel header.*
 
 .. _direct:
 

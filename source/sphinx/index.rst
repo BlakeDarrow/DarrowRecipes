@@ -34,7 +34,7 @@ Written and maintained by `BlakeDarrow`_.
 .. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/releases/latest
 
-Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using standard export options for both Unreal and Unity, this tools allows you to easily export your selected objects with the correct object name -- by default.
+Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using the users custom export settings, this tools allows you to very easily define an export workflow. 
 
 .. raw:: html
 
