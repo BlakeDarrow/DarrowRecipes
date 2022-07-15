@@ -63,24 +63,25 @@ Installation
 
 .. raw:: html
     
-   <hr>  
+   <hr>
+
+
+.. _ModeRef:
 
 Mode
-++++++++++++
++++++
 
 Batch
 -----
 
-If *Batch Export* is selected, upon exporting, every object selected will be exported separately. This tool also utilizes all the settings found in the *Easy Export* panel.
-
-.. raw:: html
-
-   <hr>  
+If *"Batch Export"* is selected, upon exporting, every object selected will be exported separately and output with their corresponding mesh name.
+Reference :ref:`pathSettings`.
 
 Singular
 ----------
 
-If the *Batch Export* boolean is **NOT** checked, when exported, all selected mesh's will be outputted as a single, combined object.
+If the *"Batch Export"* boolean is **NOT** checked, when exported, all selected mesh's will be output as a single combined object. That singular output file will be named whichever preference the user selects.
+Reference :ref:`namingSettings` and :ref:`pathSettings`.
 
 .. raw:: html
 
@@ -91,13 +92,11 @@ Object Location
 
 Depending on your exporting mode you will get two separate options.
 
-Active Origin
----------------
-| If "Use Active Origin" is selected, you are exporting as a singular object. If checked, at export, the *active object's origin* will be used instead of the world origin.
-
-Individual Origins
----------------------
-| If "Use Individual Origins", you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
+| 1. **Active Origin**
+| If you see *"Use Active Origin"*, you are exporting as a singular object. If selected, at export, the *active object's origin* will be used instead of the world origin.
+| 
+| 2. **Individual Origins**
+| If you see *"Use Individual Origins"*, you are batch exporting. If selected, you will export with each objects origin being used as the export location, instead of the world origin.
 
 If left unselected, the output will be at world origin (0,0,0).
 
@@ -110,10 +109,10 @@ If left unselected, the output will be at world origin (0,0,0).
 Path
 +++++
 
-| Selecting the folder icon next to the string will prompt the user for a destination path. If **Direct Export** is enabled, when exporting, the object(s) will be directly exported to this path.
+| Selecting the folder icon next to the string will prompt the user for a destination path. If *"Direct Export"* is enabled, when exporting, the object(s) will be directly exported to this path.
 | (This path is absolute, not relative)
 
-Once a path is selected, "Open Export Folder" will allow you to navigate directly to the folder in Windows Explorer. 
+Once a path is selected, *"Open Export Folder"* will allow you to navigate directly to the folder in Windows Explorer. 
 
 .. raw:: html
 
@@ -124,8 +123,9 @@ Once a path is selected, "Open Export Folder" will allow you to navigate directl
 Presets
 ++++++++
 
-| These are the users Export Operator presets, built in Blender's the export pop-up. This allows the user to use a vast amount of different workflows with my tool.
-| The "default" preset is built by me with an emphasis for Unreal Engine. 
+| These are the users saved Export Operator presets. These are built inside Blender's export menu. This allows the user to use a vast amount of different workflows with my tool.
+
+.. note:: The *"default"* preset is built by me with an emphasis for exporting to Unreal Engine. 
 
 .. raw:: html
 
@@ -141,20 +141,20 @@ Base Name
 
 .. note:: Depending on exporting mode you might not be able to select functionality. Batch Export locks the base naming to each objects corresponding Blender name.
 
-| **Active Collection**
+| 1. **Active Collection**
 | The active collection's name will be used as the export name.
 
-| **Active Object**
+| 2. **Active Object**
 | If selected, the active object will be used as the output base name.
 
-| **Prompt Output Name**
+| 3. **Prompt Output Name**
 | The user will be prompted for the base export name.
 
-When batch exporting, each output will be named its corresponding mesh name.
+When batch exporting, each output will be named its corresponding mesh name. Reference :ref:`ModeRef`.
 
 | If you are using the prompted exporter, don't fill out the name in Blender's exporter. This tool will automatically use the name of your selected mesh.
 |
-| If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.
+| If you are using the *"Direct Export"* method, there is no worry about accidentally effecting your export name, everything happens behind the scenes.  Reference :ref:`direct`.
 
 
 Prefix and Suffix
@@ -176,54 +176,34 @@ Advanced
 
 *To show advanced options, toggle the cogwheel in the panel menu.*
 
+.. _direct:
+
 Direct Export
 -------------------
 
-| If selected, the *Export Selection* button will utilize the user defined path and automatically export without any further user input.
+| If selected, upon exporting there is nothing else needed by the user. The exporter will use the defined path and automatically export without any further input.
 | 
-| If **not** selected, the *Export Selection* button will prompt the user for a destination to export everytime.
-
-.. raw:: html
-
-   <hr>  
-
+| If **not** selected, upon exporting their will be a prompt for the user to select a destination to export everytime.
 
 Force Single User
 -------------------
 
 | When exporting, if any objects are linked, they will become single users.
 
-.. raw:: html
-
-   <hr>  
-
 Open Folder On Export
 ----------------------
 
 | After exported, the destination folder will be opened.
-
-.. raw:: html
-
-   <hr>  
 
 Open Docs
 ----------------------
 
 | Opens **darrow.tools/EasyExport** in the default web browser.
 
-.. raw:: html
-
-   <hr>  
-
 Open Presets
 ----------------------
 
 | This opens the path to Blender's user preset files. These python files are editable, and offers a different method to edit export presets.
-
-.. raw:: html
-
-   <hr>  
-
 
 Edit Defaults
 ----------------------
