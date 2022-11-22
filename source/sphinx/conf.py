@@ -40,6 +40,10 @@ html_static_path = [
     '_static',
 ]
 
+extensions = [
+    'sphinx.ext.autosectionlabel',
+]
+
 html_js_files = [
     'logo_link.js',
 ]

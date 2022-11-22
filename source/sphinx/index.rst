@@ -2,9 +2,9 @@
 Introduction
 #########################
 
-DarrowTools is a free and open source library containing custom tools I have created for my workflow. Currently released tool features include: easy FBX exporting, circular arrays, outliner sorting, collections by type, and much more!
-All Blender addons are written for versions above 2.80+ and are free forever.
-Written and maintained by `BlakeDarrow`_. 
+DarrowTools is a collection of Blender tools I have created for my workflow. Currently released tool features include: easy FBX exporting, scene management, modeling tools, and bake assisting!
+All Blender addons are written for versions above 2.80+.
+| Darrow.tools is written and maintained by `BlakeDarrow`_. 
 
 .. _BlakeDarrow: https://linktr.ee/blakedarrow
 
@@ -34,7 +34,7 @@ Written and maintained by `BlakeDarrow`_.
 .. image:: https://img.shields.io/github/v/release/BlakeDarrow/EasyExport
     :target: https://github.com/BlakeDarrow/EasyExport/releases/latest
 
-Easy FBX Exporting for Blender with just a click. This tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using the users custom export settings, this tools allows you to very easily define an export workflow. 
+Easy FBX Exporting for Blender with just a click. Binned to keyboard shortcut "E", this tool allows you to not worry about settings or naming conventions, and simply hit export and forget about it. Using the users custom export settings, this tools allows you to very easily define an export workflow. 
 
 .. raw:: html
 
@@ -55,7 +55,7 @@ Easy FBX Exporting for Blender with just a click. This tool allows you to not wo
 .. image:: https://img.shields.io/github/v/release/BlakeDarrow/ModelingTools
     :target: https://github.com/BlakeDarrow/ModelingTools/releases/latest
 
-Blender addon for useful modeling tools.
+Blender addon for useful modeling tools such as circular arrays as grid layouts.
 
 .. raw:: html
 
@@ -73,7 +73,7 @@ Blender addon for useful modeling tools.
 .. image:: https://img.shields.io/github/v/release/BlakeDarrow/SceneOrganizer
     :target: https://github.com/BlakeDarrow/SceneOrganizer/releases/latest
 
-Blender addon for managing your viewport and outliner.
+Blender addon for managing your viewport and outliner. Allows for easy sorts and hiding of common object types with the Shift-E hotkey
 
 .. raw:: html
 
