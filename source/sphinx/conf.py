@@ -1,57 +1,38 @@
 
-import sphinx_rtd_theme
+# -- Project information -----------------------------------------------------
 
-extensions = [
-    'sphinx_rtd_theme',
+project = 'Darrow Recipes'
+copyright = '2022, Blake Darrow'
+author = 'Blake Darrow'
+release = '2023'
+
+# -- General configuration ---------------------------------------------------
+
+extensions = ["sphinx_rtd_dark_mode",
     'sphinx.ext.githubpages',
     'sphinx.ext.autosectionlabel',
+
 ]
-
-html_title = 'DarrowTools'
-
-html_short_title = "DarrowTools"
-
-html_theme = "sphinx_rtd_theme"
 
 html_theme_options = {
     'style_external_links': False,
     'navigation_depth': -1,
     'sticky_navigation' : True,
-    'prev_next_buttons_location' : "none",
+
     }
 
-project = 'DarrowTools'
-copyright = '2022, Blake Darrow'
-author = 'Blake Darrow'
+copyright = '2023, Blake Darrow'
 
 templates_path = ['_templates']
 
-exclude_patterns = []
-
-html_theme = 'sphinx_rtd_theme'
+html_show_sphinx = False
 
 html_show_sourcelink = False
 
 language = None
 
-html_link_suffix = ""
+exclude_patterns = []
 
-html_static_path = [
-    '_static',
-]
+html_theme = 'rtd'
 
-extensions = [
-    'sphinx.ext.autosectionlabel',
-]
-
-html_js_files = [
-    'logo_link.js',
-]
-
-html_css_files = [
-    'css/custom.css',
-]
-
-html_style = 'css/theme.css'
-
-html_show_sphinx = False
+html_static_path = ['_static']
