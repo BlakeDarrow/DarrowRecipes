@@ -12,7 +12,7 @@ jobs:
     name: Push html
     steps:
       - name: git-checkout
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Push html foler
         uses: s0/git-publish-subdir-action@develop
