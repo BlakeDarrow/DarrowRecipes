@@ -1,0 +1,80 @@
+@import 'theme.css';
+
+.form-group {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    margin-right: -50%;
+    transform: translate(-50%, -50%);
+  }
+
+.darrow form {
+    width:100%;
+    height: auto;
+    border-radius: 5px;
+    text-align: left;
+    color: #bfbfbf;
+    padding: 25px;
+    font-weight: 600;
+    box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+  }
+
+  .darrow form label {
+    color: #404040;
+  }
+  
+  
+  .darrow form input,
+  .darrow input[type="password"] {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 0 0 5px;
+    padding: 10px;
+    max-width: 100%;
+    resize: none;
+    border-radius: 5px;
+    text-align: left;
+    font-weight: 400;
+  }
+  
+  .darrow form textarea {
+    width: 100%;
+    border: 1px solid #ccc;
+    background: #fff;
+    margin: 0 0 5px;
+    padding:10px;
+    height: 15%;
+    max-width: 100%;
+    resize: vertical;
+    text-align: left;
+    border-radius: 5px;
+    font-weight: 400;
+    min-height: 75px;
+  }
+  
+  .darrow form textarea:hover {
+    transition: border-color 0.3s ease-in-out;
+    border: 1px solid #343131;
+  }
+  .darrow form input:hover {
+    transition: border-color 0.3s ease-in-out;
+    border: 1px solid #343131;
+  }
+  
+  .darrow form button {
+    border-radius: 5px;
+    width: 100%;
+    border: none;
+    background: #343131;
+    color: #fff;
+    margin: 0 0 5px;
+    padding:10px;
+    font-size: 14px;
+  }
+  
+  .darrow form button:hover {
+    background: #9b9b9b;
+    transition: background-color 0.3s ease-in-out;
+  }
+  
