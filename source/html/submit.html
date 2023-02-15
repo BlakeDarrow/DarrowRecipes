@@ -57,9 +57,17 @@
           name = nameInput.value;
         });
 
-        var sourceFolder = "source/sphinx/"
-        var filepath = sourceFolder + Category + "/"+ name;
+        var extension = ".rst"
 
+        var sourceFolder = "source/sphinx/"
+
+        if (Category === ""){
+          var filepath = sourceFolder + name + extension;
+
+        } else {
+          var filepath = sourceFolder + Category + "/" + name + extension;
+        }
+        
         var DirectionsInput = document.getElementById("Directions");
         var Directions = DirectionsInput.value;
         DirectionsInput.addEventListener("input", function () {
@@ -105,11 +113,13 @@
 
         var destinationName = "BlakeDarrow/DarrowRecipes"
 
-        var extension = ".rst"
-
         let workflowID = 44429210;
-        commitFile(filepath + extension, content, commitMessage, destinationName, password, workflowID)
+        
+        console.log(filepath)
+        console.log(destinationName)
         console.log(content)
+
+        commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
         
         // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
 
