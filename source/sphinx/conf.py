@@ -1,7 +1,7 @@
 
 # -- Project information -----------------------------------------------------
 
-project = 'Darrow Recipes'
+project = 'DarrowRecipes'
 copyright = '2022, Blake Darrow'
 author = 'Blake Darrow'
 release = '2023'
