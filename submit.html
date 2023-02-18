@@ -1,0 +1,242 @@
+<!DOCTYPE html>
+<html class="writer-html5" lang="en">
+
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Submit Recipe</title>
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/logo_link.js"></script>
+  <script src="_static/dark_mode_js/default_light.js"></script>
+  <script src="_static/sphinx_highlight.js"></script>
+  <script src="_static/dark_mode_js/default_dark.js"></script>
+  <script src="_static/dark_mode_js/theme_switcher.js"></script>
+  <script src="_static/js/theme.js"></script>
+  <link rel="index" title="Index" href="genindex" />
+  <link rel="search" title="Search" href="search" />
+  <script type="module">
+    import { authenticateUser } from './_static/js/main.js';
+    import { commitFile } from './_static/js/main.js';
+    import { monitorWorkflowStatusChanges } from './_static/js/main.js';
+    import { triggerDeleteWorkflowRuns } from './_static/js/main.js';
+
+    document.getElementById("login").addEventListener("click", async () => {
+      var passwordId = document.getElementById("password");
+      var password = passwordId.value;
+      passwordId.addEventListener("input", function () {
+        password = password.value;
+      });
+      authenticateUser(password)
+    });
+
+    document.getElementById("commit-file").addEventListener("click", async () => {
+      var passwordId = document.getElementById("password");
+      var password = passwordId.value;
+      passwordId.addEventListener("input", function () {
+        password = password.value;
+      });
+
+      var CategoryInput = document.getElementById("Category");
+      var Category = CategoryInput.value;
+      CategoryInput.addEventListener("input", function () {
+        Category = contentInput.value;
+      });
+
+      var nameInput = document.getElementById("file-name");
+      var name = nameInput.value;
+      nameInput.addEventListener("input", function () {
+        name = nameInput.value;
+      });
+
+      var extension = ".rst"
+
+      var sourceFolder = "source/sphinx/"
+
+      if (Category === "") {
+        var filepath = sourceFolder + name + extension;
+
+      } else {
+        var filepath = sourceFolder + Category + "/" + name + extension;
+      }
+
+      var DirectionsInput = document.getElementById("Directions");
+      var Directions = DirectionsInput.value;
+      DirectionsInput.addEventListener("input", function () {
+        Directions = DirectionsInput.value;
+      });
+
+      var PrepInput = document.getElementById("Prep");
+      var Prep = PrepInput.value;
+      PrepInput.addEventListener("input", function () {
+        Prep = PrepInput.value;
+      });
+
+      var IngredientsInput = document.getElementById("Ingredients");
+      var Ingredients = IngredientsInput.value;
+      IngredientsInput.addEventListener("input", function () {
+        Ingredients = IngredientsInput.value;
+      });
+
+      var nameFormat = "###########################################################"
+      var categoryFormat = "========================================================="
+      var spacerFormat = " "
+
+      var content = name + '\n'
+        + nameFormat + '\n'
+        + spacerFormat + '\n'
+        + 'Ingredients\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Ingredients + '\n'
+        + spacerFormat + '\n'
+        + 'Prep\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Prep + '\n'
+        + spacerFormat + '\n'
+        + 'Directions\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Directions + '\n'
+        + spacerFormat;
+
+      var commitMessage = "Automated recipe build'"
+
+      var destinationName = "BlakeDarrow/DarrowRecipes"
+
+      let workflowID = 44429210;
+
+      console.log(filepath.replace(/\s/g, ""))
+      console.log(destinationName)
+
+      commitFile(filepath.replace(/\s/g, ""), content, commitMessage, destinationName, password, workflowID)
+
+      // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
+
+    });
+
+  </script>
+  <script>
+    function loadRecipe(Name, Ingredients, Prep, Directions, Category){
+      if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
+        alert("Login to edit this recipe.");
+      } else {
+        document.getElementById("file-name").value = Name;
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Category").value = Category;
+      }
+    }
+  </script>
+</head>
+
+<body class="wy-body-for-nav">
+  <div class="wy-grid-for-nav">
+    <nav data-toggle="wy-nav-shift" class="wy-nav-side">
+      <div class="wy-side-scroll">
+        <div class="wy-side-nav-search">
+          <a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"> DarrowRecipes
+          </a>
+          <div role="search">
+            <form id="rtd-search-form" class="wy-form" action="search" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+
+          <script type="module">
+            import { getRecipes } from './_static/js/main.js';
+            getRecipes()
+          </script>
+
+        </div>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+            <ul class="current" id="file-list-container">
+              <li class="toctree-l1"><a class="reference internal" onclick="">Retrieving recipes...</a></li>
+
+            </ul>
+        </div>
+      </div>
+    </nav>
+
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="https://blakedarrow.github.io/DarrowRecipes/">DarrowRecipes</a>
+      </nav>
+      <div class="wy-nav-content">
+        <div class="rst-content">
+          <div role="navigation" aria-label="Page navigation">
+            <ul class="wy-breadcrumbs">
+              <li><a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"></a> &raquo;</li>
+              <li>Submit Recipe</li>
+              <li class="wy-breadcrumbs-aside">
+              </li>
+            </ul>
+            <hr />
+          </div>
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div itemprop="articleBody">
+              <section id="publish">
+                <h1>Submit Recipe</h1>
+                <div class="darrow" id="form-group" style="display:block">
+                  <div id="authentication-form" style="display:block">
+                    <form action="#">
+                      <label for="password">Password:</label>
+                      <input type="password" id="password" name="password" autocomplete="on" value="">
+                      <button type="button" id="login">Login</button>
+                      <p id="error-message" style="display:none"></p>
+                    </form>
+                  </div>
+                </div>
+                <div class="darrow" id="submit-form" style="display:none">
+                  <form action="#">
+                    <label for="file-name">Recipe Name:</label>
+                    <input type="text" id="file-name" name="file-name" value=""
+                      placeholder="Cream Cheese Chicken..."><br><br>
+                    <label for="Ingredients">Ingredients:</label>
+                    <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
+                    <label for="Prep">Prep:</label>
+                    <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
+                    <label for="Directions">Directions:</label>
+                    <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
+                    <label for="Category">Category:</label>
+                    <input type="text" id="Category" name="Category" value="" placeholder="None"><br><br>
+                    <button type="button" id="commit-file">Submit / Edit Recipe</button>
+                    <div class="progress-bar" style="display: none; " id="progress">
+                      <div class="progress" style="width: 0%; display: none;" id="progress-fill"></div>
+                  </form>
+                </div>
+                <br><br>
+                <p>You must use bullet points if you are creating a multi-line list.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <hr>
+      <p>© Copyright 2023, Blake Darrow.</p>
+  </div>
+  </div>
+  </section>
+  </div>
+  <script>
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+    });
+  </script>
+</body>
+
+</html>
