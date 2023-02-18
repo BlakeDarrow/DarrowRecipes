@@ -49,8 +49,13 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
+
+    - name: Set deployment output
+      id: deployment
+      run: echo "::set-output name=page_url::https://${{ github.repository }}/index.html"
         
   deploy:
+    needs: build
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
@@ -70,3 +75,4 @@ jobs:
         uses: actions/deploy-pages@v1
 
         
+
