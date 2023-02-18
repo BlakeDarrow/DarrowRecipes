@@ -49,6 +49,10 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
+    - uses: actions/upload-artifact@master
+      with:
+        name: page
+        path: .
 
     - name: Set deployment output
       id: deployment
@@ -61,15 +65,14 @@ jobs:
       url: ${{ steps.deployment.outputs.page_url }}
     runs-on: ubuntu-latest
     steps:
+      - uses: actions/download-artifact@master
+        with:
+          name: page
+          path: .
       - name: Checkout
         uses: actions/checkout@v3
       - name: Setup Pages
         uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload entire repository
-          path: '.'
       - name: Deploy to GitHub Pages
         id: deployment
         uses: actions/deploy-pages@v1
