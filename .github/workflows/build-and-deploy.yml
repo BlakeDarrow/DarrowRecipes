@@ -1,11 +1,8 @@
-name: build Sphinx
+name: build and deploy
 on: 
   push:
     branches: [ main ]
-    
-permissions:
-  contents: write
-
+  
 jobs:
   build:
     if: contains(github.event.head_commit.message, 'build')
@@ -46,10 +43,27 @@ jobs:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
-        
-    - name: Deploy Github Pages
-      uses: JamesIves/github-pages-deploy-action@v4
-      with:
-        folder: . # The folder the action should deploy
+ 
+ # Deploy job
+  deploy:
+    # Add a dependency to the build job
+    needs: build
+
+    # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+
+    # Deploy to the github-pages environment
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+
+    # Specify runner + deployment step
+    runs-on: ubuntu-latest
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v1
         
         
