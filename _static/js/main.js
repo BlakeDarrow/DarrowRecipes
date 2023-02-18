@@ -154,11 +154,16 @@ export async function commitFile(
   password,
   workflowID
 ) {
-  monitorWorkflowStatusChanges(destinationName, password, workflowID);
+
+  var progress = document.getElementById("progress");
+  var progressBar = document.getElementById("progress-fill");
+  progressBar.style.width = "0%";
+  progressBar.style.display = "none";
+  progress.style.display = "none";
 
   const defaultBranch = "main";
   const newBranch = `temp-${Date.now()}`;
-
+  
   const octokit = new Octokit({
     auth: password,
   });
@@ -264,73 +269,8 @@ export async function commitFile(
   });
   console.log("Deleted new branch");
 
-  var progress = document.getElementById("progress");
-  var progressBar = document.getElementById("progress-fill");
-
-  var progressValue = 0;
-  progressBar.style.width = progressValue + "%";
-  progressBar.style.display = "block";
-  progress.style.display = "block";
-}
-
-export async function monitorWorkflowStatusChanges(
-  destinationName,
-  password,
-  workflowId
-) {
-  var progress = document.getElementById("progress");
-  var progressBar = document.getElementById("progress-fill");
-
-  var progressValue = 0;
-  progressBar.style.width = progressValue + "%";
-  progressBar.style.display = "block";
-  progress.style.display = "block";
-
-  var octokit = new Octokit({ auth: password });
-
-  var first_run = await octokit.request(
-    "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
-    {
-      owner: destinationName.split("/")[0],
-      repo: destinationName.split("/")[1],
-      workflow_id: workflowId,
-      per_page: 1,
-    }
-  );
-
-  var lastID = first_run.data.workflow_runs[0].id;
-  console.log("Begin waiting for workflow completion...");
-  console.log(`First ID ${lastID}`);
-
-  while (true) {
-    var octokit = new Octokit({ auth: password });
-
-    var runs = await octokit.request(
-      "GET /repos/{owner}/{repo}/actions/workflows/{workflow_id}/runs",
-      {
-        owner: destinationName.split("/")[0],
-        repo: destinationName.split("/")[1],
-        workflow_id: workflowId,
-        per_page: 1,
-      }
-    );
-
-    var currentID = runs.data.workflow_runs[0].id;
-
-    progressValue += 1;
-    progressBar.style.width = progressValue + "%";
-    // console.log(lastID)
-    // console.log(currentID)
-
-    if (currentID !== lastID) {
-      console.log(`Workflow ID ${workflowId} changed to ${currentID}`);
-      lastID = currentID;
-      progressBar.style.width = "100%";
-      break;
-    }
-
-    await new Promise((resolve) => setTimeout(resolve, 1000));
-  }
+  await monitorWorkflowStatus(octokit, 'BlakeDarrow', 'DarrowRecipes');
+  
 }
 
 async function getAllWorkflowRuns(destinationName, password, workflowId) {
@@ -363,4 +303,66 @@ export async function triggerDeleteWorkflowRuns(destinationName, password, workf
   const runIds = await getAllWorkflowRuns(destinationName, password, workflowId);
   await deleteWorkflowRuns(runIds, destinationName, password, workflowId);
   console.log(`Deleted ${runIds.length} workflow runs`);
+}
+
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function monitorWorkflowStatus(octokit, owner, repo) {
+  try {
+      await sleep(5000);
+
+      var workflowRuns = await octokit.actions.listWorkflowRuns({
+        owner: owner,
+        repo: repo,
+        workflow_id: "build-and-deploy.yml",
+        per_page: 1
+      });
+
+      const id = workflowRuns.data.workflow_runs[0].check_suite_id
+      console.log(id)
+      console.log(workflowRuns)
+    
+      var progress = document.getElementById("progress");
+      var progressBar = document.getElementById("progress-fill");
+      var progressValue = 0;
+      progressBar.style.width = progressValue + "%";
+      progressBar.style.display = "block";
+      progress.style.display = "block";
+
+      const timer = setInterval(async () => {
+        try {
+          const { data: latestRun } = await octokit.request('GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs', {
+            owner: owner,
+            repo: repo,
+            check_run_id: id
+          })
+
+
+          const buildStatus = latestRun.check_runs[0].status
+
+          if (buildStatus === "completed") {
+            const deployStatus = latestRun.check_runs[1].status
+            console.log(`Build status: ${buildStatus}, Deploy status: ${deployStatus}`);
+
+            progressBar.style.width = "100%";
+            clearInterval(timer)
+            
+          } else {
+            console.log(`Build status: ${buildStatus}, Deploy status: Not Started`);
+
+            progressValue += 5
+            progressBar.style.width = progressValue + "%";
+
+          }
+
+      } catch (error) {
+        console.error(error);
+      }
+    }, 5000);
+
+  } catch (error) {
+    console.error(error);
+  }
 }
