@@ -90,7 +90,11 @@ async function parseRecipe(recipeString) {
   prep.shift();
   directions.shift();
 
-  const recipe = [ingredients.join("&bladar&"), prep.join("&bladar&"), directions.join("&bladar&")];
+  const formattedIngredients = ingredients.join("&bladar&").replace("'","$apo$").replace(";","^col^").replace('"', "@inch@");
+  const formattedPrep = prep.join("&bladar&").replace("'","$apo$").replace(";","^col^").replace('"', "@inch@");
+  const formattedDirections = directions.join("&bladar&").replace("'", "$apo$").replace(";", "^col^").replace('"', "@inch@");
+  
+  const recipe = [formattedIngredients, formattedPrep, formattedDirections];
   return recipe;
 }
 
@@ -331,21 +335,18 @@ export async function monitorWorkflowStatusChanges(
 
 async function getAllWorkflowRuns(destinationName, password, workflowId) {
   const octokit = new Octokit({ auth: password });
+  console.log(octokit)
   const response = await octokit.actions.listWorkflowRunsForRepo({
     owner: destinationName.split("/")[0],
     repo: destinationName.split("/")[1],
     workflow_id: workflowId,
   });
-  const runIds = response.data.workflow_runs.map((run) => run.id);
+  console.log(response.data)
+  const runIds = await response.data.workflow_runs.map((run) => run.id);
   return runIds;
 }
 
-async function deleteWorkflowRuns(
-  runIds,
-  destinationName,
-  password,
-  workflowId
-) {
+async function deleteWorkflowRuns(runIds, destinationName, password, workflowId) {
   const octokit = new Octokit({ auth: password });
   for (const id of runIds) {
     await octokit.actions.deleteWorkflowRun({
@@ -353,19 +354,13 @@ async function deleteWorkflowRuns(
       repo: destinationName.split("/")[1],
       run_id: id,
     });
+    console.log(`Deleted ${id} run`)
   }
 }
 
-export async function triggerDeleteWorkflowRuns(
-  destinationName,
-  password,
-  workflowId
-) {
-  const runIds = await getAllWorkflowRuns(
-    destinationName,
-    password,
-    workflowId
-  );
+export async function triggerDeleteWorkflowRuns(destinationName, password, workflowId) {
+  console.log("Attempting to delete workflow runs")
+  const runIds = await getAllWorkflowRuns(destinationName, password, workflowId);
   await deleteWorkflowRuns(runIds, destinationName, password, workflowId);
   console.log(`Deleted ${runIds.length} workflow runs`);
 }
