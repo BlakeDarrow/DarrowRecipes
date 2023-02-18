@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit &mdash; DarrowRecipes</title>
+  <title>Submit Recipe</title>
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -110,24 +110,35 @@
         + Directions + '\n'
         + spacerFormat;
 
-      var commitMessage = "Automated recipe submission and build'"
+      var commitMessage = "Automated recipe build"
 
       var destinationName = "BlakeDarrow/DarrowRecipes"
 
       let workflowID = 44429210;
 
-      console.log(filepath)
+      console.log(filepath.replace(/\s/g, ""))
       console.log(destinationName)
-      console.log(content)
 
-      commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
+      commitFile(filepath.replace(/\s/g, ""), content, commitMessage, destinationName, password, workflowID)
 
       // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
 
     });
 
   </script>
-
+  <script>
+    function loadRecipe(Name, Ingredients, Prep, Directions, Category){
+      if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
+        alert("Login to edit this recipe.");
+      } else {
+        document.getElementById("file-name").value = Name;
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g,'');;
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g,'');;
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g,'');
+        document.getElementById("Category").value = Category;
+      }
+    }
+  </script>
 </head>
 
 <body class="wy-body-for-nav">
@@ -135,7 +146,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
-          <a href="#" class="icon icon-home"> DarrowRecipes
+          <a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"> DarrowRecipes
           </a>
           <div role="search">
             <form id="rtd-search-form" class="wy-form" action="search" method="get">
@@ -144,17 +155,33 @@
               <input type="hidden" name="area" value="default" />
             </form>
           </div>
+
+          <script type="module">
+            import { getRecipes } from './_static/js/main.js';
+            getRecipes()
+          </script>
+
+        </div>
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+            <ul class="current" id="file-list-container">
+              <li class="toctree-l1"><a class="reference internal" onclick="">Retrieving recipes...</a></li>
+
+            </ul>
+        </div>
+      </div>
+    </nav>
+
     </nav>
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" aria-label="Mobile navigation menu">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-        <a href="#">DarrowRecipes</a>
+        <a href="https://blakedarrow.github.io/DarrowRecipes/">DarrowRecipes</a>
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
             <ul class="wy-breadcrumbs">
-              <li><a href="#" class="icon icon-home"></a> &raquo;</li>
+              <li><a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"></a> &raquo;</li>
               <li>Submit Recipe</li>
               <li class="wy-breadcrumbs-aside">
               </li>
@@ -188,14 +215,13 @@
                     <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
                     <label for="Category">Category:</label>
                     <input type="text" id="Category" name="Category" value="" placeholder="None"><br><br>
-                    <button type="button" id="commit-file">Submit Recipe!</button>
+                    <button type="button" id="commit-file">Submit / Edit Recipe</button>
                     <div class="progress-bar" style="display: none; " id="progress">
                       <div class="progress" style="width: 0%; display: none;" id="progress-fill"></div>
                   </form>
                 </div>
                 <br><br>
-                <p>1. You must use bullet points if you are creating a multi-line list.</p>
-                <p>2. You cannot have spaces in the recipe name.</p>
+                <p>You must use bullet points if you are creating a multi-line list.</p>
             </div>
           </div>
         </div>
@@ -212,4 +238,5 @@
     });
   </script>
 </body>
+
 </html>
