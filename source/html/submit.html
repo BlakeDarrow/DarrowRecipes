@@ -110,7 +110,7 @@
         + Directions + '\n'
         + spacerFormat;
 
-      var commitMessage = "Automated recipe build"
+      var commitMessage = "Automated recipe build'"
 
       var destinationName = "BlakeDarrow/DarrowRecipes"
 
@@ -132,9 +132,9 @@
         alert("Login to edit this recipe.");
       } else {
         document.getElementById("file-name").value = Name;
-        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g,'');;
-        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g,'');;
-        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g,'');
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
         document.getElementById("Category").value = Category;
       }
     }
