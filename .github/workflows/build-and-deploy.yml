@@ -23,13 +23,13 @@ jobs:
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
       
-    - name: Build rst with Sphinx
+    - name: Convert rst to html with Sphinx
       uses: sphinx-notes/pages@v2
       with:
         documentation_path: ./source/sphinx
         requirements_path: ./source/sphinx/requirements.txt
         
-    - name: Push rst
+    - name: Push new html
       uses: ad-m/github-push-action@master
       with:
         github_token: ${{ secrets.CREATE_SITE_SECRET }}
@@ -40,7 +40,7 @@ jobs:
     - name: git-checkout
       uses: actions/checkout@v3
 
-    - name: Push html foler
+    - name: Push existing html
       uses: s0/git-publish-subdir-action@develop
       env:
         REPO: self
@@ -63,16 +63,13 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v3
-      - name: Setup Pages
-        uses: actions/configure-pages@v3
-      - name: Upload artifact
-        uses: actions/upload-pages-artifact@v1
-        with:
-          # Upload entire repository
-          path: '.'
+        
       - name: Deploy to GitHub Pages
-        id: deployment
-        uses: actions/deploy-pages@v1
+        uses: peaceiris/actions-gh-pages@v3
+        with:
+          github_token: ${{ secrets.CREATE_SITE_SECRET }}
+          publish_dir: .
+          publish_branch: gh-pages
 
         
 
