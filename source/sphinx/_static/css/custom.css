@@ -19,10 +19,20 @@
     box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
   }
 
+  .darrow .progress-bar {
+    padding-top: 10px;
+    height:25px;
+  }
+
+  .darrow .progress {
+    background-color: green;
+    border-radius: 5px;
+    height:25px;
+  }
+
   .darrow form label {
     color: #404040;
   }
-  
   
   .darrow form input,
   .darrow input[type="password"] {
