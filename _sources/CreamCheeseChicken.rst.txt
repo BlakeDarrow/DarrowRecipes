@@ -18,5 +18,5 @@ None
 Directions
 =========================================================
  
-Put all in crockpot and cook for approximately four hours on low
+Put all in crockpot and cook for approximately four hours on low.
  
