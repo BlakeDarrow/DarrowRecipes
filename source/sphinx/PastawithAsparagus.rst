@@ -10,7 +10,7 @@ Ingredients
 - 1/4 cup olive oil
 - 1 tsp butter
 - 1lb fresh asparagus
-- salt
+- Salt
 - pepper
 - 1/4 cup shredded Parmesan
 - 1/2 lb elbow pasta
