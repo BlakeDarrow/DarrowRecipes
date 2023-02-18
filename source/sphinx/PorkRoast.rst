@@ -6,10 +6,10 @@ Ingredients
  
 - Pork loin roast
 - Granulated garlic
-- rosemary
-- thyme
-- salt and peper
-- olive oil
+- Rosemary
+- Thyme
+- Salt and pepper
+- Olive oil
  
 Prep
 =========================================================
