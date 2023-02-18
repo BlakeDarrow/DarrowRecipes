@@ -1,22 +1,23 @@
-Pork Roast 
-########################################################### 
+Pork Roast
+###########################################################
  
-Ingredients 
-========================================================= 
+Ingredients
+=========================================================
  
 - Pork loin roast
-- granulated garlic
+- Granulated garlic
 - rosemary
 - thyme
 - salt and peper
-- olive oil 
+- olive oil
  
-Prep 
-========================================================= 
+Prep
+=========================================================
  
-Preheat oven to 450 
+Preheat oven to 450
  
-Directions 
-========================================================= 
+Directions
+=========================================================
  
-Coat pork loins in oil and rub spices on the loin.  Bake for approximately 40 minutes. 
+Coat pork loins in oil and rub spices on the loin. Bake for approximately 40 minutes.
+ 
