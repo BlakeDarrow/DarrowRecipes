@@ -1,21 +1,22 @@
-Cream Cheese Chicken 
-########################################################### 
+Cream Cheese Chicken
+###########################################################
  
-Ingredients 
-========================================================= 
+Ingredients
+=========================================================
  
 - 3 Chicken Breasts
-- 1 block of Cream Cheese
+- 1 Block of Cream Cheese
 - 1 Package of dry ranch seasoning
-- 1 cup of heavy whipping cream
-- Optional dry jalapenos for kick 
+- 1 Cup of heavy whipping cream
+- Optional dry jalapenos for kick
  
-Prep 
-========================================================= 
+Prep
+=========================================================
  
-None 
+None
  
-Directions 
-========================================================= 
+Directions
+=========================================================
  
-Put all in crockpot and cook for approximately four hours on low 
+Put all in crockpot and cook for approximately four hours on low
+ 
