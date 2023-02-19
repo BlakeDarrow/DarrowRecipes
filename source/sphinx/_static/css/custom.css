@@ -107,3 +107,7 @@ html[data-theme='dark'] .darrow form textarea{
   background-color: #fff;
   color: #000
 }
+
+html[data-theme='dark'] .darrow input{
+  background-color: #fff;
+}

@@ -28,6 +28,9 @@
     import { authenticateUser } from './_static/js/main.js';
     import { commitFile } from './_static/js/main.js';
     import { triggerDeleteWorkflowRuns } from './_static/js/main.js';
+    import { checkCookie } from './_static/js/main.js';
+
+    checkCookie("password")
 
     document.getElementById("login").addEventListener("click", async () => {
       var passwordId = document.getElementById("password");
@@ -68,6 +71,8 @@
         var filepath = sourceFolder + Category + "/" + name + extension;
       }
       */
+
+      // Need to set/get category differently. Perhaps just a field for tags.
 
       var filepath = sourceFolder + name + extension;
 
@@ -131,14 +136,14 @@
 
   </script>
   <script>
-    function loadRecipe(Name, Ingredients, Prep, Directions, Category){
+    function loadRecipe(Name, Ingredients, Prep, Directions, Category) {
       if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
         alert("Login to edit this recipe.");
       } else {
         document.getElementById("file-name").value = Name;
-        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
-        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
-        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g,'').replace("$apo$", "'").replace("^col^",";").replace('@inch@', '"');
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
         document.getElementById("Category").value = Category;
       }
     }
@@ -167,10 +172,10 @@
 
         </div>
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-            <ul class="current" id="file-list-container">
-              <li class="toctree-l1"><a class="reference internal" onclick="">Retrieving recipes...</a></li>
+          <ul class="current" id="file-list-container">
+            <li class="toctree-l1"><a class="reference internal" onclick="">Retrieving recipes...</a></li>
 
-            </ul>
+          </ul>
         </div>
       </div>
     </nav>
@@ -180,6 +185,7 @@
       <nav class="wy-nav-top" aria-label="Mobile navigation menu">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
         <a href="https://blakedarrow.github.io/DarrowRecipes/">DarrowRecipes</a>
+
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content">
@@ -202,8 +208,13 @@
                       <label for="password">Password:</label>
                       <input type="password" id="password" name="password" autocomplete="on" value="">
                       <button type="button" id="login">Login</button>
-                      <p id="error-message" style="display:none"></p>
                     </form>
+                    <br>
+                    <input type="checkbox" id="remember-me" checked> Remember Me
+                    <br>
+                    <center>
+                      <p id="error-message" style="display:none"></p>
+                    </center>
                   </div>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">

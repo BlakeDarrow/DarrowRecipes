@@ -131,6 +131,15 @@ export async function authenticateUser(password) {
       auth: password,
     });
     const response = await octokit.users.getAuthenticated();
+
+    const rememberMe = document.getElementById("remember-me");
+
+    if (rememberMe.checked) {
+      setCookie("password", password, 365)
+    } else {
+      setCookie("password", "", 365)
+    }
+    
     document.getElementById("submit-form").style.display = "block";
     document.getElementById("authentication-form").style.display = "none";
   } catch (error) {
@@ -364,5 +373,38 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
 
   } catch (error) {
     console.error(error);
+  }
+}
+
+export function setCookie(cname, cvalue, exdays) {
+  const d = new Date();
+  d.setTime(d.getTime() + (exdays*24*60*60*1000));
+  let expires = "expires="+ d.toUTCString();
+  document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
+}
+
+export function getCookie(cname) {
+  let name = cname + "=";
+  let decodedCookie = decodeURIComponent(document.cookie);
+  let ca = decodedCookie.split(';');
+  for(let i = 0; i <ca.length; i++) {
+    let c = ca[i];
+    while (c.charAt(0) == ' ') {
+      c = c.substring(1);
+    }
+    if (c.indexOf(name) == 0) {
+      return c.substring(name.length, c.length);
+    }
+  }
+  return "";
+}
+
+export function checkCookie() {
+  let password = getCookie("password");
+  if (password != "") {
+    var passwordId = document.getElementById("password");
+    passwordId.value = password;
+  } else {
+    console.log("No cookies found, not logged in")
   }
 }
