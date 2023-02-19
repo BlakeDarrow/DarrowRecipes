@@ -61,12 +61,15 @@
 
       var sourceFolder = "source/sphinx/"
 
-      if (Category === "") {
+      /* if (Category === "") {
         var filepath = sourceFolder + name + extension;
 
       } else {
         var filepath = sourceFolder + Category + "/" + name + extension;
       }
+      */
+
+      var filepath = sourceFolder + name + extension;
 
       var DirectionsInput = document.getElementById("Directions");
       var Directions = DirectionsInput.value;
@@ -118,7 +121,9 @@
       console.log(filepath.replace(/\s/g, ""))
       console.log(destinationName)
 
-      commitFile(filepath.replace(/\s/g, ""), content, commitMessage, destinationName, password, workflowID)
+      var filepath = filepath.replace(/\s/g, "")
+
+      commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
 
       // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
 
