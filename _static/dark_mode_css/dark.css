@@ -7,6 +7,26 @@ html[data-theme='dark'] body {
   color: #bfbfbf;
 }
 
+html[data-theme='dark'] .darrow form{
+  background-color: #101010;
+}
+
+html[data-theme='dark'] .darrow form label{
+  color: #bfbfbf;
+}
+html[data-theme='dark'] .darrow form button{
+  background-color: #0b152d;
+  color: #fff
+}
+html[data-theme='dark'] .darrow form input{
+  background-color: #fff;
+  color: #000
+}
+html[data-theme='dark'] .darrow form textarea{
+  background-color: #fff;
+  color: #000
+}
+
 html[data-theme='dark'] .wy-nav-content-wrap {
   background-color: #101010;
 }
