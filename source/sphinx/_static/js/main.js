@@ -16,7 +16,7 @@ async function getFilesRecursively(octokit, owner, repo, path) {
     });
 
     const files = response.data.filter((item) => item.type === "file");
-    const subdirectories = response.data.filter((item) => item.type === "dir");
+    const subdirectories = response.data.filter((item) => item.type === "dir" && !item.path.includes('_static') && !item.path.includes('_templates'));
     const subdirectoryFiles = await Promise.all(
       subdirectories.map((subdir) =>
         getFilesRecursively(octokit, owner, repo, subdir.path)

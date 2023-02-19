@@ -15,6 +15,7 @@ You can also `submit <https://blakedarrow.github.io/DarrowRecipes/submit>`_ your
 .. toctree::
    :glob:
    :titlesonly:
-   :maxdepth: 1
+   :includehidden:
 
-   *
+   * 
+   

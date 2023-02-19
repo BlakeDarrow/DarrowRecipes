@@ -16,7 +16,7 @@ extensions = ["sphinx_rtd_dark_mode",
 
 html_theme_options = {
     'style_external_links': False,
-    'navigation_depth': -1,
+    'navigation_depth': 2,
     'sticky_navigation' : True,
 
     }
