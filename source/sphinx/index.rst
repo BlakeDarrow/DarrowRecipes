@@ -1,7 +1,6 @@
 
-How to use
+How to Use
 ##############
-
 
 Navigate to the left side panel. You will find a search bar, a submission page, and a list of recipes. 
 
@@ -9,16 +8,17 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 
 .. toctree::
    :caption: Submission
-   :glob:
+
    :titlesonly:
    :maxdepth: 3
 
-   /utility/submit
+   submit
 
 .. toctree::
    :caption: All Recipes
-   :glob:
    :titlesonly:
    :maxdepth: 3
+   :glob:
    
-   * 
+   recipes/*
+  
