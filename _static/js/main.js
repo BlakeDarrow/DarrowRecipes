@@ -3,7 +3,8 @@ import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 export function getRecipes() {
   getRstFileList().then((fileList) => {
     const listContainer = document.getElementById("file-list-container");
-    listContainer.innerHTML = fileList;
+    var header = '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
+    listContainer.innerHTML = header + fileList;
   });
 }
 
@@ -61,6 +62,7 @@ async function parseRecipe(recipeString) {
   const ingredients = [];
   const prep = [];
   const directions = [];
+  const tags = [];
 
   for (const line of lines) {
     if (line.trim() === "") {
@@ -71,6 +73,8 @@ async function parseRecipe(recipeString) {
       section = "prep";
     } else if (line.startsWith("Ingredients")) {
       section = "ingredients";
+    } else if (line.startsWith("------")) {
+      section = "tags";
     } else {
       switch (section) {
         case "directions":
@@ -82,6 +86,9 @@ async function parseRecipe(recipeString) {
         case "ingredients":
           ingredients.push(line.trim());
           break;
+        case "tags":
+          tags.push(line.trim());
+          break;
       }
     }
   }
@@ -90,11 +97,12 @@ async function parseRecipe(recipeString) {
   prep.shift();
   directions.shift();
 
-  const formattedIngredients = ingredients.join("&bladar&").replace("'","$apo$").replace(";","^col^").replace('"', "@inch@");
-  const formattedPrep = prep.join("&bladar&").replace("'","$apo$").replace(";","^col^").replace('"', "@inch@");
-  const formattedDirections = directions.join("&bladar&").replace("'", "$apo$").replace(";", "^col^").replace('"', "@inch@");
-  
-  const recipe = [formattedIngredients, formattedPrep, formattedDirections];
+  const formattedIngredients = ingredients.join("&bladar&").replaceAll("'","$apo$").replaceAll(";","^col^").replaceAll('"', "@inch@");
+  const formattedPrep = prep.join("&bladar&").replaceAll("'","$apo$").replaceAll(";","^col^").replaceAll('"', "@inch@");
+  const formattedDirections = directions.join("&bladar&").replaceAll("'", "$apo$").replaceAll(";", "^col^").replaceAll('"', "@inch@");
+  const formattedTags = tags.join(",").replaceAll("#", '');
+
+  const recipe = [formattedIngredients, formattedPrep, formattedDirections, formattedTags];
   return recipe;
 }
 
@@ -108,14 +116,16 @@ async function getRecipeContent(file) {
     });
     const content = atob(response.data.content);
     const name = content.split("\n")[0].trim();
+    if (name === "Submit or edit a recipe") {
+      return []
+    }
     const recipeDict = await parseRecipe(content);
-    const category = "";
     const recipe = [
       name,
       recipeDict[0],
       recipeDict[1],
       recipeDict[2],
-      category,
+      recipeDict[3],
     ];
     return recipe;
   } catch (error) {
@@ -169,6 +179,10 @@ export async function commitFile(
   progressBar.style.width = "0%";
   progressBar.style.display = "none";
   progress.style.display = "none";
+
+  var status = document.getElementById("status");
+  status.style.display = "block";
+  status.innerHTML = "Starting commit...";
 
   const defaultBranch = "main";
   const newBranch = `temp-${Date.now()}`;
@@ -278,6 +292,8 @@ export async function commitFile(
   });
   console.log("Deleted new branch");
 
+  status.innerHTML = "Recipe committed. Waiting to publish website...";
+
   await monitorWorkflowStatus(octokit, 'BlakeDarrow', 'DarrowRecipes');
   
 }
@@ -321,6 +337,9 @@ function sleep(ms) {
 async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
       await sleep(5000);
+    
+      var status = document.getElementById("status");
+      status.style.display = "none";
 
       var workflowRuns = await octokit.actions.listWorkflowRuns({
         owner: owner,
@@ -348,20 +367,22 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id
           })
 
-
-          const buildStatus = latestRun.check_runs[0].status
+          const buildStatus = latestRun.check_runs[0].status;
 
           if (buildStatus === "completed") {
-            const deployStatus = latestRun.check_runs[1].status
+            const deployStatus = latestRun.check_runs[1].status;
             console.log(`Build status: ${buildStatus}, Deploy status: ${deployStatus}`);
 
+            var status = document.getElementById("status");
+            status.style.display = "block";
+            status.innerHTML = "Website published. Refresh to see new changes!";
             progressBar.style.width = "100%";
-            clearInterval(timer)
-            
+            clearInterval(timer);
+
           } else {
             console.log(`Build status: ${buildStatus}, Deploy status: Not Started`);
 
-            progressValue += 5
+            progressValue += 5;
             progressBar.style.width = progressValue + "%";
 
           }
