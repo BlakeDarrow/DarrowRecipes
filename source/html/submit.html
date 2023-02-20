@@ -54,6 +54,8 @@
         Category = contentInput.value;
       });
 
+      var formattedCategory = Category.replaceAll(/\s/g, '').split(',').map(i => '#' + i).join(', ');
+
       var nameInput = document.getElementById("file-name");
       var name = nameInput.value;
       nameInput.addEventListener("input", function () {
@@ -63,16 +65,6 @@
       var extension = ".rst"
 
       var sourceFolder = "source/sphinx/"
-
-      /* if (Category === "") {
-        var filepath = sourceFolder + name + extension;
-
-      } else {
-        var filepath = sourceFolder + Category + "/" + name + extension;
-      }
-      */
-
-      // Need to set/get category differently. Perhaps just a field for tags.
 
       var filepath = sourceFolder + name + extension;
 
@@ -97,6 +89,7 @@
       var nameFormat = "###########################################################"
       var categoryFormat = "========================================================="
       var spacerFormat = " "
+      var tagSpacer = "------"
 
       var content = name + '\n'
         + nameFormat + '\n'
@@ -115,7 +108,10 @@
         + categoryFormat + '\n'
         + spacerFormat + '\n'
         + Directions + '\n'
-        + spacerFormat;
+        + spacerFormat + '\n'
+        + tagSpacer + '\n'
+        + spacerFormat + '\n'
+        + formattedCategory;
 
       var commitMessage = "Automated recipe build"
 
@@ -123,10 +119,7 @@
 
       let workflowID = 44429210;
 
-      console.log(filepath.replace(/\s/g, ""))
-      console.log(destinationName)
-
-      var filepath = filepath.replace(/\s/g, "")
+      var filepath = filepath.replaceAll(/\s/g, "")
 
       commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
 
@@ -141,9 +134,9 @@
         alert("Login to edit this recipe.");
       } else {
         document.getElementById("file-name").value = Name;
-        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
-        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
-        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replace(/ +(?= )/g, '').replace("$apo$", "'").replace("^col^", ";").replace('@inch@', '"');
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Category").value = Category;
       }
     }
@@ -228,16 +221,22 @@
                     <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
                     <label for="Directions">Directions:</label>
                     <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
-                    <label for="Category">Category:</label>
-                    <input type="text" id="Category" name="Category" value="" placeholder="None"><br><br>
+                    <label for="Category">Tags:</label>
+                    <input type="text" id="Category" name="Category" value="" placeholder=""><br><br>
                     <button type="button" id="commit-file">Submit / Edit Recipe</button>
-                    <div class="progress-bar" style="display: none; " id="progress">
+                    <div id="status" style="display: block;"></div>
+                    <div class="progress-bar" style="display: none;" id="progress">
                       <div class="progress" style="width: 0%; display: block;" id="progress-fill"></div>
                   </form>
                 </div>
                 <br><br>
-                <p>You must use bullet points if you are creating a multi-line list.</p>
-            </div>
+                
+                <ol>
+                <li>If you're making a multi-line list, remember to use bullet points.</li>
+                <li>Remember to separate tags with commas.</li>
+                <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the screen, select the desired recipe, and the editing form will automatically display the recipe content.</li>
+                </ol>
+              </div>
           </div>
         </div>
       </div>
