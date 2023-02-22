@@ -1,55 +1,37 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
-export function getRecipes() {
-  getRstFileList().then((fileList) => {
+export function getRecipes(octokit) {
+  getRstFileList(octokit).then((fileList) => {
     const listContainer = document.getElementById("file-list-container");
-    var header = '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
+    var header =
+      '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
     listContainer.innerHTML = header + fileList;
   });
 }
 
-async function getFilesRecursively(octokit, owner, repo, path) {
+async function getRstFileList(octokit) {
   try {
     const response = await octokit.rest.repos.getContent({
-      owner,
-      repo,
-      path,
+      owner: "BlakeDarrow",
+      repo: "DarrowRecipes",
+      path: "source/sphinx/recipes",
     });
 
-    const files = response.data.filter((item) => item.type === "file");
-    const subdirectories = response.data.filter((item) => item.type === "dir" && !item.path.includes('_static') && !item.path.includes('_templates'));
-    const subdirectoryFiles = await Promise.all(
-      subdirectories.map((subdir) =>
-        getFilesRecursively(octokit, owner, repo, subdir.path)
-      )
-    );
-
-    return files.concat(...subdirectoryFiles);
-  } catch (error) {
-    console.error(error);
-    return [];
-  }
-}
-
-async function getRstFileList() {
-  try {
-    const octokit = await new Octokit({});
-    const files = await getFilesRecursively(
-      octokit,
-      "BlakeDarrow",
-      "DarrowRecipes",
-      "source/sphinx/recipes"
-    );
-    const rstFiles = files.filter(
+    const files = response.data.filter(
       (item) => item.type === "file" && item.name.endsWith(".rst")
     );
-    const fileNames = await Promise.all(rstFiles.map(getRecipeContent));
+
+    const fileNames = await Promise.all(
+      files.map((file) => getRecipeContent(file, octokit))
+    );
+
     const fileList = `<ol>${fileNames
       .map(
         (recipeDict) =>
           `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}')">${recipeDict[0]}</a></li>`
       )
       .join("")}</ol>`;
+
     return fileList;
   } catch (error) {
     console.error(error);
@@ -97,18 +79,34 @@ async function parseRecipe(recipeString) {
   prep.shift();
   directions.shift();
 
-  const formattedIngredients = ingredients.join("&bladar&").replaceAll("'","$apo$").replaceAll(";","^col^").replaceAll('"', "@inch@");
-  const formattedPrep = prep.join("&bladar&").replaceAll("'","$apo$").replaceAll(";","^col^").replaceAll('"', "@inch@");
-  const formattedDirections = directions.join("&bladar&").replaceAll("'", "$apo$").replaceAll(";", "^col^").replaceAll('"', "@inch@");
-  const formattedTags = tags.join(",").replaceAll("#", '');
+  const formattedIngredients = ingredients
+    .join("&bladar&")
+    .replaceAll("'", "$apo$")
+    .replaceAll(";", "^col^")
+    .replaceAll('"', "@inch@");
+  const formattedPrep = prep
+    .join("&bladar&")
+    .replaceAll("'", "$apo$")
+    .replaceAll(";", "^col^")
+    .replaceAll('"', "@inch@");
+  const formattedDirections = directions
+    .join("&bladar&")
+    .replaceAll("'", "$apo$")
+    .replaceAll(";", "^col^")
+    .replaceAll('"', "@inch@");
+  const formattedTags = tags.join(",").replaceAll("#", "");
 
-  const recipe = [formattedIngredients, formattedPrep, formattedDirections, formattedTags];
+  const recipe = [
+    formattedIngredients,
+    formattedPrep,
+    formattedDirections,
+    formattedTags,
+  ];
   return recipe;
 }
 
-async function getRecipeContent(file) {
+async function getRecipeContent(file, octokit) {
   try {
-    const octokit = new Octokit({});
     const response = await octokit.rest.repos.getContent({
       owner: "BlakeDarrow",
       repo: "DarrowRecipes",
@@ -117,7 +115,7 @@ async function getRecipeContent(file) {
     const content = atob(response.data.content);
     const name = content.split("\n")[0].trim();
     if (name === "Submit or edit a recipe") {
-      return []
+      return [];
     }
     const recipeDict = await parseRecipe(content);
     const recipe = [
@@ -140,16 +138,19 @@ export async function authenticateUser(password) {
     const octokit = await new Octokit({
       auth: password,
     });
+
     const response = await octokit.users.getAuthenticated();
+
+    getRecipes(octokit);
 
     const rememberMe = document.getElementById("remember-me");
 
     if (rememberMe.checked) {
-      setCookie("password", password, 365)
+      setCookie("password", password, 365);
     } else {
-      setCookie("password", "", 365)
+      setCookie("password", "", 365);
     }
-    
+
     document.getElementById("submit-form").style.display = "block";
     document.getElementById("authentication-form").style.display = "none";
   } catch (error) {
@@ -173,7 +174,6 @@ export async function commitFile(
   password,
   workflowID
 ) {
-
   var progress = document.getElementById("progress");
   var progressBar = document.getElementById("progress-fill");
   progressBar.style.width = "0%";
@@ -186,7 +186,7 @@ export async function commitFile(
 
   const defaultBranch = "main";
   const newBranch = `temp-${Date.now()}`;
-  
+
   const octokit = new Octokit({
     auth: password,
   });
@@ -292,26 +292,30 @@ export async function commitFile(
   });
   console.log("Deleted new branch");
 
-  status.innerHTML = "Recipe committed. Waiting to publish website...";
+  status.innerHTML = "Recipe committed. Publishing website...";
 
-  await monitorWorkflowStatus(octokit, 'BlakeDarrow', 'DarrowRecipes');
-  
+  await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
 async function getAllWorkflowRuns(destinationName, password, workflowId) {
   const octokit = new Octokit({ auth: password });
-  console.log(octokit)
+  console.log(octokit);
   const response = await octokit.actions.listWorkflowRunsForRepo({
     owner: destinationName.split("/")[0],
     repo: destinationName.split("/")[1],
     workflow_id: workflowId,
   });
-  console.log(response.data)
+  console.log(response.data);
   const runIds = await response.data.workflow_runs.map((run) => run.id);
   return runIds;
 }
 
-async function deleteWorkflowRuns(runIds, destinationName, password, workflowId) {
+async function deleteWorkflowRuns(
+  runIds,
+  destinationName,
+  password,
+  workflowId
+) {
   const octokit = new Octokit({ auth: password });
   for (const id of runIds) {
     await octokit.actions.deleteWorkflowRun({
@@ -319,79 +323,88 @@ async function deleteWorkflowRuns(runIds, destinationName, password, workflowId)
       repo: destinationName.split("/")[1],
       run_id: id,
     });
-    console.log(`Deleted ${id} run`)
+    console.log(`Deleted ${id} run`);
   }
 }
 
-export async function triggerDeleteWorkflowRuns(destinationName, password, workflowId) {
-  console.log("Attempting to delete workflow runs")
-  const runIds = await getAllWorkflowRuns(destinationName, password, workflowId);
+export async function triggerDeleteWorkflowRuns(
+  destinationName,
+  password,
+  workflowId
+) {
+  console.log("Attempting to delete workflow runs");
+  const runIds = await getAllWorkflowRuns(
+    destinationName,
+    password,
+    workflowId
+  );
   await deleteWorkflowRuns(runIds, destinationName, password, workflowId);
   console.log(`Deleted ${runIds.length} workflow runs`);
 }
 
 function sleep(ms) {
-  return new Promise(resolve => setTimeout(resolve, ms));
+  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
-      await sleep(5000);
-    
-      var status = document.getElementById("status");
-      status.style.display = "none";
+    await sleep(5000);
 
-      var workflowRuns = await octokit.actions.listWorkflowRuns({
-        owner: owner,
-        repo: repo,
-        workflow_id: "build-and-deploy.yml",
-        per_page: 1
-      });
+    var workflowRuns = await octokit.actions.listWorkflowRuns({
+      owner: owner,
+      repo: repo,
+      workflow_id: "build-and-deploy.yml",
+      per_page: 1,
+    });
 
-      const id = workflowRuns.data.workflow_runs[0].check_suite_id
-      console.log(id)
-      console.log(workflowRuns)
-    
-      var progress = document.getElementById("progress");
-      var progressBar = document.getElementById("progress-fill");
-      var progressValue = 0;
-      progressBar.style.width = progressValue + "%";
-      progressBar.style.display = "block";
-      progress.style.display = "block";
+    const id = workflowRuns.data.workflow_runs[0].check_suite_id;
+    console.log(id);
+    console.log(workflowRuns);
 
-      const timer = setInterval(async () => {
-        try {
-          const { data: latestRun } = await octokit.request('GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs', {
+    var progress = document.getElementById("progress");
+    var progressBar = document.getElementById("progress-fill");
+    var progressValue = 1;
+    progressBar.style.width = progressValue + "%";
+    progressBar.style.display = "block";
+    progress.style.display = "block";
+
+    const timer = setInterval(async () => {
+      try {
+        const { data: latestRun } = await octokit.request(
+          "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
+          {
             owner: owner,
             repo: repo,
-            check_run_id: id
-          })
-
-          const buildStatus = latestRun.check_runs[0].status;
-
-          if (buildStatus === "completed") {
-            const deployStatus = latestRun.check_runs[1].status;
-            console.log(`Build status: ${buildStatus}, Deploy status: ${deployStatus}`);
-
-            var status = document.getElementById("status");
-            status.style.display = "block";
-            status.innerHTML = "Website published. Refresh to see new changes!";
-            progressBar.style.width = "100%";
-            clearInterval(timer);
-
-          } else {
-            console.log(`Build status: ${buildStatus}, Deploy status: Not Started`);
-
-            progressValue += 5;
-            progressBar.style.width = progressValue + "%";
-
+            check_run_id: id,
           }
+        );
 
+        const buildStatus = latestRun.check_runs[0].status;
+
+        if (buildStatus === "completed") {
+          const deployStatus = latestRun.check_runs[1].status;
+          console.log(
+            `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
+
+            );
+
+          var status = document.getElementById("status");
+          status.style.display = "block";
+          status.innerHTML = "Website published. Refresh to see new changes!";
+          progressBar.style.width = "100%";
+          clearInterval(timer);
+        } else {
+          console.log(
+            `Build status: ${buildStatus}, Deploy status: Not Started`
+          );
+
+          progressValue += 5;
+          progressBar.style.width = progressValue + "%";
+        }
       } catch (error) {
         console.error(error);
       }
     }, 5000);
-
   } catch (error) {
     console.error(error);
   }
@@ -399,18 +412,18 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
 
 export function setCookie(cname, cvalue, exdays) {
   const d = new Date();
-  d.setTime(d.getTime() + (exdays*24*60*60*1000));
-  let expires = "expires="+ d.toUTCString();
+  d.setTime(d.getTime() + exdays * 24 * 60 * 60 * 1000);
+  let expires = "expires=" + d.toUTCString();
   document.cookie = cname + "=" + cvalue + ";" + expires + ";path=/";
 }
 
 export function getCookie(cname) {
   let name = cname + "=";
   let decodedCookie = decodeURIComponent(document.cookie);
-  let ca = decodedCookie.split(';');
-  for(let i = 0; i <ca.length; i++) {
+  let ca = decodedCookie.split(";");
+  for (let i = 0; i < ca.length; i++) {
     let c = ca[i];
-    while (c.charAt(0) == ' ') {
+    while (c.charAt(0) == " ") {
       c = c.substring(1);
     }
     if (c.indexOf(name) == 0) {
@@ -426,6 +439,6 @@ export function checkCookie() {
     var passwordId = document.getElementById("password");
     passwordId.value = password;
   } else {
-    console.log("No cookies found, not logged in")
+    console.log("No cookies found, not logged in");
   }
 }
