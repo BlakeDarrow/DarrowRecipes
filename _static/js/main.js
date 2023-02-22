@@ -299,13 +299,11 @@ export async function commitFile(
 
 async function getAllWorkflowRuns(destinationName, password, workflowId) {
   const octokit = new Octokit({ auth: password });
-  console.log(octokit);
   const response = await octokit.actions.listWorkflowRunsForRepo({
     owner: destinationName.split("/")[0],
     repo: destinationName.split("/")[1],
     workflow_id: workflowId,
   });
-  console.log(response.data);
   const runIds = await response.data.workflow_runs.map((run) => run.id);
   return runIds;
 }
