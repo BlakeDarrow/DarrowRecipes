@@ -1,8 +1,8 @@
-Chocolate Pudding 
-########################################################### 
+Chocolate Pudding
+###########################################################
  
-Ingredients 
-========================================================= 
+Ingredients
+=========================================================
  
 Single:
 
@@ -22,16 +22,20 @@ Double:
 - 10 tbl cocoa
 - 6 cup milk
 - 8 tbl butter
-- 3 tsp (1tbl) vanilla 
+- 3 tsp (1tbl) vanilla
  
-Prep 
-========================================================= 
+Prep
+=========================================================
  
-None 
+None
  
-Directions 
-========================================================= 
+Directions
+=========================================================
  
 Mix dry ingredients then add milk. Bring to a boil and remove. Add butter and vanilla. Stir.
 
-It is important to stir constantly and break up dry clusters. 
+It is important to stir constantly and break up dry clusters.
+ 
+------
+ 
+#Dessert
