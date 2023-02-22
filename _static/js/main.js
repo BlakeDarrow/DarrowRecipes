@@ -38,7 +38,7 @@ async function getRstFileList() {
       octokit,
       "BlakeDarrow",
       "DarrowRecipes",
-      "source/sphinx/recipes"
+      "source/sphinx/recipes/"
     );
     const rstFiles = files.filter(
       (item) => item.type === "file" && item.name.endsWith(".rst")
