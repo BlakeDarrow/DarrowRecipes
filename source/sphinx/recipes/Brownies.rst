@@ -1,8 +1,8 @@
-Brownies 
-########################################################### 
+Brownies
+###########################################################
  
-Ingredients 
-========================================================= 
+Ingredients
+=========================================================
  
 - 1 cup + 2 tbsp butter
 - 2 cup sugar
@@ -10,14 +10,18 @@ Ingredients
 - 4 eggs
 - 8 tbsp cocoa
 - 1 cup flour
-- 1 cup nuts (optional) 
+- 1 cup nuts (optional)
  
-Prep 
-========================================================= 
+Prep
+=========================================================
  
-None 
+None
  
-Directions 
-========================================================= 
+Directions
+=========================================================
  
-Cream butter, sugar and vanilla. Add eggs. Mix cocoa and flour in separate bowl. Add to butter mixture. Add nuts. Grease pan and bake at 325 for 35 minutes. 
+Cream butter, sugar and vanilla. Add eggs. Mix cocoa and flour in separate bowl. Add to butter mixture. Add nuts. Grease pan and bake at 325 for 35 minutes.
+ 
+------
+ 
+#Dessert
