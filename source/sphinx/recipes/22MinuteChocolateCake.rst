@@ -29,7 +29,6 @@ Pour boiled mixture over dry mix and add eggs, buttermilk, vanilla, baking soda,
 Mix well and pour into a greased and floured 12x18 or 9x12 pan. Bake at 400 for 20 minutes.
 
 **Frosting:**
-
 Begin making 10 minutes before cake is done.
 
 Melt together and bring to a boil, stir constantly:
@@ -46,3 +45,6 @@ Remove from heat and add:
 
 Spread on cake while hot
  
+------
+ 
+#Dessert
