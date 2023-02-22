@@ -14,8 +14,6 @@ Ingredients
 - 1/2 cup milk
 - Salt, pepper, and Cayenne pepper to taste
 
- 
- 
 Prep 
 ========================================================= 
  
