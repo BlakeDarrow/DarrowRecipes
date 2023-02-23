@@ -27,7 +27,7 @@ Prep
 Directions
 =========================================================
  
-Heat olive oil in dutch oven over medium heat.  Add the onion and saute for 5-7 minutes, until soft.  Add the garlic and saute for 1-2 minutes, until fragrant.  Add the chicken broth, heavy cream, green chiles, cumin, oregano, cayenne pepper, sea salt and black pepper.  Bring to a boil, then lower the heat to medium and simmer for about 40 minutes, until soup has reduced and thickened a bit.  Reduce heat to low.  Stir in cream cheese and shredded cheese, until the cheese has melted and the chicken chili is smooth.  Stir in shredded chicken and simmer for 5 minutes, until thick and creamy.  Optional: I added a can on white beans. 
+Heat olive oil in dutch oven over medium heat. Add the onion and saute for 5-7 minutes, until soft. Add the garlic and saute for 1-2 minutes, until fragrant. Add the chicken broth, heavy cream, green chiles, cumin, oregano, cayenne pepper, sea salt and black pepper. Bring to a boil, then lower the heat to medium and simmer for about 40 minutes, until soup has reduced and thickened a bit. Reduce heat to low. Stir in cream cheese and shredded cheese, until the cheese has melted and the chicken chili is smooth. Stir in shredded chicken and simmer for 5 minutes, until thick and creamy. Optional: I added a can off white beans.
  
 ------
  
