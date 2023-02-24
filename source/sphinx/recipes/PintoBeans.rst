@@ -4,7 +4,7 @@ Pinto Beans
 Ingredients
 =========================================================
  
-- 1.5 lb pinto beans
+- 1.5 lb pinto beans (~4 cups)
 - 2 tsp chili powder
 - 1 tsp cumin
 - 1/2 tsp paprika
@@ -29,3 +29,6 @@ Directions
 - Put the beans in a pressure cooker and cover with water
 - Cook for 13 minutes
  
+------
+ 
+#
