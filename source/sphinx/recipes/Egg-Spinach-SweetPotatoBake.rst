@@ -1,4 +1,4 @@
-Egg/Spinach/Sweet Potato Bake
+Egg-Spinach-Sweet Potato Bake
 ###########################################################
  
 Ingredients
@@ -18,12 +18,12 @@ Ingredients
 Prep
 =========================================================
  
-Preheat oven to 375.  Line a baking dish with parchment paper, or grease well.
+Preheat oven to 375. Line a baking dish with parchment paper, or grease well.
  
 Directions
 =========================================================
  
-In a large bowl add eggs, taco seasoning, garlic powder, salt and pepper.  Whisk in milk, cheese, green onions and jalepenos.  Stir in sweet potatoes and spinach.  Mixture will be very thick.  Transfer the mixture into the baking dish and bake for one hour.  At the end, sprinkle more cheese on top and bake until melted.  Cool 10 minutes and serve.
+In a large bowl add eggs, taco seasoning, garlic powder, salt and pepper. Whisk in milk, cheese, green onions and jalepenos. Stir in sweet potatoes and spinach. Mixture will be very thick. Transfer the mixture into the baking dish and bake for one hour. At the end, sprinkle more cheese on top and bake until melted. Cool 10 minutes and serve.
  
 ------
  
