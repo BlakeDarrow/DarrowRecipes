@@ -1,4 +1,4 @@
-beef & pepper rice bowls
+Beef Pepper Rice Bowls
 ###########################################################
  
 Ingredients

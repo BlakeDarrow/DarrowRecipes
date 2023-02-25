@@ -210,7 +210,7 @@
                   
                   <form action="#">
                     <label for="file-name">Recipe Name:</label>
-                    <input type="text" id="file-name" name="file-name" value="" oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, '')"
+                    <input type="text" id="file-name" name="file-name" value="" maxlength="58" oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, '')"
                       placeholder=""><br><br>
                     <label for="Ingredients">Ingredients:</label>
                     <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
@@ -235,6 +235,7 @@
                 <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
                 <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free to use your name as a tag!</li>
                 <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the screen, select the desired recipe, and the editing form will automatically display the recipe content.</li>
+                <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and dashes.</li>
                 <li>For any questions please reach out to Blake!</li>
               </ol>
               </div>
