@@ -5,7 +5,7 @@ Ingredients
 =========================================================
  
 - 1.5# sweet potatoes, grated
--12 large eggs
+- 12 large eggs
 - 1 Tbsp taco seasoning
 - 2 tsp garlic powder
 - 1 1/2 tsp salt and pepper to taste
