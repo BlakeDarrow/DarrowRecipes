@@ -6,7 +6,7 @@ Ingredients
  
 - 1.5 lb pinto beans (~4 cups)
 - jalapenos
-- vinegar (obtained from jared jalapenos)
+- vinegar (obtained from jarred jalapenos)
 - 3 slices of bacon
 - 3 cloves of garlic
 - 1 onion, diced
