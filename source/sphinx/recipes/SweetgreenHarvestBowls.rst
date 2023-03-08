@@ -28,14 +28,14 @@ Ingredients
 Prep
 =========================================================
  
-Marinate chicken.  Add the marinade ingredients in a large glass bowl or plastic bag, mix well and let marinate at least 30 minutes, or over night.
+Marinate chicken. Add the marinade ingredients in a large glass bowl or plastic bag, mix well and let marinate at least 30 minutes, or over night.
 Preheat oven to 350.
  
 Directions
 =========================================================
  
-When chicken has been marinated; roast in oven on baking sheet lined in parchment paper until cooked through, approx. 35-45 minutes.  Roast vegetables, add diced sweet potatoes and brussels to large baking sheet lined with parchment.  Toss with oil, salt and pepper.  Roast for 35-45 minutes until tender.  Make Rice.  Mix up dressing, add more water to thin if needed.  Dice apple, crumble cheese and roughly chop pecans.  Assemble bowls.  Divide evenly; enjoy
+When chicken has been marinated; roast in oven on baking sheet lined in parchment paper until cooked through, approx. 35-45 minutes. Roast vegetables, add diced sweet potatoes and brussels to large baking sheet lined with parchment. Toss with oil, salt and pepper. Roast for 35-45 minutes until tender. Make Rice. Mix up dressing, add more water to thin if needed. Dice apple, crumble cheese and roughly chop pecans. Assemble bowls. Divide evenly; enjoy
  
 ------
  
-#Main
+#MainCourse
