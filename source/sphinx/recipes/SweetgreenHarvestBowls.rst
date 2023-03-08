@@ -12,7 +12,7 @@ Ingredients
 - 1/2 tsp red pepper flakes (more if like spicy)
 - BOWL
 - 2 to 3 c rice
-- 2 small sweet peppers
+- 2 small sweet potatoes
 - 1 # brussel sprouts, trimmed and halved
 - 1 large apple
 - 1/2 c pecans
