@@ -1,0 +1,42 @@
+name: test build
+on: 
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+  
+permissions:
+  contents: write
+  pages: write
+  id-token: write
+  
+jobs:
+  build:
+    if: contains(github.event.head_commit.message, 'test-build')
+    runs-on: ubuntu-latest
+    
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
+        
+      - name: Install Python
+        uses: actions/setup-python@v2
+        with:
+          python-version: 3.x
+          
+      - name: Install Sphinx
+        run: pip install -r requirements.txt
+        
+      - name: Build documentation
+        run: make.bat
+
+      - name: Upload artifacts
+        uses: actions/upload-artifact@v2
+        with:
+          name: html
+          path: _build/
+        
+      - name: Push documentation
+        uses: ad-m/github-push-action@master
+        with:
+          github_token: ${{ secrets.CREATE_SITE_SECRET }}
+          branch: gh-pages

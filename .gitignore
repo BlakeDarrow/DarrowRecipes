@@ -1,5 +1,6 @@
 
 .DS_Store
+_build/
 build/
 .venv
 source/.vs/*
@@ -7,4 +8,4 @@ source/.vscode/*
 .vscode/settings.json
 builddir/*
 source/BUILDDIR/*
-make.bat
+
