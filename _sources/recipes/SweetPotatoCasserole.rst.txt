@@ -24,8 +24,8 @@ Preheat oven to 325. Grease 9x13 pan.
 Directions
 =========================================================
  
-Mast potatoes, sugar, eggs, salt, 4 Tbsp butter, milk and vanilla.  Mix until smooth,  Transfer to a 9x13 pan.  Mix brown sugar, flour; cut in 3 Tbsp butter until coarse.  Add pecans and sprinkle over potato mixture.  Bake for 30 minutes until lightly brown
+Mast potatoes, sugar, eggs, salt, 4 Tbsp butter, milk and vanilla. Mix until smooth, Transfer to a 9x13 pan. Mix brown sugar, flour; cut in 3 Tbsp butter until coarse. Add pecans and sprinkle over potato mixture. Bake for 30 minutes until lightly brown
  
 ------
  
-#
+#Melanie
