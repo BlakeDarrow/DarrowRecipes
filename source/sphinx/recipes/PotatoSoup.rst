@@ -21,8 +21,8 @@ Prep
 Directions
 =========================================================
  
-Cook cubed potatoes in just enough water to cover, do not drain. Fry bacon until crisp, drain.  Saute 1/4 c onion in bacon drippings.  Add sauted onions, crumbled bacon and the 1 Tbsp bacon drippings to potatoes,  Then add milk and cheese.  Season with garlic salt and pepper.  Simmer until cheese melts.
+Cook cubed potatoes in just enough water to cover, do not drain. Fry bacon until crisp, drain. Saute 1/4 c onion in bacon drippings. Add sauted onions, crumbled bacon and the 1 Tbsp bacon drippings to potatoes, Then add milk and cheese. Season with garlic salt and pepper. Simmer until cheese melts.
  
 ------
  
-#Soup
+#Soup, #Melanie
