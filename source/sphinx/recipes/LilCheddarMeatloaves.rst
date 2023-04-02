@@ -18,13 +18,13 @@ Ingredients
 Prep
 =========================================================
  
-Preheat oven to 350 degrees.  Prepare a greased 13x9x2 oven safe baking dish. 
+Preheat oven to 350 degrees. Prepare a greased 13x9x2 oven safe baking dish.
  
 Directions
 =========================================================
  
-In a bowl, beat the egg and milk.  Stir in cheese, oats, onion and salt.  Add beef and mix well. Shape into 8 loaves, placed in greased baking dish.  Combine ketchup, brown sugar and mustard, spoon over loaves.  Bake uncovered at 350 for 45 minutes or until meat reads at least 160 internally. 
+In a bowl, beat the egg and milk. Stir in cheese, oats, onion and salt. Add beef and mix well. Shape into 8 loaves, placed in greased baking dish. Combine ketchup, brown sugar and mustard, spoon over loaves. Bake uncovered at 350 for 45 minutes or until meat reads at least 160 internally.
  
 ------
  
-#MainCourse, #Beef
+#MainCourse, #Beef, #Melanie
