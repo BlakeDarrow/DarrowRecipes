@@ -19,8 +19,8 @@ Sliced green onions, chopped peanuts, chopped parsley or cilantro for optional t
 Directions
 =========================================================
  
-Season chicken with salt and pepper and place in crock pot,  Mix remaining ingredients together in a small bowl and pour the sauce over the chicken. Cover and cook on low 5-6 hours or on high for 2 1/2-3 hours,  Serve hot with any desired toppings and enjoy.
+Season chicken with salt and pepper and place in crock pot, Mix remaining ingredients together in a small bowl and pour the sauce over the chicken. Cover and cook on low 5-6 hours or on high for 2 1/2-3 hours, Serve hot with any desired toppings and enjoy.
  
 ------
  
-#Chicken, #crockpot
+#Melanie, #crockpot
