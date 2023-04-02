@@ -22,8 +22,8 @@ Preheat oven to 375. Slice squash in half lengthwise and scoop out seeds. Rub in
 Directions
 =========================================================
  
-Heat a large pot to medium and add bacon.  Cook until crispy.  Transfer bacon to plate and set aside.  Add onion and ginger to pot and cook until translucent, Add apple, cook until soft.  Scoop out the flesh of squash and add to pot.  Cover with broth.  Use an immersion blender until smooth.  If didn't use all broth and thick, add rest.  Season as needed.  Garnish with the crumbled bacon, chives and sour cream if desired,
+Heat a large pot to medium and add bacon. Cook until crispy. Transfer bacon to plate and set aside. Add onion and ginger to pot and cook until translucent, Add apple, cook until soft. Scoop out the flesh of squash and add to pot. Cover with broth. Use an immersion blender until smooth. If didn't use all broth and thick, add rest. Season as needed. Garnish with the crumbled bacon, chives and sour cream if desired,
  
 ------
  
-#Soup
+#Soup, #Melanie
