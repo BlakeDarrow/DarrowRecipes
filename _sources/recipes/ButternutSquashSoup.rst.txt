@@ -26,4 +26,4 @@ Heat a large pot to medium and add bacon. Cook until crispy. Transfer bacon to p
  
 ------
  
-#Soup, #Melanie
+#Soup, #Melanie, #Favorite
