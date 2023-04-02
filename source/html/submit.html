@@ -29,14 +29,54 @@
     import { commitFile } from './_static/js/main.js';
     import { triggerDeleteWorkflowRuns } from './_static/js/main.js';
     import { checkCookie } from './_static/js/main.js';
+    import { getCookie } from './_static/js/main.js';
+    import { setCookie } from './_static/js/main.js';
 
-    checkCookie("password")
+    checkCookie("password");
+
+    let autoLogin = getCookie("remember-me");
+
+    if (autoLogin) {
+      let passwordCookie = getCookie("password");
+
+      if (passwordCookie !== "") {
+        var passwordId = document.getElementById("password");
+        var password = passwordId.value;
+        if (password === ""){
+          password.value = "None"
+        }
+
+        passwordId.addEventListener("input", function () {
+          password = password.value;
+        });
+
+        console.log("attempting to login user")
+        authenticateUser(password);
+      }
+    }
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      setCookie("password", "", 365);
+      setCookie("remember-me", "False", 365);      
+      document.getElementById("password").value = "";
+      document.getElementById("file-name").value = "";
+      document.getElementById("Ingredients").value = "";
+      document.getElementById("Prep").value = "";
+      document.getElementById("Directions").value = "";
+      document.getElementById("Category").value = "";
+
+      document.getElementById("authentication-form").style.display = "block";
+      document.getElementById("submit-form").style.display = "none";
+
+      console.log("attempting to logout user")
+      
+    });
 
     document.getElementById("login").addEventListener("click", async () => {
       var passwordId = document.getElementById("password");
       var password = passwordId.value;
       passwordId.addEventListener("input", function () {
-        password = password.value;
+        password = passwordId.value;
       });
       authenticateUser(password)
     });
@@ -237,6 +277,7 @@
                 <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the screen, select the desired recipe, and the editing form will automatically display the recipe content.</li>
                 <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and dashes.</li>
                 <li>For any questions please reach out to Blake!</li>
+                <li>Logout <a href="" id="logout">here.</a></li>
               </ol>
               </div>
           </div>
