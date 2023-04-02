@@ -17,8 +17,8 @@ Prep
 Directions
 =========================================================
  
-Place all in instapot.  Cook 10-13 minutes on high pressure normal release.
+Place all in instapot. Cook 10-13 minutes on high pressure normal release.
  
 ------
  
-#
+#Melanie, #Dessert
