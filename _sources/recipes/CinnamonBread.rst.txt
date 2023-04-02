@@ -12,14 +12,15 @@ Ingredients
 - 2 c milk
 - 2/3 c oil
 
--Topping
+Topping:
+
 - 1 Tbsp cinnamon
 - 1 tsp and 2/3 c sugar
  
 Prep
 =========================================================
  
-Preheat oven to 350°F.  Grease 2 lova pans.
+Preheat oven to 350F.  Grease 2 lova pans.
  
 Directions
 =========================================================
