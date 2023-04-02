@@ -4,21 +4,21 @@ Easy 20 minute gluten free drop biscuits
 Ingredients
 =========================================================
  
-- 1 3/4 cup flour 
+- 1 3/4 cup flour
 - 3/4 teaspoon xanthan gum (omit if your blend already contains it
-- 1/4 cup cornstarch or potato starch or arrowroot 
-- 1 Tbsp baking powder 
+- 1/4 cup cornstarch or potato starch or arrowroot
+- 1 Tbsp baking powder
 - 1/4 tsp baking soda
 - 1/2 tsp kosher salt
-- 2 tsp granulated sugar 
-- 8 Tbsp unsalted butter cut into a quarter inch dice or grated in chilled 
-- 1 cup  (8 fluid ounces) buttermilk chilled 
+- 2 tsp granulated sugar
+- 8 Tbsp unsalted butter cut into a quarter inch dice or grated in chilled
+- 1 cup (8 fluid ounces) buttermilk chilled
 - 1 Tbsp unsalted butter melted
  
 Prep
 =========================================================
  
-Preheat your oven to 425°F. Line a large rimmed baking sheet with unbleached parchment paper and set it aside.
+Preheat your oven to 425Â°F. Line a large rimmed baking sheet with unbleached parchment paper and set it aside.
  
 Directions
 =========================================================
@@ -27,4 +27,4 @@ In a large bowl, place the flour, xanthan gum, cornstarch, baking powder, baking
  
 ------
  
-#Bread
+#Bread, #Melanie
