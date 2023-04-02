@@ -20,13 +20,13 @@ Ingredients
 Prep
 =========================================================
  
-Preheat oven to 425.  Grease a 18x13 baking sheet or a 13x9 sheet pan; depending on desired thickness.
+Preheat oven to 425. Grease a 18x13 baking sheet or a 13x9 sheet pan; depending on desired thickness.
  
 Directions
 =========================================================
  
-In a medium bowl, add the milk, vinegar and vanilla together.  Set aside for 10 minutes.  To a separate large bowl, whisk together the flour, sugar, baking powder, sale and baking soda.  After the milk mixture has sat for 10 minutes, add in the coconut cream and oil.  Whisk together well.  Add the wet ingredients to the dry ingredients and whisk, scrapping down the sides.  Do not overmix. Let mixture sit for at least 5 minutes before pouring.  Pour all if your batter and spread evenly.  In a small bowl, combine the brown sugar and cinnamon together,  Spoonful small amounts across the top of your batter.  Use a knife or toothpick to make swirls in the batter.  Place in oven and bake for 12-15 minutes.
+In a medium bowl, add the milk, vinegar and vanilla together. Set aside for 10 minutes. To a separate large bowl, whisk together the flour, sugar, baking powder, sale and baking soda. After the milk mixture has sat for 10 minutes, add in the coconut cream and oil. Whisk together well. Add the wet ingredients to the dry ingredients and whisk, scrapping down the sides. Do not overmix. Let mixture sit for at least 5 minutes before pouring. Pour all if your batter and spread evenly. In a small bowl, combine the brown sugar and cinnamon together, Spoonful small amounts across the top of your batter. Use a knife or toothpick to make swirls in the batter. Place in oven and bake for 12-15 minutes.
  
 ------
  
-#Breakfast
+#Breakfast, #Baldwin
