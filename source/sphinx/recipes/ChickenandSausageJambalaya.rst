@@ -30,8 +30,8 @@ Prep
 Directions
 =========================================================
  
-Combine all ingredients in slow cooker except salt, pepper, and rice.  Cook on high 3-4 hours.  Salt and pepper to taste.  Stir in rice, cover and cook on high approximately 30 minutes.  Add water or broth as needed once rice soaks up liquid.  Remove bay leaves, serve.
+Combine all ingredients in slow cooker except salt, pepper, and rice. Cook on high 3-4 hours. Salt and pepper to taste. Stir in rice, cover and cook on high approximately 30 minutes. Add water or broth as needed once rice soaks up liquid. Remove bay leaves, serve.
  
 ------
  
-#MainDish, #crockpot
+#MainDish, #crockpot, #Favorite
