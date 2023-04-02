@@ -18,13 +18,13 @@ Ingredients
 Prep
 =========================================================
  
-Preheat oven to 350 degrees.  Bring a large pot of water to a boil.  Cook macaroni for 3 minutes less than the box instructions,  Drain.
+Preheat oven to 350 degrees. Bring a large pot of water to a boil. Cook macaroni for 3 minutes less than the box instructions, Drain.
  
 Directions
 =========================================================
  
-Heat a large skillet over high heat.  Add the ground beef and onions to the pan. Break beef apart, cooking for 6-7 minutes until browned.  Drain any fat.  Mix in garlic and cook for 1 minute until fragrant. Add in worchestershire sauce, tomato sauce and diced tomatoes.  Mix until combined.  Stir in Italian seasoning, salt and pepper.  Taste and adjust seasonings to taste.  Mix in cooked macaroni and cheddar cheese.  If skillet is heat safe, place in oven for 20-25 minutes until bubbly and cheese is melted.  Or transfer to a casserole dish and bake. 
+Heat a large skillet over high heat. Add the ground beef and onions to the pan. Break beef apart, cooking for 6-7 minutes until browned. Drain any fat. Mix in garlic and cook for 1 minute until fragrant. Add in worchestershire sauce, tomato sauce and diced tomatoes. Mix until combined. Stir in Italian seasoning, salt and pepper. Taste and adjust seasonings to taste. Mix in cooked macaroni and cheddar cheese. If skillet is heat safe, place in oven for 20-25 minutes until bubbly and cheese is melted. Or transfer to a casserole dish and bake.
  
 ------
  
-#MainCourse, #Beef
+#MainCourse, #Melanie
