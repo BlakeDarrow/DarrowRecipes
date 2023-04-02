@@ -25,8 +25,8 @@ Zest or finely grate one lime to produce 1 1/2 tsp zest, then juice both limes.
 Directions
 =========================================================
  
-In a sauce pan, combine 3 Tbsp lime juice, quinoa, water, 1 Tbsp olive oil, curry and 1/2 tsp salt.  Bring to a boil; reduce heat and simmer covered 15-20 minutes or until quinoa transparent and liquid absorbed.  Cool and place in large bowl.  Add carrots, chickpeas, scallions, almonds and raisins.  Toss.  In a small bowl combine remaining 3 Tbsp lime juice, zest, remaining 2 Tbsp olive oil, 1/4 tsp salt and pepper.  Whisk until blended.  Pour over quinoa mixture, toss.  I refrigerate leftovers.
+In a sauce pan, combine 3 Tbsp lime juice, quinoa, water, 1 Tbsp olive oil, curry and 1/2 tsp salt. Bring to a boil; reduce heat and simmer covered 15-20 minutes or until quinoa transparent and liquid absorbed. Cool and place in large bowl. Add carrots, chickpeas, scallions, almonds and raisins. Toss. In a small bowl combine remaining 3 Tbsp lime juice, zest, remaining 2 Tbsp olive oil, 1/4 tsp salt and pepper. Whisk until blended. Pour over quinoa mixture, toss. I refrigerate leftovers.
  
 ------
  
-#
+#Melanie, #Salad
