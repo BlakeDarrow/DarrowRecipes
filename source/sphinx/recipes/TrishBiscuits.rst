@@ -1,4 +1,4 @@
-Biscuits - Trish
+Trish Biscuits
 ###########################################################
  
 Ingredients
