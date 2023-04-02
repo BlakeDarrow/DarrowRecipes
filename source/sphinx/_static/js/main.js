@@ -147,8 +147,10 @@ export async function authenticateUser(password) {
 
     if (rememberMe.checked) {
       setCookie("password", password, 365);
+      setCookie("remember-me", "True", 365)
     } else {
       setCookie("password", "", 365);
+      setCookie("remember-me", "False", 365)
     }
 
     document.getElementById("submit-form").style.display = "block";
