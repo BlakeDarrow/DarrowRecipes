@@ -5,6 +5,7 @@ Ingredients
 =========================================================
  
 Single:
+
 - 1/2 cup sugar
 - 2/3 cup flour
 - 1/2 tsp salt
@@ -12,7 +13,9 @@ Single:
 - 4 cup milk
 - 5 tbl butter
 - 2 tsp vanilla
+
 Double:
+
 - 2 1/4 cup sugar
 - 1 cup flour
 - 3/4 tsp salt
@@ -34,4 +37,4 @@ It is important to stir constantly and break up dry clusters.
  
 ------
  
-#Dessert, #Mark
+#Dessert, #Mark, #Tricia, #Favorite
