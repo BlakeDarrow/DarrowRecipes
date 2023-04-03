@@ -42,13 +42,13 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 
    <br>
    
-   <h1>Changelog</h1>
+   <h1>Logs</h1>
 
 
 .. toctree::
-   :caption: Changelog
+   :caption: Logs
    :maxdepth: 3
    :titlesonly:
    :glob:
 
-   Changelog
+   builds

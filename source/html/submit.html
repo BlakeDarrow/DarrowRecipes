@@ -163,13 +163,13 @@
       var options = { timeZone: "America/Chicago" };
       var cstDate = now.toLocaleString("en-US", options);
 
-      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0]}`;
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
 
       // var originalAuthor = " Dont know how to find this"
       // var originalDescription = `${originalAuthor} created "${name}" at ${time}`
 
       var username = getCookie("username");
-      var commitDescription = `${username} edited "${name}" at ${time}`;
+      var commitDescription = `${username} built '${name}' at ${time}.`;
 
       // var recipeLog = originalDescription + " " + commitDescription;
 
@@ -238,7 +238,7 @@
 
         } else {
 
-          commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitDescription);
+          commitFile(filepath, content, commitDescription, destinationName, password, workflowID, commitMessage);
 
         }
 

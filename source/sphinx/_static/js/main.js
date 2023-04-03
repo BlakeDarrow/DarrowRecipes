@@ -59,6 +59,10 @@ async function parseRecipe(recipeString) {
     } else if (line.startsWith("------")) {
       section = "tags";
     } else {
+        // Skip over any lines that don't match expected sections
+      if (!section) {
+        continue;
+      }
       switch (section) {
         case "directions":
           directions.push(line.trim());
@@ -70,8 +74,11 @@ async function parseRecipe(recipeString) {
           ingredients.push(line.trim());
           break;
         case "tags":
-          tags.push(line.trim());
-          break;
+            const tagLine = line.trim().split(/[\s,]+/);
+            const tagWords = tagLine.filter(word => word.startsWith("#"));
+            const validTags = tagWords.filter(tag => tag.length > 1);
+            tags.push(...validTags);
+            break;
       }
     }
   }
@@ -95,7 +102,7 @@ async function parseRecipe(recipeString) {
     .replaceAll("'", "$apo$")
     .replaceAll(";", "^col^")
     .replaceAll('"', "@inch@");
-  const formattedTags = tags.join(",").replaceAll("#", "");
+  const formattedTags = tags.join(", ").replaceAll("#", "");
 
   const recipe = [
     formattedIngredients,
@@ -401,10 +408,10 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
           }
         );
 
-        const buildStatus = latestRun.check_runs[0].status;
+        const buildStatus = latestRun.check_runs[1].status;
 
         if (buildStatus === "completed") {
-          const deployStatus = latestRun.check_runs[1].status;
+          const deployStatus = latestRun.check_runs[2].status;
           console.log(
             `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
           );
