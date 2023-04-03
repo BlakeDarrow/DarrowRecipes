@@ -10,15 +10,16 @@ permissions:
   id-token: write
   
 jobs:
-  build:
-    if: contains(github.event.head_commit.message, 'build')
+  changelog:
+    if: contains(github.event.head_commit.message, 'Automated')
     runs-on: ubuntu-latest
+    continue-on-error: true
     steps:
     - name: Checkout code
-        uses: actions/checkout@v2
+      uses: actions/checkout@v2
 
     - name: Add build to changelog
-      run: sed -i "4i- *${{github.event.head_commit.message} ($(date +'%Y-%m-%d %H:%M:%S %Z)'))" source/sphinx/Changelog.rst
+      run: sed -i "4i- ${{ github.event.head_commit.message }} ($(TZ='America/Chicago' date +'%Y-%m-%d %H:%M:%S %Z'))" source/sphinx/Changelog.rst
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v7.0.0
@@ -29,6 +30,11 @@ jobs:
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
+  build:
+    needs: changelog
+    if: contains(github.event.head_commit.message, 'build') || (failure() && contains(github.event.head_commit.message, 'build'))
+    runs-on: ubuntu-latest
+    steps:
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
@@ -67,6 +73,7 @@ jobs:
  
   deploy:
     needs: build
+    if: contains(github.event.head_commit.message, 'build')
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
