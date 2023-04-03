@@ -24,6 +24,7 @@ async function getRstFileList(octokit) {
     const fileNames = await Promise.all(
       files.map((file) => getRecipeContent(file, octokit))
     );
+    console.log("Built map of recipes.");
 
     const fileList = `<ol>${fileNames
       .map(
@@ -139,6 +140,8 @@ export async function authenticateUser(password) {
       auth: password,
     });
 
+    console.log("Successfully authenticated to GitHub.");
+
     const response = await octokit.users.getAuthenticated();
 
     getRecipes(octokit);
@@ -147,14 +150,24 @@ export async function authenticateUser(password) {
 
     if (rememberMe.checked) {
       setCookie("password", password, 365);
-      setCookie("remember-me", "True", 365)
+      setCookie("remember-me", "True", 365);
     } else {
       setCookie("password", "", 365);
-      setCookie("remember-me", "False", 365)
+      setCookie("remember-me", "False", 365);
     }
 
     document.getElementById("submit-form").style.display = "block";
     document.getElementById("authentication-form").style.display = "none";
+
+    if (getCookie("username") === "") {
+      var userInput = prompt("Please enter your name:");
+      setCookie("username", userInput, 365);
+    }
+
+    if (getCookie("username") !== "") {
+      var username = getCookie("username");
+      console.log(`Welcome ${username}!`);
+    }
   } catch (error) {
     if (error.name === "HttpError" && error.status === 401) {
       document.getElementById("error-message").innerHTML = "Invalid token!";
@@ -174,7 +187,8 @@ export async function commitFile(
   commitMessage,
   destinationName,
   password,
-  workflowID
+  workflowID,
+  commitDescription
 ) {
   var progress = document.getElementById("progress");
   var progressBar = document.getElementById("progress-fill");
@@ -238,6 +252,8 @@ export async function commitFile(
     ],
   });
 
+  var username = getCookie("username");
+
   const {
     data: { sha: newCommitSha },
   } = await octokit.git.createCommit({
@@ -274,10 +290,12 @@ export async function commitFile(
     repo: destinationName.split("/")[1],
     pull_number: number,
     commit_title: commitMessage,
+    body: commitDescription,
     sha: newCommitSha,
     merge_method: "squash",
   });
   console.log("Merged pull request");
+  console.log(`${commitDescription}.`);
 
   await octokit.pulls.update({
     owner: destinationName.split("/")[0],
@@ -336,7 +354,7 @@ export async function triggerDeleteWorkflowRuns(
   password,
   workflowId
 ) {
-  console.log("Attempting to delete workflow runs");
+  console.log("Attempting to delete workflow runs...");
   const runIds = await getAllWorkflowRuns(
     destinationName,
     password,
@@ -389,8 +407,7 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
           const deployStatus = latestRun.check_runs[1].status;
           console.log(
             `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
-
-            );
+          );
 
           var status = document.getElementById("status");
           status.style.display = "block";

@@ -34,6 +34,23 @@
 
     checkCookie("password");
 
+    var testMode = false; // Don't commit to GitHub
+    var deleteWorkflowRuns = false;
+
+    if (testMode) {
+      console.log("Using debug mode. Commits will NOT be pushed to GitHub.")
+
+      var status = document.getElementById("status");
+      status.style.display = "block";
+      status.innerHTML = "Debug mode...";
+
+      var progress = document.getElementById("progress");
+      var progressBar = document.getElementById("progress-fill");
+      progressBar.style.width = "50%";
+      progressBar.style.display = "block";
+      progress.style.display = "block";
+    }
+
     let autoLogin = getCookie("remember-me");
 
     if (autoLogin) {
@@ -42,7 +59,7 @@
       if (passwordCookie !== "") {
         var passwordId = document.getElementById("password");
         var password = passwordId.value;
-        if (password === ""){
+        if (password === "") {
           password.value = "None"
         }
 
@@ -50,26 +67,34 @@
           password = password.value;
         });
 
-        console.log("attempting to login user")
+        console.log("Attempting to authenticate...")
         authenticateUser(password);
       }
     }
 
     document.getElementById("logout").addEventListener("click", async () => {
       setCookie("password", "", 365);
-      setCookie("remember-me", "False", 365);      
+      setCookie("remember-me", "False", 365);
+      setCookie("username", "", 365);
       document.getElementById("password").value = "";
       document.getElementById("file-name").value = "";
       document.getElementById("Ingredients").value = "";
       document.getElementById("Prep").value = "";
       document.getElementById("Directions").value = "";
       document.getElementById("Category").value = "";
-
       document.getElementById("authentication-form").style.display = "block";
       document.getElementById("submit-form").style.display = "none";
-
       console.log("attempting to logout user")
-      
+
+    });
+
+    document.getElementById("clear-file").addEventListener("click", async () => {
+      document.getElementById("file-name").value = "";
+      document.getElementById("Ingredients").value = "";
+      document.getElementById("Prep").value = "";
+      document.getElementById("Directions").value = "";
+      document.getElementById("Category").value = "";
+      console.log("Form cleared.")
     });
 
     document.getElementById("login").addEventListener("click", async () => {
@@ -134,6 +159,20 @@
       var allowCommit = true
       var errorMessage = "error"
 
+      var now = new Date();
+      var options = { timeZone: "America/Chicago" };
+      var cstDate = now.toLocaleString("en-US", options);
+
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0]}`;
+
+      // var originalAuthor = " Dont know how to find this"
+      // var originalDescription = `${originalAuthor} created "${name}" at ${time}`
+
+      var username = getCookie("username");
+      var commitDescription = `${username} edited "${name}" at ${time}`;
+
+      // var recipeLog = originalDescription + " " + commitDescription;
+
       var content = name + '\n'
         + nameFormat + '\n'
         + spacerFormat + '\n'
@@ -154,43 +193,58 @@
         + spacerFormat + '\n'
         + tagSpacer + '\n'
         + spacerFormat + '\n'
-        + formattedCategory;
+        + formattedCategory + '\n'
+        + spacerFormat + '\n'
+        + commitDescription;
 
-      if (name === ""){
-        allowCommit = false
+      if (name === "") {
+        allowCommit = false;
         errorMessage = "No recipe name provided";
       }
 
-      if (Ingredients === "" && Prep === "" && Directions === ""){
-        allowCommit = false
+      if (Ingredients === "" && Prep === "" && Directions === "") {
+        allowCommit = false;
         errorMessage = "The recipe is blank.";
       }
 
       function isValidString(str) {
-        var validChars = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-\s]+$/;
+        var validChars = /^[\s\S]*$/;
         return validChars.test(str);
       }
 
       if (!isValidString(content)) {
-        allowCommit = false
+        allowCommit = false;
         errorMessage = "The recipe contains invalid characters.";
       }
 
-      var commitMessage = "Automated recipe build"
+      var commitMessage = "Automated recipe build";
 
-      var destinationName = "BlakeDarrow/DarrowRecipes"
+      var destinationName = "BlakeDarrow/DarrowRecipes";
 
       let workflowID = 44429210;
 
-      var filepath = filepath.replaceAll(/\s/g, "")
+      var filepath = filepath.replaceAll(/\s/g, "");
 
       if (allowCommit) {
-        commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
-      } else {
-        alert(`Error: ${errorMessage}`)
-      }
+        if (testMode) {
 
-      // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
+          console.log(content);
+
+          if (deleteWorkflowRuns) {
+
+            triggerDeleteWorkflowRuns(destinationName, password, workflowID);
+
+          }
+
+        } else {
+
+          commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitDescription);
+
+        }
+
+      } else {
+        alert(`Error: ${errorMessage}`);
+      }
 
     });
 
@@ -209,7 +263,6 @@
     }
   </script>
 </head>
-
 <body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
@@ -224,7 +277,6 @@
               <input type="hidden" name="area" value="default" />
             </form>
           </div>
-
         </div>
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
           <ul class="current" id="file-list-container">
@@ -234,13 +286,11 @@
         </div>
       </div>
     </nav>
-
     </nav>
     <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
       <nav class="wy-nav-top" aria-label="Mobile navigation menu">
         <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
         <a href="https://blakedarrow.github.io/DarrowRecipes/">DarrowRecipes</a>
-
       </nav>
       <div class="wy-nav-content">
         <div class="rst-content">
@@ -273,40 +323,46 @@
                   </div>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">
-                 
-                  
                   <form action="#">
                     <label for="file-name">Recipe Name:</label>
-                    <input type="text" id="file-name" name="file-name" value="" maxlength="58" oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, '')"
-                      placeholder=""><br><br>
+                    <input type="text" id="file-name" name="file-name" value="" maxlength="58"
+                      oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, '')" placeholder=""><br><br>
                     <label for="Ingredients">Ingredients:</label>
                     <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
                     <label for="Prep">Prep:</label>
                     <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
                     <label for="Directions">Directions:</label>
                     <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
-                    <label for="Category" >Tags:</label>
-                    <input type="text" id="Category" name="Category" value="" placeholder="" oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')"><br><br>
-                    <button type="button" id="commit-file">Submit / Edit Recipe</button>
-                    
+                    <label for="Category">Tags:</label>
+                    <input type="text" id="Category" name="Category" value="" placeholder=""
+                      oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')"><br><br>
+                    <div class="button_group">
+                      <button type="button" id="commit-file" style="width:90%">Submit / Edit Recipe</button>
+                      <button type="button" id="clear-file"  style="width:10%">Clear</button>
+                    </div>
                     <div class="status" id="status" style="display: none;"></div>
-                    
                     <div class="progress-bar" style="display: none;" id="progress">
                       <div class="progress" style="width: 5%; display: block;" id="progress-fill"></div>
 
-                    </form>
+                  </form>
                 </div>
                 <br><br>
-                
+                <hr>
+                <h1>Help</h1>
                 <ol>
-                <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
-                <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free to use your name as a tag!</li>
-                <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the screen, select the desired recipe, and the editing form will automatically display the recipe content.</li>
-                <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and dashes.</li>
-                <li>For any questions please reach out to Blake!</li>
-                <li>Logout <a href="" id="logout">here.</a></li>
-              </ol>
-              </div>
+                  <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
+                  <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free
+                    to use your name as a tag!</li>
+                  <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the
+                    screen, select the desired recipe, and the editing form will automatically display the recipe
+                    content.</li>
+                  <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and
+                    dashes.</li>
+                  <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
+                  <li>For any questions please reach out to Blake!</li>
+                  <li>Logout <a href="" id="logout">here.</a></li>
+                </ol>
+            </div>
           </div>
         </div>
       </div>
