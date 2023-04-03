@@ -131,6 +131,9 @@
       var spacerFormat = " "
       var tagSpacer = "------"
 
+      var allowCommit = true
+      var errorMessage = "error"
+
       var content = name + '\n'
         + nameFormat + '\n'
         + spacerFormat + '\n'
@@ -153,6 +156,26 @@
         + spacerFormat + '\n'
         + formattedCategory;
 
+      if (name === ""){
+        allowCommit = false
+        errorMessage = "No recipe name provided";
+      }
+
+      if (Ingredients === "" && Prep === "" && Directions === ""){
+        allowCommit = false
+        errorMessage = "The recipe is blank.";
+      }
+
+      function isValidString(str) {
+        var validChars = /^[a-zA-Z0-9!@#\$%\^\&*\)\(+=._-\s]+$/;
+        return validChars.test(str);
+      }
+
+      if (!isValidString(content)) {
+        allowCommit = false
+        errorMessage = "The recipe contains invalid characters.";
+      }
+
       var commitMessage = "Automated recipe build"
 
       var destinationName = "BlakeDarrow/DarrowRecipes"
@@ -161,7 +184,11 @@
 
       var filepath = filepath.replaceAll(/\s/g, "")
 
-      commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
+      if (allowCommit) {
+        commitFile(filepath, content, commitMessage, destinationName, password, workflowID)
+      } else {
+        alert(`Error: ${errorMessage}`)
+      }
 
       // triggerDeleteWorkflowRuns(destinationName, password, workflowID)
 
