@@ -20,18 +20,22 @@
 }
 
 .progress-bar {
-border-radius: 5px;
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
 }
 
 .progress {
   background-color: green;
   border-radius: 5px;
   padding: 10px;
+
 }
 
 .status {
   font-size: 90%;
-  padding: 10px;
+  padding: 2px;
+  margin: 2px;
 }
 
 .darrow form label {
@@ -76,13 +80,19 @@ border-radius: 5px;
   border: 1px solid #343131;
 }
 
+.button_group {
+width: 100%;
+margin: 2px !important;
+display: flex;
+}
+
 .darrow form button {
   border-radius: 5px;
   width: 100%;
   border: none;
   background: #343131;
   color: #fff;
-  margin: 0 0 5px;
+  margin: 2px;
   padding: 10px;
   font-size: 14px;
 }
