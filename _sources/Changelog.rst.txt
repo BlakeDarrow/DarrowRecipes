@@ -1,7 +1,6 @@
 Changelog
 ##################
 
-- Update workflow, build (2023-04-03 23:24:12 UTC)
 - Automated recipe build (2023-04-03 13:11:50 CDT)
 - Automated recipe build (2023-04-03 13:09:31 CDT)
 - Automated recipe build (2023-04-03 13:05:37 CDT)
