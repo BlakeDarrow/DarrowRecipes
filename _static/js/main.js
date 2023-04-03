@@ -295,7 +295,11 @@ export async function commitFile(
   console.log("Deleted new branch");
 
   status.innerHTML = "Recipe committed. Publishing website...";
-
+  document.getElementById("file-name").value = "";
+  document.getElementById("Ingredients").value = "";
+  document.getElementById("Prep").value = "";
+  document.getElementById("Directions").value = "";
+  document.getElementById("Category").value = "";
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
