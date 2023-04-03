@@ -14,6 +14,21 @@ jobs:
     if: contains(github.event.head_commit.message, 'build')
     runs-on: ubuntu-latest
     steps:
+    - name: Checkout code
+        uses: actions/checkout@v2
+
+    - name: Add build to changelog
+      run: sed -i "4i- *${{github.event.head_commit.message} ($(date +'%Y-%m-%d %H:%M:%S %Z)'))" source/sphinx/Changelog.rst
+
+    - name: Commit changes
+      uses: EndBug/add-and-commit@v7.0.0
+      with:
+        message: "Updated changelog"
+        add: 'source/sphinx/Changelog.rst'
+        force: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:

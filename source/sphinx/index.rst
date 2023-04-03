@@ -6,6 +6,15 @@ Navigate to the left side panel. You will find a search bar, a submission page, 
 
 You can search for specific recipes, keywords, or tags within the search bar. You can also manually navigate to them by selecting the recipe title in the 'All Recipes' panel on the left of your screen. Alternatively, select from the list below.
 
+
+.. I am using raw html to render the section titles because I am hiding the toctree labels with css so that the column elements line up cleanly.
+.. raw:: html
+
+   <hr>
+
+   <h1>Submission</h1>
+
+
 .. toctree::
    :caption: Submission
 
@@ -14,6 +23,13 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 
    submit
 
+.. raw:: html
+
+   <br>
+   
+   <h1>All Recipes</h1>
+
+
 .. toctree::
    :caption: All Recipes
    :titlesonly:
@@ -21,4 +37,18 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
    :glob:
    
    recipes/*
-  
+
+.. raw:: html
+
+   <br>
+   
+   <h1>Changelog</h1>
+
+
+.. toctree::
+   :caption: Changelog
+   :maxdepth: 3
+   :titlesonly:
+   :glob:
+
+   Changelog

@@ -17,7 +17,8 @@ extensions = ["sphinx_rtd_dark_mode",
 html_theme_options = {
     'style_external_links': False,
     'navigation_depth': -1,
-    'sticky_navigation' : True,
+    'sticky_navigation' : False,
+    'collapse_navigation': True,
 
     }
 
@@ -39,5 +40,3 @@ html_static_path = ['_static']
 
 def setup(app):
     app.add_js_file('jquery.js')
-
-
