@@ -386,7 +386,7 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
       per_page: 1,
     });
 
-    const id = workflowRuns.data.workflow_runs[1].check_suite_id;
+    const id = workflowRuns.data.workflow_runs[0].check_suite_id;
     console.log(id);
     console.log(workflowRuns);
 
