@@ -13,8 +13,8 @@ Ingredients
 - 1 TBS apple cider vinegar
 - 1 TBS dijon mustard OR course ground mustard
 - 1/2 TSP celery seeds
-- kosher salt (to taste)
-- black pepper (to taste)
+- Kosher salt (to taste)
+- Black pepper (to taste)
  
 Prep
 =========================================================
@@ -32,3 +32,5 @@ Directions
 ------
  
 #Camryn
+ 
+Blake built 'Coleslaw' at 9:12:59 PM on 4-3-2023.
