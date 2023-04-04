@@ -33,7 +33,7 @@ jobs:
 
   build:
     needs: changelog
-    if: github.event_name == 'push' && (contains(github.event.head_commit.message, 'Updated changelog') || (contains(github.event.head_commit.message, 'build') && failure()))
+    if: contains(github.event.head_commit.message, 'build') || (failure() && contains(github.event.head_commit.message, 'build'))
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
