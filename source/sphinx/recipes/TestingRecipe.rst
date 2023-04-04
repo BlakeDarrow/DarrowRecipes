@@ -21,5 +21,3 @@ Test
 ------
  
 #Test, #Testing, #Tested4, #Tested6
- 
-Blake built "Testing Recipe" at 8:19:42 PM on 4/3/2023.
