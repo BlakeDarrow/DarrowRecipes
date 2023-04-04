@@ -11,7 +11,7 @@ permissions:
   
 jobs:
   changelog:
-    if: contains(github.event.head_commit.message, 'Automated')
+    if: contains(github.event.head_commit.message, 'built')
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -33,7 +33,7 @@ jobs:
 
   build:
     needs: changelog
-    if: contains(github.event.head_commit.message, 'build') || (failure() && contains(github.event.head_commit.message, 'build'))
+    if: contains(github.event.head_commit.message, 'built') || (failure() && contains(github.event.head_commit.message, 'built'))
     runs-on: ubuntu-latest
     steps:
     - uses: actions/checkout@v3
