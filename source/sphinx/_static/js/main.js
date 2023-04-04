@@ -386,7 +386,7 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
       per_page: 1,
     });
 
-    const id = workflowRuns.data.workflow_runs[0].check_suite_id;
+    const id = workflowRuns.data.workflow_runs[1].check_suite_id;
     console.log(id);
     console.log(workflowRuns);
 
@@ -408,10 +408,10 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
           }
         );
 
-        const buildStatus = latestRun.check_runs[0].status;
+        const buildStatus = latestRun.check_runs[1].status;
 
         if (buildStatus === "completed") {
-          const deployStatus = latestRun.check_runs[1].status;
+          const deployStatus = latestRun.check_runs[2].status;
           console.log(
             `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
           );
