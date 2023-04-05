@@ -438,10 +438,10 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
           }
         );
 
-        const buildStatus = latestRun.check_runs[1].status;
+        const buildStatus = latestRun.check_runs[0].status;
 
         if (buildStatus === "completed") {
-          const deployStatus = latestRun.check_runs[2].status;
+          const deployStatus = latestRun.check_runs[1].status;
           console.log(
             `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
           );
