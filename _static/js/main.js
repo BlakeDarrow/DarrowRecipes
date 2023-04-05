@@ -24,12 +24,13 @@ async function getRstFileList(octokit) {
     const fileNames = await Promise.all(
       files.map((file) => getRecipeContent(file, octokit))
     );
+    console.log("----------")
     console.log("Built map of recipes.");
 
     const fileList = `<ol>${fileNames
       .map(
         (recipeDict) =>
-          `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}')">${recipeDict[0]}</a></li>`
+          `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`
       )
       .join("")}</ol>`;
 
@@ -42,6 +43,7 @@ async function getRstFileList(octokit) {
 async function parseRecipe(recipeString) {
   const lines = recipeString.split("\n");
   let section = "";
+  let afterTags = "";
   const ingredients = [];
   const prep = [];
   const directions = [];
@@ -78,7 +80,12 @@ async function parseRecipe(recipeString) {
             const tagWords = tagLine.filter(word => word.startsWith("#"));
             const validTags = tagWords.filter(tag => tag.length > 1);
             tags.push(...validTags);
-            break;
+            section = "afterTags"; // set the section to afterTags
+          break;
+      case "afterTags":
+          // concatenate the current line with afterTags and trim
+          afterTags += line;
+          break;
       }
     }
   }
@@ -86,6 +93,22 @@ async function parseRecipe(recipeString) {
   ingredients.shift();
   prep.shift();
   directions.shift();
+  afterTags = afterTags.trim(); // need to test with both lines.
+  const formattedAfterTags = afterTags.replaceAll("'", '^quote^').replaceAll("| ", '');
+  var authorship = formattedAfterTags.split(".");
+  authorship = authorship.filter(function (element) { return element !== ""; });
+
+  if (authorship.length === 1 && authorship[0].includes("edited")) {
+    authorship[0] = "Edited by Current user.";
+    authorship[1] = "Recipe submitted prior to the generation of logs.";
+    //console.log("Authorship only contained who edited last.")
+  }
+
+  if (authorship.length === 0 ) {
+    authorship[0] = "Edited by Current user.";
+    authorship[1] = "Recipe submitted prior to the generation of logs.";
+    //console.log("No existing edits, and submitted prior to generation of logs.")
+  }
 
   const formattedIngredients = ingredients
     .join("&bladar&")
@@ -102,13 +125,17 @@ async function parseRecipe(recipeString) {
     .replaceAll("'", "$apo$")
     .replaceAll(";", "^col^")
     .replaceAll('"', "@inch@");
+  
   const formattedTags = tags.join(", ").replaceAll("#", "");
 
+  //var debugAuthor = ["Edited by Blake.", "Blake submitted ^quote^Chicken and Sausage Jambalaya^quote^ at 5:35:35 PM on 4-4-2023."];
+  
   const recipe = [
     formattedIngredients,
     formattedPrep,
     formattedDirections,
     formattedTags,
+    authorship,
   ];
   return recipe;
 }
@@ -132,6 +159,7 @@ async function getRecipeContent(file, octokit) {
       recipeDict[1],
       recipeDict[2],
       recipeDict[3],
+      recipeDict[4],
     ];
     return recipe;
   } catch (error) {
@@ -325,6 +353,8 @@ export async function commitFile(
   document.getElementById("Prep").value = "";
   document.getElementById("Directions").value = "";
   document.getElementById("Category").value = "";
+  document.getElementById("editedByValue").value = "";
+  document.getElementById("submittedByValue").value = "";
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
