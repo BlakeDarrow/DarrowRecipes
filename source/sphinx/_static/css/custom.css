@@ -126,3 +126,53 @@ html[data-theme="dark"] .darrow form textarea {
 html[data-theme="dark"] .darrow input {
   background-color: #fff;
 }
+
+html[data-theme="dark"] .tooltip .tooltiptext span {
+  color: #d9d9d9 !important;
+}
+
+html[data-theme="dark"] .hiddenDebug label {
+  color: #d9d9d9 !important;
+}
+
+.hiddenDebug {
+  color: #404040;  
+}
+
+.hiddenDebug input {
+  border-radius: 5px !important;
+  width: 50%;
+}
+
+.tooltip .tooltiptext span {
+  color: #404040 !important;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext  {
+  visibility: hidden;
+  width: 75%;
+  text-align: center;
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -25%;
+  margin-bottom: 0px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: Lato, proxima-nova, Helvetica Neue, Arial, sans-serif !important;
+  text-align: right !important;
+  font-size: 90%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
