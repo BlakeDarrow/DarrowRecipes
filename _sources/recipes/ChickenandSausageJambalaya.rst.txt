@@ -34,4 +34,7 @@ Combine all ingredients in slow cooker except salt, pepper, and rice. Cook on hi
  
 ------
  
-#MainDish, #crockpot, #Favorite
+#MainCourse, #crockpot, #Favorite
+ 
+| Melanie edited 'Chicken and Sausage Jambalaya' at 8:10:13 PM on 4-4-2023.
+| Recipe submitted prior to the generation of logs.
