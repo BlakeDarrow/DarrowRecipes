@@ -18,7 +18,7 @@ Ingredients
 Prep
 =========================================================
  
-Preheat your oven to 425°F. Line a large rimmed baking sheet with unbleached parchment paper and set it aside.
+Preheat your oven to 425. Line a large rimmed baking sheet with unbleached parchment paper and set it aside.
  
 Directions
 =========================================================
@@ -28,3 +28,6 @@ In a large bowl, place the flour, xanthan gum, cornstarch, baking powder, baking
 ------
  
 #Bread, #Melanie
+ 
+| Melanie edited 'Easy 20 minute gluten free drop biscuits' at 7:28:15 PM on 4-4-2023.
+| Recipe submitted prior to the generation of logs.
