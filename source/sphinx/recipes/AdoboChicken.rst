@@ -24,11 +24,12 @@ Directions
  
 1. Add all ingredients to your crockpot or slow cooker. Cover and cook on low for eight hours or on high for four hours.
 2. 30 minutes before serving, use two forks to shred chicken. Stir the chicken in the sauces inside the slow cooker and cook another 30 minutes to let the chicken to soak up the juices. Serve with cooked rice, veggies, cilantro and diced avocado if desired.
-3. Note: choose how many chipotle peppers to use based on how spicy you want the chicken to be.
+
+Note: choose how many chipotle peppers to use based on how spicy you want the chicken to be.
  
 ------
  
 #MainCourse, #Melanie, #Crockpot
  
-| Blake edited 'Adobo Chicken' at 1:07:25 PM on 4-6-2023.
+| Blake edited 'Adobo Chicken' at 4:30:46 PM on 4-6-2023.
 | Melanie created 'Adobo Chicken' at 4:35:28 PM on 4-5-2023
