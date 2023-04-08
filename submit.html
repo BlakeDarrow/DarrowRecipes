@@ -1,174 +1,461 @@
 <!DOCTYPE html>
-<html class="writer-html5" lang="en" >
-<head>
-  <meta charset="utf-8" /><meta name="generator" content="Docutils 0.18.1: http://docutils.sourceforge.net/" />
+<html class="writer-html5" lang="en">
 
+<head>
+  <meta charset="utf-8" />
+  <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Submit or edit a recipe &mdash; DarrowRecipes 2023 documentation</title>
-      <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
-      <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
-      <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
-      <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="_static/js/html5shiv.min.js"></script>
-  <![endif]-->
-  
-        <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
-        <script src="_static/doctools.js"></script>
-        <script src="_static/sphinx_highlight.js"></script>
-        <script src="_static/jquery.js"></script>
-        <script src="_static/dark_mode_js/default_dark.js"></script>
-        <script src="_static/dark_mode_js/theme_switcher.js"></script>
-    <script src="_static/js/theme.js"></script>
-    <link rel="index" title="Index" href="genindex.html" />
-    <link rel="search" title="Search" href="search.html" />
-    <link rel="next" title="22 Minute Chocolate Cake" href="recipes/22MinuteChocolateCake.html" />
-    <link rel="prev" title="How to Use" href="index.html" /> 
+  <title>Recipe Submission</title>
+  <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
+  <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
+  <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+  <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
+  <script src="_static/jquery.js"></script>
+  <script src="_static/underscore.js"></script>
+  <script src="_static/doctools.js"></script>
+  <script src="_static/logo_link.js"></script>
+  <script src="_static/dark_mode_js/default_light.js"></script>
+  <script src="_static/sphinx_highlight.js"></script>
+  <script src="_static/dark_mode_js/default_dark.js"></script>
+  <script src="_static/dark_mode_js/theme_switcher.js"></script>
+  <script src="_static/js/theme.js"></script>
+  <link rel="index" title="Index" href="genindex" />
+  <link rel="search" title="Search" href="search" />
+  <script>
+    function checkIfTextIsInClass(inputText) {
+      const elementsWithClass = document.querySelectorAll(".toctree-l1");
+      const recipeExistsMsg = document.getElementById("tooltiptext");
+      var inputTextNoWhitespace = inputText.replace(/\s/g, '').toLowerCase();;
+      for (let i = 0; i < elementsWithClass.length; i++) {
+        var textContentNoWhitespace = elementsWithClass[i].textContent.replace(/\s/g, '').toLowerCase();;
+        if (textContentNoWhitespace === inputTextNoWhitespace) {
+          console.log("Recipe exists");
+          recipeExistsMsg.style.display = "inline-block";
+          return true;
+        }
+
+      }
+      recipeExistsMsg.style.display = "none";
+      return false;
+    }
+
+  </script>
+  <script type="module">
+    import { authenticateUser } from './_static/js/main.js';
+    import { commitFile } from './_static/js/main.js';
+    import { triggerDeleteWorkflowRuns } from './_static/js/main.js';
+    import { checkCookie } from './_static/js/main.js';
+    import { getCookie } from './_static/js/main.js';
+    import { setCookie } from './_static/js/main.js';
+
+    checkCookie("password");
+
+    var testMode = false; // Don't commit to GitHub
+    var deleteWorkflowRuns = false;
+
+    if (testMode) {
+      console.log("Using debug mode. Commits will NOT be pushed to GitHub.")
+
+      var status = document.getElementById("status");
+      status.style.display = "block";
+      status.innerHTML = "Debug mode...";
+
+      var progress = document.getElementById("progress");
+      var progressBar = document.getElementById("progress-fill");
+
+      var debugMenu = document.getElementById("hiddenDebug");
+
+      progressBar.style.width = "50%";
+      progressBar.style.display = "block";
+      progress.style.display = "block";
+      debugMenu.style.display = "block";
+    }
+
+    let autoLogin = getCookie("remember-me");
+
+    if (autoLogin) {
+      let passwordCookie = getCookie("password");
+
+      if (passwordCookie !== "") {
+        var passwordId = document.getElementById("password");
+        var password = passwordId.value;
+        if (password === "") {
+          password.value = "None"
+        }
+
+        passwordId.addEventListener("input", function () {
+          password = password.value;
+        });
+
+        console.log("Attempting to authenticate...")
+        authenticateUser(password);
+      }
+    }
+
+    document.getElementById("logout").addEventListener("click", async () => {
+      setCookie("password", "", 365);
+      setCookie("remember-me", "False", 365);
+      setCookie("username", "", 365);
+      document.getElementById("password").value = "";
+      document.getElementById("file-name").value = "";
+      document.getElementById("Ingredients").value = "";
+      document.getElementById("Prep").value = "";
+      document.getElementById("Directions").value = "";
+      document.getElementById("Category").value = "";
+      document.getElementById("editedByValue").value = "";
+      document.getElementById("submittedByValue").value = "";
+      document.getElementById("authentication-form").style.display = "block";
+      document.getElementById("submit-form").style.display = "none";
+      console.log("attempting to logout user")
+
+    });
+
+    document.getElementById("clear-file").addEventListener("click", async () => {
+      document.getElementById("file-name").value = "";
+      document.getElementById("Ingredients").value = "";
+      document.getElementById("Prep").value = "";
+      document.getElementById("Directions").value = "";
+      document.getElementById("Category").value = "";
+      document.getElementById("editedByValue").value = "";
+      document.getElementById("submittedByValue").value = "";
+      console.log("Form cleared.")
+    });
+
+    document.getElementById("login").addEventListener("click", async () => {
+      var passwordId = document.getElementById("password");
+      var password = passwordId.value;
+      passwordId.addEventListener("input", function () {
+        password = passwordId.value;
+      });
+      authenticateUser(password)
+    });
+
+    document.getElementById("commit-file").addEventListener("click", async () => {
+      var passwordId = document.getElementById("password");
+      var password = passwordId.value;
+      passwordId.addEventListener("input", function () {
+        password = password.value;
+      });
+
+      var CategoryInput = document.getElementById("Category");
+      var Category = CategoryInput.value;
+      CategoryInput.addEventListener("input", function () {
+        Category = contentInput.value;
+      });
+
+      var formattedCategory = Category.replaceAll(/\s/g, '').split(',').map(i => '#' + i).join(', ');
+
+      var nameInput = document.getElementById("file-name");
+      var name = nameInput.value;
+      nameInput.addEventListener("input", function () {
+        name = nameInput.value;
+      });
+
+      var extension = ".rst"
+
+      var sourceFolder = "source/sphinx/recipes/"
+
+      var filepath = sourceFolder + name + extension;
+
+      var DirectionsInput = document.getElementById("Directions");
+      var Directions = DirectionsInput.value;
+      DirectionsInput.addEventListener("input", function () {
+        Directions = DirectionsInput.value.replaceAll(/\r/g, "");
+      });
+
+      var PrepInput = document.getElementById("Prep");
+      var Prep = PrepInput.value;
+      PrepInput.addEventListener("input", function () {
+        Prep = PrepInput.value.replaceAll(/\r/g, "");
+      });
+
+      var IngredientsInput = document.getElementById("Ingredients");
+      var Ingredients = IngredientsInput.value;
+      IngredientsInput.addEventListener("input", function () {
+        Ingredients = IngredientsInput.value.replaceAll(/\r/g, "");
+      });
+
+      var nameFormat = "###########################################################"
+      var categoryFormat = "========================================================="
+      var spacerFormat = " "
+      var tagSpacer = "------"
+      var allowCommit = true
+      var errorMessage = "error"
+      var now = new Date();
+      var options = { timeZone: "America/Chicago" };
+      var cstDate = now.toLocaleString("en-US", options);
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
+      var username = getCookie("username");
+      var newRecipe = false;
+      var commitMessage = "Empty";
+
+      var submittedByValue = document.getElementById("submittedByValue");
+      if (submittedByValue.value === "") {
+        if (!checkIfTextIsInClass(name)) {
+          console.log("New recipe being submitted!")
+          console.log("----------")
+          newRecipe = true;
+        }
+      }
+      var editedByValue = document.getElementById("editedByValue");
+      var editedBy = `Empty`;
+      var submittedBy = "";
+      if (newRecipe) {
+        submittedBy = `${username} created '${name}' at ${time}.`;
+        editedBy = "This recipe has not been edited."
+        submittedByValue.value = submittedBy;
+        editedByValue.value = "This recipe has not been edited."
+        commitMessage = submittedBy;
+      } else {
+        editedBy = `${username} edited '${name}' at ${time}.`;
+        editedByValue.value = editedBy;
+        submittedBy = submittedByValue.value;
+        commitMessage = editedBy;
+      }
+
+      var content = name + '\n'
+        + nameFormat + '\n'
+        + spacerFormat + '\n'
+        + 'Ingredients\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Ingredients + '\n'
+        + spacerFormat + '\n'
+        + 'Prep\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Prep + '\n'
+        + spacerFormat + '\n'
+        + 'Directions\n'
+        + categoryFormat + '\n'
+        + spacerFormat + '\n'
+        + Directions + '\n'
+        + spacerFormat + '\n'
+        + tagSpacer + '\n'
+        + spacerFormat + '\n'
+        + formattedCategory + '\n'
+        + spacerFormat + '\n'
+        + "| " + editedBy + '\n'
+        + "| " + submittedBy;
+
+      if (name === "") {
+        allowCommit = false;
+        errorMessage = "No recipe name provided";
+      }
+
+      if (Ingredients === "" && Prep === "" && Directions === "") {
+        allowCommit = false;
+        errorMessage = "The recipe is blank.";
+      }
+
+      function isValidString(str) {
+        var validChars = /^[\s\S]*$/;
+        return validChars.test(str);
+      }
+
+      if (!isValidString(content)) {
+        allowCommit = false;
+        errorMessage = "The recipe contains invalid characters.";
+      }
+
+      var commitBody = "Automated recipe build";
+
+      var destinationName = "BlakeDarrow/DarrowRecipes";
+
+      let workflowID = 44429210;
+
+      var filepath = filepath.replaceAll(/\s/g, "");
+
+      if (allowCommit) {
+        if (testMode) {
+
+          console.log(content);
+          console.log("----------");
+          console.log(`Commit message: ${commitMessage}`);
+
+          if (deleteWorkflowRuns) {
+
+            triggerDeleteWorkflowRuns(destinationName, password, workflowID);
+
+          }
+
+        } else {
+
+          console.log(editedBy);
+          console.log(submittedBy);
+          console.log("----------");
+          console.log(content);
+          commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitBody);
+
+        }
+
+      } else {
+        alert(`Error: ${errorMessage}`);
+      }
+
+    });
+
+  </script>
+  <script>
+    function loadRecipe(Name, Ingredients, Prep, Directions, Category, submittedBy) {
+      if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
+        alert("Login to edit this recipe.");
+      } else {
+
+        document.getElementById("editedByValue").value = "";
+        document.getElementById("submittedByValue").value = "";
+        document.getElementById("file-name").value = Name;
+        document.getElementById("Ingredients").value = Ingredients.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
+        document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
+        document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
+        document.getElementById("Category").value = Category;
+
+        console.log("----------")
+
+        var author = submittedBy.split(",")
+        author = author.filter(function (element) { return element !== ""; });
+        console.log(`Loaded '${Name}', '${author}'`);
+
+        var submittedByValue = document.getElementById("submittedByValue");
+        if (author.length > 0) {
+          submittedByValue.value = author[1].replaceAll("^quote^", "'");
+        }
+      }
+    }
+  </script>
 </head>
 
-<body class="wy-body-for-nav"> 
+<body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
-        <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="index.html" class="icon icon-home">
-            DarrowRecipes
+        <div class="wy-side-nav-search">
+          <a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"> DarrowRecipes
           </a>
-<div role="search">
-  <form id="rtd-search-form" class="wy-form" action="search.html" method="get">
-    <input type="text" name="q" placeholder="Search docs" aria-label="Search docs" />
-    <input type="hidden" name="check_keywords" value="yes" />
-    <input type="hidden" name="area" value="default" />
-  </form>
-</div>
-        </div><div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
-              <p class="caption" role="heading"><span class="caption-text">Submission</span></p>
-<ul class="current">
-<li class="toctree-l1 current"><a class="current reference internal" href="#">Submit or edit a recipe</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="recipes/22MinuteChocolateCake.html">22 Minute Chocolate Cake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/AdoboChicken.html">Adobo Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ApplesauceInstapot.html">Applesauce Instapot</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/AvocadoChimichurri.html">Avocado Chimichurri</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/BananaBread.html">Banana Bread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/BeefPepperRiceBowls.html">Beef Pepper Rice Bowls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Brownies.html">Brownies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ButterDipBiscuits.html">Butter Dip Biscuits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ButternutSquashSoup.html">Butternut Squash Soup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ChewyChocolateCrinkleCookies.html">Chewy Chocolate Crinkle Cookies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ChickenBreastCasserole.html">Chicken Breast Casserole</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ChickenandSausageJambalaya.html">Chicken and Sausage Jambalaya</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ChocolatePudding.html">Chocolate Pudding</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ChuckRoast.html">Chuck Roast</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CinnamonBread.html">Cinnamon Bread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CinnamonRollSheetPanPancakes.html">Cinnamon Roll Sheet Pan Pancakes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Coleslaw.html">Coleslaw</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CollardGreens.html">Collard Greens</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CommunionBread.html">Communion Bread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CowboyCaviar.html">Cowboy Caviar</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CreamCheeseChicken.html">Cream Cheese Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/CrockpotLasagna.html">Crockpot Lasagna</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Easy20minuteglutenfreedropbiscuits.html">Easy 20 minute gluten free drop biscuits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/EasyButterChicken.html">Easy Butter Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/EasyChickenTaco.html">Easy Chicken Taco</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Egg-Spinach-SweetPotatoBake.html">Egg-Spinach-Sweet Potato Bake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Fruitcrumbletopping.html">Fruit Crumble Topping</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/GFBread.html">GF Bread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Granola.html">Granola</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Guacamole.html">Guacamole</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/JalepenoChickenCasserole.html">Jalepeno Chicken Casserole</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/KeyLimePie.html">Key Lime Pie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/LemonOliveOilMuffins.html">Lemon Olive Oil Muffins</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/LemonyMediterraneanChicken.html">Lemony Mediterranean Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/LilCheddarMeatloaves.html">Lil Cheddar Meatloaves</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/LimeBiryaniSalad.html">Lime Biryani Salad</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/MacCheese.html">Mac  Cheese</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Meringue.html">Meringue</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/MississippiCrockPotChicken.html">Mississippi Crock Pot Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/NancysScotchShortbread.html">Nancys Scotch Shortbread</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/NoBakeCookies.html">No Bake Cookies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/NoBakeLemonCheesecakeCups.html">No Bake Lemon Cheesecake Cups</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/OldFashionedGoulash.html">Old Fashioned Goulash</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/OmeletteCasserole.html">Omelette Casserole</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PBCrunchBars.html">PB Crunch Bars</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/Pancakes.html">Pancakes</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PastawithAsparagus.html">Pasta with Asparagus</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PestoChicken.html">Pesto Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PintoBeans.html">Pinto Beans</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PioneerWomanMeatloaf.html">Pioneer Woman Meatloaf</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PorkRoast.html">Pork Roast</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PotatoSoup.html">Potato Soup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PumpkinCheesecakeDip.html">Pumpkin Cheesecake Dip</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PumpkinChocolateChipCookies.html">Pumpkin Chocolate Chip Cookies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/PumpkinRoll.html">Pumpkin Roll</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/RosemaryCarrots.html">Rosemary Carrots</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SlowCookerHoneyGarlicChicken.html">Slow Cooker Honey Garlic Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SlowCookerSalsaVerdeHoneyLimeChicken.html">Slow Cooker Salsa Verde Honey Lime Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SplitPeaSoup.html">Split Pea Soup</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/StrawberryShortcake.html">Strawberry Shortcake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SugarCookies.html">Sugar Cookies</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SweetPotatoCasserole.html">Sweet Potato Casserole</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/SweetgreenHarvestBowls.html">Sweetgreen Harvest Bowls</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TacoPasta.html">Taco Pasta</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TestingRecipe.html">Testing Recipe</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TrishBiscuits.html">Trish Biscuits</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TrishPecanPie.html">Trish Pecan Pie</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TrishPoundCake.html">Trish Pound Cake</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/TuscanChicken.html">Tuscan Chicken</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/WalnutHamLinguine.html">Walnut Ham Linguine</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/WhiteChickenChili.html">White Chicken Chili</a></li>
-<li class="toctree-l1"><a class="reference internal" href="recipes/ZucchiniBread.html">Zucchini Bread</a></li>
-</ul>
-<p class="caption" role="heading"><span class="caption-text">Logs</span></p>
-<ul>
-<li class="toctree-l1"><a class="reference internal" href="builds.html">Automated Build Log</a></li>
-</ul>
+          <div role="search">
+            <form id="rtd-search-form" class="wy-form" action="search" method="get">
+              <input type="text" name="q" placeholder="Search docs" />
+              <input type="hidden" name="check_keywords" value="yes" />
+              <input type="hidden" name="area" value="default" />
+            </form>
+          </div>
+        </div>
+
+        <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
+          <ul class="current" id="file-list-container">
+            <p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
+            <li class="toctree-l1"><a class="reference internal">User not logged in</a></li>
+          </ul>
 
         </div>
       </div>
     </nav>
-
-    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap"><nav class="wy-nav-top" aria-label="Mobile navigation menu" >
-          <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
-          <a href="index.html">DarrowRecipes</a>
+    </nav>
+    <section data-toggle="wy-nav-shift" class="wy-nav-content-wrap">
+      <nav class="wy-nav-top" aria-label="Mobile navigation menu">
+        <i data-toggle="wy-nav-top" class="fa fa-bars"></i>
+        <a href="https://blakedarrow.github.io/DarrowRecipes/">DarrowRecipes</a>
       </nav>
-
       <div class="wy-nav-content">
         <div class="rst-content">
           <div role="navigation" aria-label="Page navigation">
-  <ul class="wy-breadcrumbs">
-      <li><a href="index.html" class="icon icon-home" aria-label="Home"></a></li>
-      <li class="breadcrumb-item active">Submit or edit a recipe</li>
-      <li class="wy-breadcrumbs-aside">
-      </li>
-  </ul>
-  <hr/>
-</div>
-          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
-           <div itemprop="articleBody">
-             
-  <section id="submit-or-edit-a-recipe">
-<h1>Submit or edit a recipe<a class="headerlink" href="#submit-or-edit-a-recipe" title="Permalink to this heading"></a></h1>
-</section>
-
-
-           </div>
+            <ul class="wy-breadcrumbs">
+              <li><a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"></a> &raquo;</li>
+              <li>Recipe Submission</li>
+              <li class="wy-breadcrumbs-aside">
+              </li>
+            </ul>
+            <hr />
           </div>
-          
+          <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
+            <div itemprop="articleBody">
+              <section id="publish">
+                <h1>Recipe Submission</h1>
+                <div class="darrow" id="form-group" style="display:block">
+                  <div id="authentication-form" style="display:block">
+                    <form action="#">
+                      <label for="password">Password:</label>
+                      <input type="password" id="password" name="password" autocomplete="on" value="">
+                      <button type="button" id="login">Login</button>
+                    </form>
+                    <br>
+                    <input type="checkbox" id="remember-me" checked> Remember Me
+                    <br>
+                    <center>
+                      <p id="error-message" style="display:none"></p>
+                    </center>
+                  </div>
+                </div>
+                <div class="hiddenDebug" id="hiddenDebug" style="display: none;">
+                  <hr>
+                  <label for="editedByValue">Edited by:</label>
+                  <input type="text" id="editedByValue" name="editedByValue" value=""><br><br>
+                  <label for="submittedByValue">Submitted by:</label>
+                  <input type="text" id="submittedByValue" name="submittedByValue" value=""><br><br>
+                  <hr>
+                </div>
+                <div class="darrow" id="submit-form" style="display:none">
+                  <form action="#">
+                    <label for="file-name">Recipe Name:</label>
+                    <span id="recipe-exists-msg" class="tooltip" style="display: block">
+                      <span class="tooltiptext" id="tooltiptext" style="display: none">This recipe name exists. Are you
+                        editing an existing Recipe?</span>
+                      <input type="text" id="file-name" name="file-name" value="" maxlength="58"
+                        oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, ''); checkIfTextIsInClass(this.value)"
+                        placeholder=""><br><br>
+                    </span>
+                    <label for=" Ingredients">Ingredients:</label>
+                    <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
+                    <label for="Prep">Prep:</label>
+                    <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
+                    <label for="Directions">Directions:</label>
+                    <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
+                    <label for="Category">Tags:</label>
+                    <input type="text" id="Category" name="Category" value="" placeholder=""
+                      oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')"><br><br>
+                    <div class="button_group">
+                      <button type="button" id="commit-file" style="width:90%">Submit / Edit Recipe</button>
+                      <button type="button" id="clear-file" style="width:10%">Clear</button>
+                    </div>
+                    <div class="status" id="status" style="display: none;"></div>
+                    <div class="progress-bar" style="display: none;" id="progress">
+                      <div class="progress" style="width: 5%; display: block;" id="progress-fill"></div>
+                  </form>
+                </div>
+                <br><br>
+                <hr>
+                <h1>Help</h1>
+                <ol>
+                  <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
+                  <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free
+                    to use your name as a tag!</li>
+                  <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the
+                    screen, select the desired recipe, and the editing form will automatically display the recipe
+                    content.</li>
+                  <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and
+                    dashes.</li>
+                  <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
+                  <li>For any questions please reach out to Blake!</li>
+                  <li>Logout <a href="" id="logout">here.</a></li>
+                </ol>
+            </div>
+          </div>
         </div>
       </div>
-    </section>
+      <hr>
+      <p>© Copyright 2023, Blake Darrow.</p>
+  </div>
+  </div>
+  </section>
   </div>
   <script>
-      jQuery(function () {
-          SphinxRtdTheme.Navigation.enable(false);
-      });
-  </script> 
-
+    jQuery(function () {
+      SphinxRtdTheme.Navigation.enable(true);
+    });
+  </script>
 </body>
+
 </html>
