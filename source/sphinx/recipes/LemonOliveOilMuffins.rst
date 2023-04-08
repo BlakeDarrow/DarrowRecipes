@@ -26,7 +26,7 @@ Directions
 =========================================================
  
 1. In a large bowl with the flour, soda, powder and salt.
-2. In a separate bowl whisk the brown sugar, olive oil, syrup, lemon juice, lemon zest, vanilla and water.
+2. In a separate bowl whisk the brown sugar, olive oil, syrup, lemon juice, lemon zest, vanilla and water.
 3. Slowly pour sugar and oil mixture into flour mixture and stir until combined, don't over mix.
 4. Divide the batter into 12 muffins cups using a scooper.
 5. Bake for 18 to 20 minutes. Cool cupcakes, then remove from pan. Sprinkle with powdered sugar and enjoy 
