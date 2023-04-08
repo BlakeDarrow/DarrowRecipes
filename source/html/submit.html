@@ -163,44 +163,38 @@
       var DirectionsInput = document.getElementById("Directions");
       var Directions = DirectionsInput.value;
       DirectionsInput.addEventListener("input", function () {
-        Directions = DirectionsInput.value;
+        Directions = DirectionsInput.value.replaceAll(/\r/g, "");
       });
 
       var PrepInput = document.getElementById("Prep");
       var Prep = PrepInput.value;
       PrepInput.addEventListener("input", function () {
-        Prep = PrepInput.value;
+        Prep = PrepInput.value.replaceAll(/\r/g, "");
       });
 
       var IngredientsInput = document.getElementById("Ingredients");
       var Ingredients = IngredientsInput.value;
       IngredientsInput.addEventListener("input", function () {
-        Ingredients = IngredientsInput.value;
+        Ingredients = IngredientsInput.value.replaceAll(/\r/g, "");
       });
 
       var nameFormat = "###########################################################"
       var categoryFormat = "========================================================="
       var spacerFormat = " "
       var tagSpacer = "------"
-
       var allowCommit = true
       var errorMessage = "error"
-
       var now = new Date();
       var options = { timeZone: "America/Chicago" };
       var cstDate = now.toLocaleString("en-US", options);
-
       var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
-
       var username = getCookie("username");
-      
-
       var newRecipe = false;
       var commitMessage = "Empty";
 
       var submittedByValue = document.getElementById("submittedByValue");
-      if (submittedByValue.value === ""){
-        if (!checkIfTextIsInClass(name)){
+      if (submittedByValue.value === "") {
+        if (!checkIfTextIsInClass(name)) {
           console.log("New recipe being submitted!")
           console.log("----------")
           newRecipe = true;
@@ -209,7 +203,7 @@
       var editedByValue = document.getElementById("editedByValue");
       var editedBy = `Empty`;
       var submittedBy = "";
-      if (newRecipe){
+      if (newRecipe) {
         submittedBy = `${username} created '${name}' at ${time}.`;
         editedBy = "This recipe has not been edited."
         submittedByValue.value = submittedBy;
@@ -289,7 +283,7 @@
           }
 
         } else {
-          
+
           console.log(editedBy);
           console.log(submittedBy);
           console.log("----------");
@@ -310,6 +304,7 @@
       if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
         alert("Login to edit this recipe.");
       } else {
+
         document.getElementById("editedByValue").value = "";
         document.getElementById("submittedByValue").value = "";
         document.getElementById("file-name").value = Name;
@@ -318,20 +313,21 @@
         document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Category").value = Category;
 
-        console.log("----------") // need to test this with both lines
+        console.log("----------")
 
         var author = submittedBy.split(",")
         author = author.filter(function (element) { return element !== ""; });
-        console.log(author);
+        console.log(`Loaded '${Name}', '${author}'`);
 
         var submittedByValue = document.getElementById("submittedByValue");
-        if (author.length > 0){
+        if (author.length > 0) {
           submittedByValue.value = author[1].replaceAll("^quote^", "'");
         }
       }
     }
   </script>
 </head>
+
 <body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
@@ -393,7 +389,7 @@
                     </center>
                   </div>
                 </div>
-                <div class = "hiddenDebug" id = "hiddenDebug" style="display: none;">
+                <div class="hiddenDebug" id="hiddenDebug" style="display: none;">
                   <hr>
                   <label for="editedByValue">Edited by:</label>
                   <input type="text" id="editedByValue" name="editedByValue" value=""><br><br>
@@ -405,11 +401,13 @@
                   <form action="#">
                     <label for="file-name">Recipe Name:</label>
                     <span id="recipe-exists-msg" class="tooltip" style="display: block">
-                      <span class="tooltiptext" id="tooltiptext" style="display: none">This recipe name exists. Are you editing an existing Recipe?</span>
+                      <span class="tooltiptext" id="tooltiptext" style="display: none">This recipe name exists. Are you
+                        editing an existing Recipe?</span>
                       <input type="text" id="file-name" name="file-name" value="" maxlength="58"
-                        oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, ''); checkIfTextIsInClass(this.value)"" placeholder=""><br><br>
+                        oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, ''); checkIfTextIsInClass(this.value)"
+                        placeholder=""><br><br>
                     </span>
-                    <label for="Ingredients">Ingredients:</label>
+                    <label for=" Ingredients">Ingredients:</label>
                     <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
                     <label for="Prep">Prep:</label>
                     <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
@@ -420,7 +418,7 @@
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')"><br><br>
                     <div class="button_group">
                       <button type="button" id="commit-file" style="width:90%">Submit / Edit Recipe</button>
-                      <button type="button" id="clear-file"  style="width:10%">Clear</button>
+                      <button type="button" id="clear-file" style="width:10%">Clear</button>
                     </div>
                     <div class="status" id="status" style="display: none;"></div>
                     <div class="progress-bar" style="display: none;" id="progress">
