@@ -16,9 +16,9 @@ Prep
 Directions
 =========================================================
  
-1.  Arrange the chicken breast in the bottom of your crockpot.
-2.  Sprinkle the taco seasoning envelope over the chicken. Pour the entire can of Rotel tomatoes on top of that.
-3. Cook on high in your crock pot for three hours. Once done remove the lid and shred chicken with a fork and stir back into liquid.
+1. Arrange the chicken breast in the bottom of your crockpot.
+2. Sprinkle the taco seasoning envelope over the chicken. Pour the entire can of Rotel tomatoes on top of that.
+3. Cook on high in your crock pot for three hours. Once done remove the lid and shred chicken with a fork and stir back into liquid.
 4. Serve with your favorite taco toppings including shredded lettuce, cheese, pico de Gallo, guacamole, sour cream, or chopped cilantro. You can use hard taco shells or tortillas.
 
  
