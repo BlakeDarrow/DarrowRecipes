@@ -22,4 +22,7 @@ Cook in the crockpot for 8 to 10 hours.
  
 ------
  
-#MainCourse, #Melanie
+#MainCourse, #Melanie, #Crockpot, #Favorite
+ 
+| Blake edited 'Chuck Roast' at 12:28:42 PM on 4-8-2023.
+| Recipe submitted prior to the generation of logs.
