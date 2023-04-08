@@ -6,6 +6,17 @@ export function getRecipes(octokit) {
     var header =
       '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
     listContainer.innerHTML = header + fileList;
+
+    const elements = document.querySelectorAll('.toctree-l1');
+    elements.forEach((element) => {
+      element.addEventListener('click', () => {
+        const aElement = element.querySelector('.reference.internal');
+        const onclickValue = aElement.getAttribute('onclick');
+        const loadRecipe = onclickValue.replace("loadRecipe(", '').split("','");
+        
+        console.log(loadRecipe);
+      });
+    });
   });
 }
 
@@ -28,12 +39,11 @@ async function getRstFileList(octokit) {
     console.log("Built map of recipes.");
 
     const fileList = `<ol>${fileNames
-      .map(
-        (recipeDict) =>
-          `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`
-      )
+      .map((recipeDict) => {
+        return `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`
+      })
       .join("")}</ol>`;
-
+    
     return fileList;
   } catch (error) {
     console.error(error);
@@ -114,22 +124,25 @@ async function parseRecipe(recipeString) {
     .join("&bladar&")
     .replaceAll("'", "$apo$")
     .replaceAll(";", "^col^")
-    .replaceAll('"', "@inch@");
+    .replaceAll('"', "@inch@")
+    .replaceAll(/\r/g, "");
   const formattedPrep = prep
     .join("&bladar&")
     .replaceAll("'", "$apo$")
     .replaceAll(";", "^col^")
-    .replaceAll('"', "@inch@");
+    .replaceAll('"', "@inch@")
+    .replaceAll(/\r/g, "");
   const formattedDirections = directions
     .join("&bladar&")
     .replaceAll("'", "$apo$")
     .replaceAll(";", "^col^")
-    .replaceAll('"', "@inch@");
+    .replaceAll('"', "@inch@")
+    .replaceAll(/\r/g, "");
   
   const formattedTags = tags.join(", ").replaceAll("#", "");
 
   //var debugAuthor = ["Edited by Blake.", "Blake submitted ^quote^Chicken and Sausage Jambalaya^quote^ at 5:35:35 PM on 4-4-2023."];
-  
+
   const recipe = [
     formattedIngredients,
     formattedPrep,
@@ -137,6 +150,8 @@ async function parseRecipe(recipeString) {
     formattedTags,
     authorship,
   ];
+
+ 
   return recipe;
 }
 
@@ -161,6 +176,7 @@ async function getRecipeContent(file, octokit) {
       recipeDict[3],
       recipeDict[4],
     ];
+
     return recipe;
   } catch (error) {
     console.error(error);
