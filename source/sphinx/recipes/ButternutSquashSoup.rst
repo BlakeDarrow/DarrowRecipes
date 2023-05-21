@@ -27,3 +27,6 @@ Heat a large pot to medium and add bacon. Cook until crispy. Transfer bacon to p
 ------
  
 #Soup, #Melanie, #Favorite
+ 
+| Blake edited 'Butternut Squash Soup' at 2:15:59 PM on 5-21-2023.
+| Recipe submitted prior to the generation of logs.
