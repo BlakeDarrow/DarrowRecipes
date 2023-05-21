@@ -13,7 +13,6 @@ export function getRecipes(octokit) {
         const aElement = element.querySelector('.reference.internal');
         const onclickValue = aElement.getAttribute('onclick');
         const loadRecipe = onclickValue.replace("loadRecipe(", '').split("','");
-        
         console.log(loadRecipe);
       });
     });
@@ -35,8 +34,7 @@ async function getRstFileList(octokit) {
     const fileNames = await Promise.all(
       files.map((file) => getRecipeContent(file, octokit))
     );
-    console.log("----------")
-    console.log("Built map of recipes.");
+    console.log("Built sidebar containing recipes.");
 
     const fileList = `<ol>${fileNames
       .map((recipeDict) => {
@@ -112,12 +110,12 @@ async function parseRecipe(recipeString) {
     authorship[0] = "Edited by Current user.";
     authorship[1] = "Recipe submitted prior to the generation of logs.";
     //console.log("Authorship only contained who edited last.")
-  }
-
-  if (authorship.length === 0 ) {
+  } else if (authorship.length === 0 ) {
     authorship[0] = "Edited by Current user.";
     authorship[1] = "Recipe submitted prior to the generation of logs.";
     //console.log("No existing edits, and submitted prior to generation of logs.")
+  } else {
+    authorship[1] = authorship[1] + "."
   }
 
   const formattedIngredients = ingredients
@@ -191,7 +189,7 @@ export async function authenticateUser(password) {
       auth: password,
     });
 
-    console.log("Successfully authenticated to GitHub.");
+    console.log("Successfully authenticated to GitHub!");
 
     const response = await octokit.users.getAuthenticated();
 
@@ -211,13 +209,14 @@ export async function authenticateUser(password) {
     document.getElementById("authentication-form").style.display = "none";
 
     if (getCookie("username") === "") {
+      console.log("Prompting for username...");
       var userInput = prompt("Please enter your name:");
       setCookie("username", userInput, 365);
     }
 
     if (getCookie("username") !== "") {
       var username = getCookie("username");
-      console.log(`Welcome ${username}!`);
+      console.log(`Cookies found, welcome ${username}!`);
     }
   } catch (error) {
     if (error.name === "HttpError" && error.status === 401) {
@@ -241,6 +240,13 @@ export async function commitFile(
   workflowID,
   commitDescription
 ) {
+  if (/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/.test(content)) {
+    var nonLatinChars = content.match(/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g);
+    console.log("----------------");
+    console.log("Non-Latin characters found: ", nonLatinChars);
+    console.log("----------------");
+  }
+  
   var progress = document.getElementById("progress");
   var progressBar = document.getElementById("progress-fill");
   progressBar.style.width = "0%";
@@ -285,7 +291,6 @@ export async function commitFile(
     content: btoa(content),
     encoding: "base64",
   });
-  console.log("Created new file");
 
   const {
     data: { sha: newTreeSha },
@@ -302,6 +307,8 @@ export async function commitFile(
       },
     ],
   });
+
+  console.log("Created new file");
 
   var username = getCookie("username");
 
@@ -513,6 +520,6 @@ export function checkCookie() {
     var passwordId = document.getElementById("password");
     passwordId.value = password;
   } else {
-    console.log("No cookies found, not logged in");
+    console.log("No cookies found, not logged in.");
   }
 }

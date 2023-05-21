@@ -22,7 +22,7 @@ Ingredients
 Prep
 =========================================================
  
-Preheat oven to 375°. Line a baking sheet with parchment paper.
+Preheat oven to 375 degrees. Line a baking sheet with parchment paper.
  
 Directions
 =========================================================

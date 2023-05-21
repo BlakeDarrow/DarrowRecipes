@@ -57,7 +57,7 @@
     var deleteWorkflowRuns = false;
 
     if (testMode) {
-      console.log("Using debug mode. Commits will NOT be pushed to GitHub.")
+      console.log("Using debug mode. Commits will NOT be pushed to GitHub!")
 
       var status = document.getElementById("status");
       status.style.display = "block";
@@ -90,7 +90,7 @@
           password = password.value;
         });
 
-        console.log("Attempting to authenticate...")
+        console.log("Attempting to authenticate with token...")
         authenticateUser(password);
       }
     }
@@ -109,7 +109,7 @@
       document.getElementById("submittedByValue").value = "";
       document.getElementById("authentication-form").style.display = "block";
       document.getElementById("submit-form").style.display = "none";
-      console.log("attempting to logout user")
+      console.log("Attempting to logout user...")
 
     });
 
@@ -243,7 +243,7 @@
 
       if (name === "") {
         allowCommit = false;
-        errorMessage = "No recipe name provided";
+        errorMessage = "No recipe name provided.";
       }
 
       if (Ingredients === "" && Prep === "" && Directions === "") {
@@ -271,10 +271,8 @@
 
       if (allowCommit) {
         if (testMode) {
-
-          console.log(content);
-          console.log("----------");
-          console.log(`Commit message: ${commitMessage}`);
+          console.log("User would send:")
+          console.log([content]);
 
           if (deleteWorkflowRuns) {
 
@@ -284,10 +282,8 @@
 
         } else {
 
-          console.log(editedBy);
-          console.log(submittedBy);
-          console.log("----------");
-          console.log(content);
+          console.log("User sent:")
+          console.log([content]);
           commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitBody);
 
         }
@@ -312,12 +308,9 @@
         document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Category").value = Category;
-
-        console.log("----------")
-
         var author = submittedBy.split(",")
         author = author.filter(function (element) { return element !== ""; });
-        console.log(`Loaded '${Name}', '${author}'`);
+        console.log(`User selected to edit '${Name}'.'`);
 
         var submittedByValue = document.getElementById("submittedByValue");
         if (author.length > 0) {
@@ -408,11 +401,14 @@
                         placeholder=""><br><br>
                     </span>
                     <label for=" Ingredients">Ingredients:</label>
-                    <textarea id="Ingredients" name="Ingredients" value="" placeholder=""></textarea><br><br>
+                    <textarea id="Ingredients" name="Ingredients" value="" placeholder=""
+                      oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
                     <label for="Prep">Prep:</label>
-                    <textarea id="Prep" name="Prep" value="" placeholder=""></textarea><br><br>
+                    <textarea id="Prep" name="Prep" value="" placeholder=""
+                      oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
                     <label for="Directions">Directions:</label>
-                    <textarea id="Directions" name="Directions" value="" placeholder=""></textarea><br><br>
+                    <textarea id="Directions" name="Directions" value="" placeholder=""
+                      oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
                     <label for="Category">Tags:</label>
                     <input type="text" id="Category" name="Category" value="" placeholder=""
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')"><br><br>
@@ -439,8 +435,68 @@
                     dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
                   <li>For any questions please reach out to Blake!</li>
+                  <li><a href="" onclick="toggleDivVisibility(); event.preventDefault();">Show output log</a></li>
                   <li>Logout <a href="" id="logout">here.</a></li>
                 </ol>
+                <script>
+                  function toggleDivVisibility() {
+                    const myDiv = document.getElementById('log');
+                    myDiv.style.display = myDiv.style.display === 'none' ? 'block' : 'none';
+                  }
+                </script>
+                <div id="log" style="display:none">
+                  <hr>
+                  <h1>Output Log</h1>
+                  <p id="logOutput" style="color: #2980b9;"></p>
+                </div>
+                <script>
+                  const originalConsoleLog = console.log;
+                  const logOutput = document.getElementById('logOutput');
+
+                  console.log = function (message) {
+                    originalConsoleLog.apply(console, arguments);
+
+                    if (Array.isArray(message)) {
+                      const arrayContainer = document.createElement('div');
+                      const indentSize = 40;
+
+                      arrayContainer.style.paddingLeft = `${1 * indentSize}px`;
+                      arrayContainer.style.paddingRight = `${1 * indentSize}px`;
+
+                      const spacer = document.createElement('span');
+                      spacer.textContent = "";
+                      arrayContainer.appendChild(spacer);
+
+                      arrayContainer.appendChild(document.createElement('br'));
+
+                      message.forEach(function (element) {
+                        const lines = element.split('\n');
+                        lines.forEach(function (line) {
+                          const logMessage = document.createElement('span');
+                          logMessage.textContent = line;
+                          arrayContainer.appendChild(logMessage);
+
+                          const spacer2 = document.createElement('p');
+                          spacer2.textContent = "";
+                          arrayContainer.appendChild(spacer2);
+                        });
+
+                      });
+
+                      logOutput.appendChild(arrayContainer);
+                    } else {
+                      const logMessage = document.createElement('span');
+                      logMessage.textContent = "- " + message;
+                      logOutput.appendChild(logMessage);
+                      logOutput.appendChild(document.createElement('br'));
+                    }
+
+                    logOutput.scrollTop = logOutput.scrollHeight;
+                  };
+
+                </script>
+
+
             </div>
           </div>
         </div>

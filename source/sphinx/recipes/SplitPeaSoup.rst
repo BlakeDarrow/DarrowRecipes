@@ -38,4 +38,4 @@ Note: This soup freezes beautifully. Stored in an airtight container for up to t
 #
  
 | Blake edited 'Split Pea Soup' at 1:09:55 PM on 4-6-2023.
-| Melanie created 'Split Pea Soup' at 4:41:33 PM on 4-5-2023
+| Melanie created 'Split Pea Soup' at 4:41:33 PM on 4-5-2023.
