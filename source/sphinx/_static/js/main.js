@@ -1,5 +1,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
+document.getElementById("cancel-button").addEventListener("click", cancelCommit);
+
 export function getRecipes(octokit) {
   getRstFileList(octokit).then((fileList) => {
     const listContainer = document.getElementById("file-list-container");
@@ -13,7 +15,7 @@ export function getRecipes(octokit) {
         const aElement = element.querySelector('.reference.internal');
         const onclickValue = aElement.getAttribute('onclick');
         const loadRecipe = onclickValue.replace("loadRecipe(", '').split("','");
-        console.log(loadRecipe);
+        // console.log(loadRecipe);
       });
     });
   });
@@ -34,13 +36,15 @@ async function getRstFileList(octokit) {
     const fileNames = await Promise.all(
       files.map((file) => getRecipeContent(file, octokit))
     );
-    console.log("Built sidebar containing recipes.");
-
+    console.log("Built map of recipes.");
+    
     const fileList = `<ol>${fileNames
       .map((recipeDict) => {
         return `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`
       })
       .join("")}</ol>`;
+    
+    console.log("Built navigation sidebar containing recipes.");
     
     return fileList;
   } catch (error) {
@@ -189,7 +193,7 @@ export async function authenticateUser(password) {
       auth: password,
     });
 
-    console.log("Successfully authenticated to GitHub!");
+    console.log("...successfully authenticated to GitHub!");
 
     const response = await octokit.users.getAuthenticated();
 
@@ -231,6 +235,22 @@ export async function authenticateUser(password) {
   }
 }
 
+let cancelFlag = false;
+
+function cancelCommit(event) {
+  event.preventDefault();
+  cancelFlag = true;
+  console.log("User is asking to cancel the operation...");
+}
+
+function cancelEvents() {
+  console.log("...commit canceled successfully.");
+  var status = document.getElementById("status");
+  status.innerHTML = "Canceled.";
+  document.getElementById("cancel-button").style.display = "none";
+  cancelFlag = false;
+}
+
 export async function commitFile(
   filepath,
   content,
@@ -240,6 +260,14 @@ export async function commitFile(
   workflowID,
   commitDescription
 ) {
+
+  document.getElementById("cancel-button").style.display = "block";
+
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
+
   if (/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/.test(content)) {
     var nonLatinChars = content.match(/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g);
     console.log("----------------");
@@ -271,7 +299,13 @@ export async function commitFile(
     repo: destinationName.split("/")[1],
     ref: defaultBranch,
   });
-  console.log("Get latest commit");
+  console.log("Fetching...");
+  status.innerHTML = "Fetching...";
+
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
 
   const {
     data: { ref },
@@ -281,7 +315,13 @@ export async function commitFile(
     ref: `refs/heads/${newBranch}`,
     sha: latestCommitSha,
   });
-  console.log("Created new branch");
+  console.log("Created new branch.");
+  status.innerHTML = "Created new branch...";
+
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
 
   const {
     data: { sha: blobSha },
@@ -291,6 +331,14 @@ export async function commitFile(
     content: btoa(content),
     encoding: "base64",
   });
+
+  console.log("Created new blob.");
+  status.innerHTML = "Created new blob.";
+  
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
 
   const {
     data: { sha: newTreeSha },
@@ -308,9 +356,13 @@ export async function commitFile(
     ],
   });
 
-  console.log("Created new file");
+  console.log("Created tree.");
+  status.innerHTML = "Created tree.";
 
-  var username = getCookie("username");
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
 
   const {
     data: { sha: newCommitSha },
@@ -321,7 +373,13 @@ export async function commitFile(
     tree: newTreeSha,
     parents: [latestCommitSha],
   });
-  console.log("Created new commit");
+  console.log("Created commit.");
+  status.innerHTML = "Created commit.";
+
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
 
   await octokit.git.updateRef({
     owner: destinationName.split("/")[0],
@@ -342,6 +400,15 @@ export async function commitFile(
     body: "automated merge",
   });
   console.log("Created pull request");
+  status.innerHTML = "Created pull request.";
+
+  if (cancelFlag) {
+    cancelEvents();
+    return;
+  }
+
+  console.log("User can no longer cancel recipe commit.")
+  document.getElementById("cancel-button").style.display = "none";
 
   await octokit.pulls.merge({
     owner: destinationName.split("/")[0],
@@ -352,8 +419,9 @@ export async function commitFile(
     sha: newCommitSha,
     merge_method: "squash",
   });
-  console.log("Merged pull request");
+  console.log("Recipe committed to main branch.");
   console.log(`${commitDescription}.`);
+  status.innerHTML = "Recipe committed to main branch.";
 
   await octokit.pulls.update({
     owner: destinationName.split("/")[0],
@@ -361,16 +429,20 @@ export async function commitFile(
     pull_number: number,
     state: "closed",
   });
-  console.log("Closed pull request");
+  console.log("Closed pull request.");
+  status.innerHTML = "Closed pull request.";
 
   await octokit.git.deleteRef({
     owner: destinationName.split("/")[0],
     repo: destinationName.split("/")[1],
     ref: `heads/${newBranch}`,
   });
-  console.log("Deleted new branch");
+  console.log("Deleted temporary branch.");
+  status.innerHTML = "Deleted temporary branch.";
 
-  status.innerHTML = "Recipe committed. Publishing website...";
+  console.log("Recipe fully committed. Publishing website...");
+  status.innerHTML = "Recipe fully committed. Publishing website...";
+
   document.getElementById("file-name").value = "";
   document.getElementById("Ingredients").value = "";
   document.getElementById("Prep").value = "";
@@ -378,6 +450,9 @@ export async function commitFile(
   document.getElementById("Category").value = "";
   document.getElementById("editedByValue").value = "";
   document.getElementById("submittedByValue").value = "";
+
+  cancelFlag = false;
+  console.log("Reset 'cancelFlag'");
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
