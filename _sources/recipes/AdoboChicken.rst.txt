@@ -32,4 +32,4 @@ Note: choose how many chipotle peppers to use based on how spicy you want the ch
 #MainCourse, #Melanie, #Crockpot
  
 | Blake edited 'Adobo Chicken' at 4:30:46 PM on 4-6-2023.
-| Melanie created 'Adobo Chicken' at 4:35:28 PM on 4-5-2023
+| Melanie created 'Adobo Chicken' at 4:35:28 PM on 4-5-2023.

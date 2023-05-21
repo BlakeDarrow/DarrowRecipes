@@ -21,7 +21,7 @@ Preheat oven to 350.  Mix up a sauce using ketchup, brown sugar, hot sauce, and 
 Directions
 =========================================================
  
-1. Sauté the onion in olive oil with time and salt and pepper.
+1. Saute the onion in olive oil with time and salt and pepper.
 2. Soak 5 to 7 pieces of bread in milk.
 3. Add seven eggs to the meat and mix with hands. Then add the onion, bread and milk. Form into a loaf. I don't use a loaf pan so I can cover the sides with bacon.
 5. Cover the loaf with the bacon slices. Tuck in the sides of bacon around the low to cover completely.
