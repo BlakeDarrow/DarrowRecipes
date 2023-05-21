@@ -36,6 +36,7 @@
   font-size: 90%;
   padding: 2px;
   margin: 2px;
+  margin-top: 20px;
 }
 
 .darrow form label {
@@ -69,70 +70,48 @@
   border-radius: 5px;
   font-weight: 400;
   min-height: 75px;
-}
+} 
 
 .darrow form textarea:hover {
   transition: border-color 0.3s ease-in-out;
-  border: 1px solid #343131;
+  border: 1px solid #bfbfbf;
 }
 .darrow form input:hover {
   transition: border-color 0.3s ease-in-out;
-  border: 1px solid #343131;
+  border: 1px solid #bfbfbf;
 }
 
 .button_group {
 width: 100%;
-margin: 2px !important;
 display: flex;
+flex: 1;
+grid-gap: 2px;
 }
 
 .darrow form button {
+  
   border-radius: 5px;
   width: 100%;
   border: none;
   background: #343131;
   color: #fff;
-  margin: 2px;
   padding: 10px;
   font-size: 14px;
+  min-width: 50px;
+}
+
+#commit-file {
+  flex-basis: 80%;
+}
+
+#clear-file,
+#cancel-button {
+  flex-basis: 20%;
 }
 
 .darrow form button:hover {
-  background: #9b9b9b;
+  background: #bfbfbf;
   transition: background-color 0.3s ease-in-out;
-}
-
-html[data-theme="dark"] .darrow form {
-  background-color: #101010;
-  color: #d9d9d9
-}
-
-html[data-theme="dark"] .darrow form label {
-  color: #d9d9d9;
-}
-html[data-theme="dark"] .darrow form button {
-  background-color: #0b152d;
-  color: #fff;
-}
-html[data-theme="dark"] .darrow form input {
-  background-color: #fff;
-  color: #000;
-}
-html[data-theme="dark"] .darrow form textarea {
-  background-color: #fff;
-  color: #000;
-}
-
-html[data-theme="dark"] .darrow input {
-  background-color: #fff;
-}
-
-html[data-theme="dark"] .tooltip .tooltiptext span {
-  color: #d9d9d9 !important;
-}
-
-html[data-theme="dark"] .hiddenDebug label {
-  color: #d9d9d9 !important;
 }
 
 .hiddenDebug {
@@ -174,5 +153,63 @@ html[data-theme="dark"] .hiddenDebug label {
 .tooltip:hover .tooltiptext {
   visibility: visible;
   opacity: 1;
+}
+
+.scrollable-div {
+  height: 150px;
+  overflow: auto;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 10px;
+  color: #404040;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+html[data-theme="dark"] #cancel-button[disabled] {
+  background-color: #101010;
+  transition: background-color 0.3s ease-in-out;
+}
+
+html[data-theme="dark"] .darrow form {
+  background-color: #101010;
+  color: #d9d9d9;
+}
+
+html[data-theme="dark"] .darrow form label {
+  color: #d9d9d9;
+}
+html[data-theme="dark"] .darrow form button {
+  background-color: #0b152d;
+  color: #d9d9d9;
+}
+html[data-theme="dark"] .darrow form input {
+  background-color: #d9d9d9;
+  color: #000;
+}
+html[data-theme="dark"] .darrow form textarea {
+  background-color: #d9d9d9;
+  color: #000;
+}
+html[data-theme="dark"] .darrow input {
+  background-color: #d9d9d9;
+}
+
+html[data-theme="dark"] .tooltip .tooltiptext span {
+  color: #d9d9d9 !important;
+}
+
+html[data-theme="dark"] .hiddenDebug label {
+  color: #d9d9d9 !important;
+}
+
+html[data-theme="dark"] .hiddenDebug input {
+  background-color: #d9d9d9 !important;
+  color: #000;
+}
+
+html[data-theme="dark"] .scrollable-div {
+  background-color: #101010 !important;
+  color: #d9d9d9;
+  box-shadow: 0 0 1px 0 #d9d9d9;
 }
 
