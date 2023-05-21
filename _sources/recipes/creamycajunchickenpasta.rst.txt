@@ -30,11 +30,16 @@ stretchy pants because youll want seconds
 Directions
 =========================================================
  
-
+- boil 6 cups of water in a large pot over high hearr and cook pasta. drain pasta, rinse with cold water and set aside
+- while pasta is cooking, add the butter, olive oil and onion to a large pot over medium high heat and cook 3 to 4 minutes or until the onion becomes translucent
+- add the bell pepper, garlic, cajun seasoning basil paprika, pepper, salt and cayenne. stir to combine and cook until bell pepper becomes soft
+- add the chicken and stir and cook another 6 to 8 minutes or until the chicken is cooked through
+- add the parmesan, heavy cream, cream cheese and broth and stir and cook for 8 to 10 minutes or until sauce thickens and cheese has fully melted
+- add the cooked and drained pasta and stir to coat. cook for 2 to 3 minutes then serve with fresh parsley if desired
  
 ------
  
 #
  
-| kayla edited 'creamy cajun chicken pasta' at 9:38:11 PM on 5-20-2023.
+| kayla edited 'creamy cajun chicken pasta' at 9:51:55 PM on 5-20-2023.
 | kayla created 'creamy cajun chicken pasta' at 9:32:17 PM on 5-20-2023
