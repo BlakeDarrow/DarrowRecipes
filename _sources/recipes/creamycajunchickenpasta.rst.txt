@@ -25,7 +25,7 @@ Ingredients
 Prep
 =========================================================
  
-
+stretchy pants because youll want seconds
  
 Directions
 =========================================================
@@ -36,5 +36,5 @@ Directions
  
 #
  
-| This recipe has not been edited.
-| kayla created 'creamy cajun chicken pasta' at 9:32:17 PM on 5-20-2023.
+| kayla edited 'creamy cajun chicken pasta' at 9:38:11 PM on 5-20-2023.
+| kayla created 'creamy cajun chicken pasta' at 9:32:17 PM on 5-20-2023
