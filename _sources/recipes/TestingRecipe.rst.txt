@@ -6,7 +6,7 @@ Ingredients
  
 1. Test
 2. Test
-3. Test'
+3. Test
  
 Prep
 =========================================================
@@ -22,5 +22,5 @@ Directions
  
 #Test
  
-| Blake edited 'Testing Recipe' at 1:18:40 PM on 5-21-2023.
+| Blake edited 'Testing Recipe' at 1:23:09 PM on 5-21-2023.
 | Recipe submitted prior to the generation of logs.
