@@ -222,6 +222,11 @@ export async function authenticateUser(password) {
       var username = getCookie("username");
       console.log(`Cookies found, welcome ${username}!`);
     }
+    // start with auto-sizing enabled
+    autosize('Ingredients');
+    autosize('Prep');
+    autosize('Directions');
+
   } catch (error) {
     if (error.name === "HttpError" && error.status === 401) {
       document.getElementById("error-message").innerHTML = "Invalid token!";
