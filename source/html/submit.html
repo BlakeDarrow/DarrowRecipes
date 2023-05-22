@@ -24,25 +24,6 @@
   <script src="_static/js/theme.js"></script>
   <link rel="index" title="Index" href="genindex" />
   <link rel="search" title="Search" href="search" />
-  <script>
-    function checkIfTextIsInClass(inputText) {
-      const elementsWithClass = document.querySelectorAll(".toctree-l1");
-      const recipeExistsMsg = document.getElementById("tooltiptext");
-      var inputTextNoWhitespace = inputText.replace(/\s/g, '').toLowerCase();;
-      for (let i = 0; i < elementsWithClass.length; i++) {
-        var textContentNoWhitespace = elementsWithClass[i].textContent.replace(/\s/g, '').toLowerCase();;
-        if (textContentNoWhitespace === inputTextNoWhitespace) {
-          console.log("Recipe exists!");
-          recipeExistsMsg.style.display = "inline-block";
-          return true;
-        }
-
-      }
-      recipeExistsMsg.style.display = "none";
-      return false;
-    }
-
-  </script>
   <script type="module">
     import { authenticateUser } from './_static/js/main.js';
     import { commitFile } from './_static/js/main.js';
@@ -298,6 +279,22 @@
 
   </script>
   <script>
+    function checkIfTextIsInClass(inputText) {
+      const elementsWithClass = document.querySelectorAll(".toctree-l1");
+      const recipeExistsMsg = document.getElementById("tooltiptext");
+      var inputTextNoWhitespace = inputText.replace(/\s/g, '').toLowerCase();;
+      for (let i = 0; i < elementsWithClass.length; i++) {
+        var textContentNoWhitespace = elementsWithClass[i].textContent.replace(/\s/g, '').toLowerCase();;
+        if (textContentNoWhitespace === inputTextNoWhitespace) {
+          console.log("Recipe exists!");
+          recipeExistsMsg.style.display = "inline-block";
+          return true;
+        }
+      }
+      recipeExistsMsg.style.display = "none";
+      return false;
+    }
+
     // https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
     function autosize(textarea_id, row_limit) {
       // Set default for row_limit parameter
@@ -305,7 +302,6 @@
       if (!row_limit) {
         row_limit = 25;
       }
-
       // Get the element
       const textarea = document.getElementById(textarea_id);
 
@@ -390,7 +386,6 @@
         autosize('Ingredients');
         autosize('Prep');
         autosize('Directions');
-
       }
     }
   </script>
@@ -411,13 +406,11 @@
             </form>
           </div>
         </div>
-
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
           <ul class="current" id="file-list-container">
             <p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
             <li class="toctree-l1"><a class="reference internal">User not logged in</a></li>
           </ul>
-
         </div>
       </div>
     </nav>
@@ -496,11 +489,9 @@
                     <span>
                       <div class="status" id="status" style="display: none;"></div>
                     </span>
-
                     <div class="progress-bar" style="display: none;" id="progress">
                       <div class="progress" style="width: 5%; display: block;" id="progress-fill"></div>
                   </form>
-
                   <script>
                   </script>
                 </div>
@@ -508,7 +499,10 @@
                 <hr>
                 <h1>Help</h1>
                 <ol>
+                  <!-- <li>For the best recipe format please use bullet points for the Ingredients, and a numbered list for the Prep and Directions.</li>  -->
                   <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
+                  <li>Ensure each element in a list contains a space after the identifier. For example "1. Preheat oven" or "- Preheat oven".</li>
+                  <li>Line breaks between elements are not retained when loading an existing recipe to edit. Please add them back.</li>
                   <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free
                     to use your name as a tag!</li>
                   <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the
@@ -518,7 +512,7 @@
                     dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
                   <li>For any questions please reach out to Blake!</li>
-                  <li><a href="" onclick="toggleDivVisibility(); event.preventDefault();">Toggle log</a>.</li>
+                  <li>For any problems check the <a href="" onclick="toggleDivVisibility(); event.preventDefault();">log</a>.</li>
                   <li>Logout <a href="" id="logout">here.</a></li>
                 </ol>
                 <script>
@@ -583,8 +577,6 @@
                   };
 
                 </script>
-
-
             </div>
           </div>
         </div>
@@ -601,5 +593,4 @@
     });
   </script>
 </body>
-
 </html>

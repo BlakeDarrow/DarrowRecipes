@@ -1,8 +1,6 @@
 Automated Build Log
 ###################
 
-- Blake edited 'Testing Recipe' at 11:31:37 PM on 5-21-2023.
-- Blake edited 'Testing Recipe' at 3:53:47 PM on 5-21-2023.
 - Blake edited 'Chicken and Sausage Jambalaya' at 12:29:34 AM on 5-21-2023.
 - Blake edited 'Testing Recipe' at 11:08:02 PM on 5-20-2023.
 - Blake edited 'Testing Recipe' at 10:18:53 PM on 5-20-2023.
