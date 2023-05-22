@@ -32,7 +32,7 @@
       for (let i = 0; i < elementsWithClass.length; i++) {
         var textContentNoWhitespace = elementsWithClass[i].textContent.replace(/\s/g, '').toLowerCase();;
         if (textContentNoWhitespace === inputTextNoWhitespace) {
-          console.log("Recipe exists");
+          console.log("Recipe exists!");
           recipeExistsMsg.style.display = "inline-block";
           return true;
         }
@@ -120,7 +120,10 @@
       document.getElementById("Category").value = "";
       document.getElementById("editedByValue").value = "";
       document.getElementById("submittedByValue").value = "";
-      console.log("Form cleared.")
+      autosize('Ingredients');
+      autosize('Prep');
+      autosize('Directions');
+      console.log("Form reset.")
     });
 
     document.getElementById("login").addEventListener("click", async () => {
@@ -295,11 +298,78 @@
 
   </script>
   <script>
+    // https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
+    function autosize(textarea_id, row_limit) {
+      // Set default for row_limit parameter
+      row_limit = parseInt(row_limit ?? '25');
+      if (!row_limit) {
+        row_limit = 25;
+      }
+
+      // Get the element
+      const textarea = document.getElementById(textarea_id);
+
+      // Set required styles for this to function properly.
+      textarea.style.setProperty('resize', 'none');
+      textarea.style.setProperty('min-height', '0');
+      textarea.style.setProperty('max-height', 'none');
+      textarea.style.setProperty('height', 'auto');
+
+      var setRows = function () {
+        // Reset rows attribute to get accurate scrollHeight
+        textarea.setAttribute('rows', '1');
+
+        // Get the computed values object reference
+        const cs = getComputedStyle(textarea);
+
+        // Force content-box for size accurate line-height calculation
+        // Remove scrollbars, lock width (subtract inline padding and inline border widths)
+        // and remove inline padding and borders to keep width consistent (for text wrapping accuracy)
+        const inline_padding = parseFloat(cs['padding-left']) + parseFloat(cs['padding-right']);
+        const inline_border_width = parseFloat(cs['border-left-width']) + parseFloat(cs['border-right-width']);
+        textarea.style.setProperty('overflow', 'hidden', 'important');
+        textarea.style.setProperty('width', (parseFloat(cs['width']) - inline_padding - inline_border_width) + 'px');
+        textarea.style.setProperty('box-sizing', 'content-box');
+        textarea.style.setProperty('padding-inline', '0');
+        textarea.style.setProperty('border-width', '0');
+
+        // Get the base line height, and top / bottom padding.
+        const block_padding = parseFloat(cs['padding-top']) + parseFloat(cs['padding-bottom']);
+        const line_height =
+          // If line-height is not explicitly set, use the computed height value (ignore padding due to content-box)
+          cs['line-height'] === 'normal' ? parseFloat(cs['height'])
+            // Otherwise (line-height is explicitly set), use the computed line-height value.
+            : parseFloat(cs['line-height']);
+
+        // Get the scroll height (rounding to be safe to ensure cross browser consistency)
+        const scroll_height = Math.round(textarea.scrollHeight);
+
+        // Undo overflow, width, border-width, box-sizing & inline padding overrides
+        textarea.style.removeProperty('width');
+        textarea.style.removeProperty('box-sizing');
+        textarea.style.removeProperty('padding-inline');
+        textarea.style.removeProperty('border-width');
+        textarea.style.removeProperty('overflow');
+
+        // Subtract block_padding from scroll_height and divide that by our line_height to get the row count.
+        // Round to nearest integer as it will always be within ~.1 of the correct whole number.
+        const rows = Math.round((scroll_height - block_padding) / line_height);
+
+        // Set the calculated rows attribute (limited by row_limit)
+        textarea.setAttribute("rows", "" + Math.min(rows, row_limit));
+      };
+      setRows(); // trigger once to ensure updates
+      textarea.oninput = setRows;
+      // Trigger the event to set the initial rows value
+      textarea.dispatchEvent(new Event('value', {
+        bubbles: true
+      }));
+    }
+
     function loadRecipe(Name, Ingredients, Prep, Directions, Category, submittedBy) {
       if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
         alert("Login to edit this recipe.");
       } else {
-
         document.getElementById("editedByValue").value = "";
         document.getElementById("submittedByValue").value = "";
         document.getElementById("file-name").value = Name;
@@ -315,6 +385,12 @@
         if (author.length > 0) {
           submittedByValue.value = author[1].replaceAll("^quote^", "'");
         }
+
+        // Set all the textarea to be auto expanding.
+        autosize('Ingredients');
+        autosize('Prep');
+        autosize('Directions');
+
       }
     }
   </script>
@@ -411,21 +487,24 @@
                     <label for="Category">Tags:</label>
                     <input type="text" id="Category" name="Category" value="" placeholder=""
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')">
-                      <hr>
+                    <hr>
                     <div class="button_group">
-                      <button type="button" id="commit-file">Submit / Edit Recipe</button>
-                      <button type="button" id="clear-file">Clear</button>
+                      <button type="button" id="commit-file">Publish Recipe</button>
+                      <button type="button" id="clear-file">Reset</button>
                       <button type="button" id="cancel-button" style="display: none;">Cancel</button>
                     </div>
-                    <span><div class="status" id="status" style="display: none;"></div></span>
+                    <span>
+                      <div class="status" id="status" style="display: none;"></div>
+                    </span>
 
                     <div class="progress-bar" style="display: none;" id="progress">
                       <div class="progress" style="width: 5%; display: block;" id="progress-fill"></div>
                   </form>
 
-      
+                  <script>
+                  </script>
                 </div>
-                <br><br><br>
+                <br><br>
                 <hr>
                 <h1>Help</h1>
                 <ol>
@@ -439,7 +518,7 @@
                     dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
                   <li>For any questions please reach out to Blake!</li>
-                  <li><a href="" onclick="toggleDivVisibility(); event.preventDefault();">Toggle log</a></li>
+                  <li><a href="" onclick="toggleDivVisibility(); event.preventDefault();">Toggle log</a>.</li>
                   <li>Logout <a href="" id="logout">here.</a></li>
                 </ol>
                 <script>
@@ -451,7 +530,7 @@
                 <div id="log" style="display:none">
                   <hr>
                   <h1>Log</h1>
-                  <div class= "scrollable-div" >
+                  <div class="scrollable-div">
                     <p id="logOutput"></p>
                   </div>
                 </div>
@@ -495,7 +574,7 @@
                       const options = { timeZone: 'America/Chicago', hour12: true };
                       const cstTime = currentDate.toLocaleTimeString('en-US', options);
                       const logMessage = document.createElement('span');
-                      logMessage.textContent = "["+ cstTime + "] " + message;
+                      logMessage.textContent = "[" + cstTime + "] " + message;
                       logOutput.appendChild(logMessage);
                       logOutput.appendChild(document.createElement('br'));
                     }

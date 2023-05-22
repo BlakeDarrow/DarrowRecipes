@@ -29,7 +29,6 @@
   background-color: green;
   border-radius: 5px;
   padding: 10px;
-
 }
 
 .status {
@@ -58,6 +57,7 @@
 }
 
 .darrow form textarea {
+  max-width: 0px;
   width: 100%;
   border: 1px solid #ccc;
   background: #fff;
@@ -70,7 +70,8 @@
   border-radius: 5px;
   font-weight: 400;
   min-height: 75px;
-} 
+  line-height: 24px;
+}
 
 .darrow form textarea:hover {
   transition: border-color 0.3s ease-in-out;
@@ -82,14 +83,13 @@
 }
 
 .button_group {
-width: 100%;
-display: flex;
-flex: 1;
-grid-gap: 2px;
+  width: 100%;
+  display: flex;
+  flex: 1;
+  grid-gap: 2px;
 }
 
 .darrow form button {
-  
   border-radius: 5px;
   width: 100%;
   border: none;
@@ -115,7 +115,7 @@ grid-gap: 2px;
 }
 
 .hiddenDebug {
-  color: #404040;  
+  color: #404040;
 }
 
 .hiddenDebug input {
@@ -132,7 +132,7 @@ grid-gap: 2px;
   display: inline-block;
 }
 
-.tooltip .tooltiptext  {
+.tooltip .tooltiptext {
   visibility: hidden;
   width: 75%;
   text-align: center;
@@ -156,13 +156,55 @@ grid-gap: 2px;
 }
 
 .scrollable-div {
-  height: 150px;
+  height: 300px;
   overflow: auto;
   border-radius: 5px;
   margin: 2px;
   padding: 10px;
   color: #404040;
   box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+/* For webkit-based browsers */
+::-webkit-scrollbar {
+  width: 6px; /* Width of the vertical scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; /* Color of the scrollbar track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bfbfbf; /* Color of the scrollbar handle */
+  border-radius: 2.5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d9d9d9; /* Color of the scrollbar handle when hovered */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; /* Color of the scrollbar track */
+}
+
+/* Handle */
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #bfbfbf; /* Color of the scrollbar handle */
+  border-radius: 2.5px;
+}
+
+/* Handle on hover */
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf; /* Color of the scrollbar handle when hovered */
+}
+
+/* Handle on hover */
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #101010; /* Color of the scrollbar track */
 }
 
 html[data-theme="dark"] #cancel-button[disabled] {
@@ -173,6 +215,7 @@ html[data-theme="dark"] #cancel-button[disabled] {
 html[data-theme="dark"] .darrow form {
   background-color: #101010;
   color: #d9d9d9;
+  box-shadow: 0 0 1px 0 #d9d9d9;
 }
 
 html[data-theme="dark"] .darrow form label {
@@ -212,4 +255,3 @@ html[data-theme="dark"] .scrollable-div {
   color: #d9d9d9;
   box-shadow: 0 0 1px 0 #d9d9d9;
 }
-
