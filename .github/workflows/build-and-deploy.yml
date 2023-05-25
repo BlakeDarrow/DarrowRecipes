@@ -101,24 +101,17 @@ jobs:
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - name: Build rst with Sphinx
-      uses: sphinx-notes/pages@v2
-      with:
+    - name: Build and Commit
+      uses: bodik/sphinx-notes-pages@v2
+      with: 
         documentation_path: ./source/sphinx
         requirements_path: ./source/sphinx/requirements.txt
-        target_branch: gh-pages-test
-    
-    - name: Checkout
-      uses: actions/checkout@v3
-      with:
-        ref: gh-pages
-
-    - name: Push rst
+    - name: Push changes
       uses: ad-m/github-push-action@master
       with:
-        github_token: ${{ secrets.CREATE_SITE_SECRET }}
+        github_token: ${{ secrets.GITHUB_TOKEN }}
         branch: gh-pages
-
+    
   deploy:
     needs: build
     environment:
