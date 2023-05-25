@@ -66,7 +66,7 @@ jobs:
           cache: 'pip'
 
     - name: Add automated submission to changelog
-      if: "contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created') ||" #If we are manually building, skip the changelog steps
+      if: "contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
 
     - name: Add last build date to index
