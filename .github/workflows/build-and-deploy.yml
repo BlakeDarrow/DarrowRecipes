@@ -57,16 +57,14 @@ jobs:
     continue-on-error: true
     steps:
     - name: Checkout code
-      if: "!contains(github.event.head_commit.message, 'build')" #If we are manually building, skip the changelog steps
       uses: actions/checkout@v3
     - name: Add build to changelog
       if: "!contains(github.event.head_commit.message, 'build') && !github.event_name == 'workflow_dispatch'" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
     - name: Add last build date to index
-      if: "!contains(github.event.head_commit.message, 'build')"
       run: |
         export TZ="America/Chicago"
-        sed -i "$ Last built at $(date +'%l:%M:%S %p on %-m-%-d-%Y.')" source/sphinx/index.rst
+        sed -i '$c\'"Last built at $(date +'%l:%M:%S %p on %-m-%-d-%Y.')" source/sphinx/index.rst
 
     - name: Commit changes
       uses: EndBug/add-and-commit@v7.0.0
