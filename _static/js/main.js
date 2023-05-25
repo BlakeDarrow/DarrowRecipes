@@ -455,6 +455,9 @@ export async function commitFile(
   document.getElementById("Category").value = "";
   document.getElementById("editedByValue").value = "";
   document.getElementById("submittedByValue").value = "";
+  autosize('Ingredients');
+  autosize('Prep');
+  autosize('Directions');
 
   cancelFlag = false;
   console.log("Reset 'cancelFlag'");
