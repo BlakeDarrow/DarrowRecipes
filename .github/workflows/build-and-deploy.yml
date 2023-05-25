@@ -45,7 +45,7 @@ jobs:
           name: Recipes
           tag_name: ${{ steps.set_tag_name.outputs.tag_name }}
       
-  changelog:
+  build:
     if: |
       (contains(github.event.head_commit.message, 'edited') || 
       contains(github.event.head_commit.message, 'created')) && 
@@ -59,7 +59,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v3
     - name: Add build to changelog
-      if: "!contains(github.event.head_commit.message, 'build') && !github.event_name == 'workflow_dispatch'" #If we are manually building, skip the changelog steps
+      if: "!github.event_name == 'workflow_dispatch'" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
     - name: Add last build date to index
       run: |
@@ -71,19 +71,10 @@ jobs:
       with:
         message: "Automated updates"
         add: "['source/sphinx/builds.rst','source/sphinx/index.rst']"
-
         force: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-  build:
-    needs: changelog
-    continue-on-error: true
-    if: |
-      ((needs.changelog.result != 'failure' || needs.changelog.result != 'skipped') || 
-      contains(github.event.head_commit.message, 'build'))
-      || github.event_name == 'workflow_dispatch'
-    runs-on: ubuntu-latest
-    steps:
+      
     - uses: actions/checkout@v3
     - uses: actions/setup-python@v4
       with:
