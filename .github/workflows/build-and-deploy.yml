@@ -51,22 +51,17 @@ jobs:
       contains(github.event.head_commit.message, 'created')) && 
       !contains(github.event.head_commit.message, 'testing') ||
       contains(github.event.head_commit.message, 'build')
+
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-    - name: Skip changelog
-      if: contains(github.event.head_commit.message, 'build')
-      run: echo "Skipping changelog build steps."
-
     - name: Checkout code
       uses: actions/checkout@v3
-
     - name: Add build to changelog
-      run: |
-        if ! contains(github.event.head_commit.message, 'build'); then
-          sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
-        fi
+      if: "!contains(github.event.head_commit.message, 'build')"
+      run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
     - name: Commit changes
+      if: "!contains(github.event.head_commit.message, 'build')"
       uses: EndBug/add-and-commit@v7.0.0
       with:
         message: "Updated changelog"
@@ -74,7 +69,6 @@ jobs:
         force: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-
   build:
     needs: changelog
     continue-on-error: true
