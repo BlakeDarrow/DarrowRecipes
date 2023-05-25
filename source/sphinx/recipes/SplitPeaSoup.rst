@@ -35,7 +35,7 @@ Note: This soup freezes beautifully. Stored in an airtight container for up to t
  
 ------
  
-#
+#Crockpot
  
-| Blake edited 'Split Pea Soup' at 1:09:55 PM on 4-6-2023.
+| Blake edited 'Split Pea Soup' at 9:35:18 PM on 5-24-2023.
 | Melanie created 'Split Pea Soup' at 4:41:33 PM on 4-5-2023.
