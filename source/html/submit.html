@@ -31,6 +31,9 @@
     import { checkCookie } from './_static/js/main.js';
     import { getCookie } from './_static/js/main.js';
     import { setCookie } from './_static/js/main.js';
+    import { monitorWorkflowStatus } from './_static/js/main.js';
+    import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
+
     checkCookie("password");
 
     var testMode = false; // Don't commit to GitHub
@@ -92,6 +95,19 @@
       console.log("Attempting to logout user...")
 
     });
+
+    if (testMode) {
+      document.getElementById("monitor-workflow").addEventListener("click", async () => {
+        console.log("Attempting to monitor workflow runs..");
+        var passwordId = document.getElementById("password");
+        var password = passwordId.value;
+        passwordId.addEventListener("input", function () {
+          password = password.value;
+        });
+        const octokit = new Octokit({ auth: password });
+        monitorWorkflowStatus(octokit,"BlakeDarrow","DarrowRecipes");
+      });
+    }
 
     document.getElementById("clear-file").addEventListener("click", async () => {
       document.getElementById("file-name").value = "";
@@ -456,6 +472,7 @@
                   <input type="text" id="editedByValue" name="editedByValue" value=""><br><br>
                   <label for="submittedByValue">Submitted by:</label>
                   <input type="text" id="submittedByValue" name="submittedByValue" value=""><br><br>
+                  <button type="button" id="monitor-workflow">Monitor Workflow</button>
                   <hr>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">
