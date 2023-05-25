@@ -59,14 +59,14 @@ jobs:
     - uses: actions/checkout@master
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
-        
+
     - uses: actions/setup-python@v4
       with:
           python-version: '3'
           cache: 'pip'
 
     - name: Add automated submission to changelog
-      if: "!github.event_name == 'workflow_dispatch'" #If we are manually building, skip the changelog steps
+      if: "contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created') ||" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
 
     - name: Add last build date to index
@@ -96,16 +96,22 @@ jobs:
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
 
-    - uses: actions/checkout@master
-      with:
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+    - name: Checkout
+        uses: actions/checkout@master
+        with:
+          ref: main
 
     - name: Build rst with Sphinx
       uses: sphinx-notes/pages@v2
       with:
         documentation_path: ./source/sphinx
         requirements_path: ./source/sphinx/requirements.txt
-        
+    
+    - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: main
+
     - name: Push rst
       uses: ad-m/github-push-action@master
       with:
