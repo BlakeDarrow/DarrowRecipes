@@ -1,8 +1,7 @@
 name: Automated Commits
 on: 
   push:
-    branches: [ main ]
-      paths:
+    paths:
       - 'source/sphinx/recipes/**'
 
   workflow_dispatch:
