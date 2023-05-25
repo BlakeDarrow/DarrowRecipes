@@ -97,9 +97,9 @@ jobs:
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
 
     - name: Checkout
-        uses: actions/checkout@master
-        with:
-          ref: main
+      uses: actions/checkout@master
+      with:
+        ref: main
 
     - name: Build rst with Sphinx
       uses: sphinx-notes/pages@v2
@@ -108,9 +108,9 @@ jobs:
         requirements_path: ./source/sphinx/requirements.txt
     
     - name: Checkout
-        uses: actions/checkout@v3
-        with:
-          ref: main
+      uses: actions/checkout@v3
+      with:
+        ref: main
 
     - name: Push rst
       uses: ad-m/github-push-action@master
