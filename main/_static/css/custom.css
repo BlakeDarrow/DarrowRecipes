@@ -1,0 +1,257 @@
+@import "theme.css";
+
+.form-group {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-right: -50%;
+  transform: translate(-50%, -50%);
+}
+
+.darrow form {
+  width: 100%;
+  height: auto;
+  border-radius: 5px;
+  text-align: left;
+  color: #404040;
+  padding: 25px;
+  font-weight: 600;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+.progress-bar {
+  border-radius: 5px;
+  padding: 2px;
+  margin: 2px;
+}
+
+.progress {
+  background-color: green;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.status {
+  font-size: 90%;
+  padding: 2px;
+  margin: 2px;
+  margin-top: 20px;
+}
+
+.darrow form label {
+  color: #404040;
+}
+
+.darrow form input,
+.darrow input[type="password"] {
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  margin: 0 0 5px;
+  padding: 10px;
+  max-width: 100%;
+  resize: none;
+  border-radius: 5px;
+  text-align: left;
+  font-weight: 400;
+}
+
+.darrow form textarea {
+  max-width: 0px;
+  width: 100%;
+  border: 1px solid #ccc;
+  background: #fff;
+  margin: 0 0 5px;
+  padding: 10px;
+  height: 15%;
+  max-width: 100%;
+  resize: vertical;
+  text-align: left;
+  border-radius: 5px;
+  font-weight: 400;
+  min-height: 75px;
+  line-height: 24px;
+}
+
+.darrow form textarea:hover {
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #bfbfbf;
+}
+.darrow form input:hover {
+  transition: border-color 0.3s ease-in-out;
+  border: 1px solid #bfbfbf;
+}
+
+.button_group {
+  width: 100%;
+  display: flex;
+  flex: 1;
+  grid-gap: 2px;
+}
+
+.darrow form button {
+  border-radius: 5px;
+  width: 100%;
+  border: none;
+  background: #343131;
+  color: #fff;
+  padding: 10px;
+  font-size: 14px;
+  min-width: 50px;
+}
+
+#commit-file {
+  flex-basis: 80%;
+}
+
+#clear-file,
+#cancel-button {
+  flex-basis: 20%;
+}
+
+.darrow form button:hover {
+  background: #bfbfbf;
+  transition: background-color 0.3s ease-in-out;
+}
+
+.hiddenDebug {
+  color: #404040;
+}
+
+.hiddenDebug input {
+  border-radius: 5px !important;
+  width: 50%;
+}
+
+.tooltip .tooltiptext span {
+  color: #404040 !important;
+}
+
+.tooltip {
+  position: relative;
+  display: inline-block;
+}
+
+.tooltip .tooltiptext {
+  visibility: hidden;
+  width: 75%;
+  text-align: center;
+  padding: 2px;
+  position: absolute;
+  z-index: 1;
+  bottom: 100%;
+  left: 50%;
+  margin-left: -25%;
+  margin-bottom: 0px;
+  opacity: 0;
+  transition: opacity 0.3s;
+  font-family: Lato, proxima-nova, Helvetica Neue, Arial, sans-serif !important;
+  text-align: right !important;
+  font-size: 90%;
+}
+
+.tooltip:hover .tooltiptext {
+  visibility: visible;
+  opacity: 1;
+}
+
+.scrollable-div {
+  height: 300px;
+  overflow: auto;
+  border-radius: 5px;
+  margin: 2px;
+  padding: 10px;
+  color: #404040;
+  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
+}
+
+/* For webkit-based browsers */
+::-webkit-scrollbar {
+  width: 6px; /* Width of the vertical scrollbar */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; /* Color of the scrollbar track */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #bfbfbf; /* Color of the scrollbar handle */
+  border-radius: 2.5px;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #d9d9d9; /* Color of the scrollbar handle when hovered */
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #fff; /* Color of the scrollbar track */
+}
+
+/* Handle */
+html[data-theme="dark"] ::-webkit-scrollbar-thumb {
+  background: #bfbfbf; /* Color of the scrollbar handle */
+  border-radius: 2.5px;
+}
+
+/* Handle on hover */
+html[data-theme="dark"] ::-webkit-scrollbar-thumb:hover {
+  background: #bfbfbf; /* Color of the scrollbar handle when hovered */
+}
+
+/* Handle on hover */
+html[data-theme="dark"] ::-webkit-scrollbar-track {
+  background: #101010; /* Color of the scrollbar track */
+}
+
+html[data-theme="dark"] #cancel-button[disabled] {
+  background-color: #101010;
+  transition: background-color 0.3s ease-in-out;
+}
+
+html[data-theme="dark"] .darrow form {
+  background-color: #101010;
+  color: #d9d9d9;
+  box-shadow: 0 0 1px 0 #d9d9d9;
+}
+
+html[data-theme="dark"] .darrow form label {
+  color: #d9d9d9;
+}
+html[data-theme="dark"] .darrow form button {
+  background-color: #0b152d;
+  color: #d9d9d9;
+}
+html[data-theme="dark"] .darrow form input {
+  background-color: #d9d9d9;
+  color: #000;
+}
+html[data-theme="dark"] .darrow form textarea {
+  background-color: #d9d9d9;
+  color: #000;
+}
+html[data-theme="dark"] .darrow input {
+  background-color: #d9d9d9;
+}
+
+html[data-theme="dark"] .tooltip .tooltiptext span {
+  color: #d9d9d9 !important;
+}
+
+html[data-theme="dark"] .hiddenDebug label {
+  color: #d9d9d9 !important;
+}
+
+html[data-theme="dark"] .hiddenDebug input {
+  background-color: #d9d9d9 !important;
+  color: #000;
+}
+
+html[data-theme="dark"] .scrollable-div {
+  background-color: #101010 !important;
+  color: #d9d9d9;
+  box-shadow: 0 0 1px 0 #d9d9d9;
+}
