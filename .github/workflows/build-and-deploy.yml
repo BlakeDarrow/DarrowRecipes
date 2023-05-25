@@ -47,39 +47,54 @@ jobs:
       
   build:
     if: |
-      (contains(github.event.head_commit.message, 'edited') || 
-      contains(github.event.head_commit.message, 'created')) && 
-      !contains(github.event.head_commit.message, 'testing') ||
+      (contains(github.event.head_commit.message, 'edited') ||
+      contains(github.event.head_commit.message, 'created')) || 
       contains(github.event.head_commit.message, 'build') ||
       github.event_name == 'workflow_dispatch'
 
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-    - name: Checkout code
-      uses: actions/checkout@v3
-    - name: Add build to changelog
+    - uses: actions/setup-python@v4
+      with:
+          python-version: '3'
+          cache: 'pip'
+
+      uses: actions/checkout@master
+      with:
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+    - name: Add automated submission to changelog
       if: "!github.event_name == 'workflow_dispatch'" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
+
     - name: Add last build date to index
       run: |
         export TZ="America/Chicago"
         sed -i '$c\'"Last built at $(date +'%l:%M:%S %p on %-m-%-d-%Y.')" source/sphinx/index.rst
 
-    - name: Commit changes
+    - name: Commit automated changes
       uses: EndBug/add-and-commit@v7.0.0
       with:
         message: "Automated updates"
         add: "['source/sphinx/builds.rst','source/sphinx/index.rst']"
-        force: true
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-      
-    - uses: actions/checkout@v3
-    - uses: actions/setup-python@v4
+
+    - uses: actions/checkout@master
       with:
-          python-version: '3'
-          cache: 'pip'
+        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+
+    - name: Push static html to gh-pages
+      uses: s0/git-publish-subdir-action@develop
+      env:
+        REPO: self
+        BRANCH: gh-pages # The branch name where you want to push the assets
+        FOLDER: source/html # The directory where your assets are generated
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
+        MESSAGE: "Build: ({sha}) {msg}" # The commit message
+        CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
+
     - uses: actions/checkout@master
       with:
         fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
@@ -96,21 +111,6 @@ jobs:
         github_token: ${{ secrets.CREATE_SITE_SECRET }}
         branch: gh-pages
         
-        name: Deploy static content to Pages
-        
-    - name: git-checkout
-      uses: actions/checkout@v3
-
-    - name: Push html folder
-      uses: s0/git-publish-subdir-action@develop
-      env:
-        REPO: self
-        BRANCH: gh-pages # The branch name where you want to push the assets
-        FOLDER: source/html # The directory where your assets are generated
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} # GitHub will automatically add this - you don't need to bother getting a token
-        MESSAGE: "Build: ({sha}) {msg}" # The commit message
-        CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
-
   deploy:
     needs: build
     environment:
