@@ -511,7 +511,32 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function monitorWorkflowStatus(octokit, owner, repo) {
+function getCurrentTime() {
+  var now = new Date();
+  
+  var currentTimeUTC = now.toISOString();
+
+  var datePart = currentTimeUTC.substr(0, 10);
+  var timePart = currentTimeUTC.substr(11, 8);
+  
+  var formattedTime = datePart + 'T' + timePart + 'Z';
+
+  return formattedTime;
+}
+
+function calculateDifference(lastRan) {
+  var currentTime = getCurrentTime();
+
+  var date1 = new Date(lastRan);
+  var date2 = new Date(currentTime);
+
+  var timeDifferenceMs = date2 - date1;
+  var timeDifferenceSec = Math.floor(timeDifferenceMs / 1000);
+  var timeDifferenceMin = Math.floor(timeDifferenceSec / 60);
+  return timeDifferenceSec
+}
+
+export async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
     await sleep(5000);
 
@@ -522,9 +547,12 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
       per_page: 1,
     });
 
-    const id = workflowRuns.data.workflow_runs[0].check_suite_id;
-    console.log(id);
+    var id = workflowRuns.data.workflow_runs[0].check_suite_id;
+    var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
     console.log(workflowRuns);
+    var maxSec = 60;
+    var dif = calculateDifference(lastRan);
+    console.log('Last workflow triggered ' + dif + ' seconds ago.');
 
     var progress = document.getElementById("progress");
     var progressBar = document.getElementById("progress-fill");
@@ -543,13 +571,12 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id,
           }
         );
-
+        // console.log(latestRun.check_runs[0]);
         const buildStatus = latestRun.check_runs[0].status;
 
-        if (buildStatus === "completed") {
-          const deployStatus = latestRun.check_runs[1].status;
+        if (buildStatus === "completed" && dif <= maxSec) {
           console.log(
-            `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
+            `Build and Deploy status: ${buildStatus}`
           );
 
           var status = document.getElementById("status");
@@ -557,14 +584,29 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
           status.innerHTML = "Website published. Refresh to see new changes!";
           progressBar.style.width = "100%";
           clearInterval(timer);
-        } else {
+        }
+        else if (dif >= maxSec) {
+          workflowRuns = await octokit.actions.listWorkflowRuns({
+            owner: owner,
+            repo: repo,
+            workflow_id: "build-and-deploy.yml",
+            per_page: 1,
+          });
+      
+          id = workflowRuns.data.workflow_runs[0].check_suite_id;
+          lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+          maxSec = 60;
+          dif = calculateDifference(lastRan);
+          console.log('Last workflow triggered ' + dif + ' seconds ago.');
+        }
+        else {
           console.log(
-            `Build status: ${buildStatus}, Deploy status: Not Started`
+            `Build and Deploy status: ${buildStatus}`
           );
 
           progressValue += 5;
           progressBar.style.width = progressValue + "%";
-        }
+          }
       } catch (error) {
         console.error(error);
       }
