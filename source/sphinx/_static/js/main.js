@@ -445,8 +445,8 @@ export async function commitFile(
   console.log("Deleted temporary branch.");
   status.innerHTML = "Deleted temporary branch.";
 
-  console.log("Recipe fully committed. Publishing website...");
-  status.innerHTML = "Recipe fully committed. Publishing website...";
+  console.log("Recipe fully committed. Waiting to be deployed...");
+  status.innerHTML = "Recipe fully committed. Waiting to be deployed...";
 
   document.getElementById("file-name").value = "";
   document.getElementById("Ingredients").value = "";
@@ -511,21 +511,33 @@ function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
-async function monitorWorkflowStatus(octokit, owner, repo) {
+function getCurrentTime() {
+  var now = new Date();
+  
+  var currentTimeUTC = now.toISOString();
+
+  var datePart = currentTimeUTC.substr(0, 10);
+  var timePart = currentTimeUTC.substr(11, 8);
+  
+  var formattedTime = datePart + 'T' + timePart + 'Z';
+
+  return formattedTime;
+}
+
+function calculateDifference(lastRan) {
+  var currentTime = getCurrentTime();
+
+  var date1 = new Date(lastRan);
+  var date2 = new Date(currentTime);
+
+  var timeDifferenceMs = date2 - date1;
+  var timeDifferenceSec = Math.floor(timeDifferenceMs / 1000);
+  var timeDifferenceMin = Math.floor(timeDifferenceSec / 60);
+  return timeDifferenceSec
+}
+
+export async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
-    await sleep(5000);
-
-    var workflowRuns = await octokit.actions.listWorkflowRuns({
-      owner: owner,
-      repo: repo,
-      workflow_id: "build-and-deploy.yml",
-      per_page: 1,
-    });
-
-    const id = workflowRuns.data.workflow_runs[0].check_suite_id;
-    console.log(id);
-    console.log(workflowRuns);
-
     var progress = document.getElementById("progress");
     var progressBar = document.getElementById("progress-fill");
     var progressValue = 1;
@@ -533,9 +545,20 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
     progressBar.style.display = "block";
     progress.style.display = "block";
 
-    const timer = setInterval(async () => {
+    var timer = setInterval(async () => {
       try {
-        const { data: latestRun } = await octokit.request(
+        var workflowRuns = await octokit.actions.listWorkflowRuns({
+          owner: owner,
+          repo: repo,
+          workflow_id: "build-and-deploy.yml",
+          per_page: 1,
+        });
+        var id = workflowRuns.data.workflow_runs[0].check_suite_id;
+        var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+        var maxSec = 60;
+        var dif = calculateDifference(lastRan);
+    
+        var { data: latestRun } = await octokit.request(
           "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
           {
             owner: owner,
@@ -543,32 +566,27 @@ async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id,
           }
         );
+        var buildStatus = latestRun.check_runs[0].status; // 1 being the deploy step
+        console.info([dif + ' seconds stale.', workflowRuns, latestRun, "Build: " + buildStatus]);
 
-        const buildStatus = latestRun.check_runs[0].status;
-
-        if (buildStatus === "completed") {
-          const deployStatus = latestRun.check_runs[1].status;
-          console.log(
-            `Build status: ${buildStatus}, Deploy status: ${deployStatus}`
-          );
-
+        if ((buildStatus === "completed" && dif <= maxSec)) {
+          console.log(`Website published!`);
           var status = document.getElementById("status");
           status.style.display = "block";
           status.innerHTML = "Website published. Refresh to see new changes!";
           progressBar.style.width = "100%";
           clearInterval(timer);
-        } else {
-          console.log(
-            `Build status: ${buildStatus}, Deploy status: Not Started`
-          );
-
-          progressValue += 5;
+          return
+        }
+        else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
+          console.log('In progress...')
+          progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
         }
       } catch (error) {
         console.error(error);
       }
-    }, 5000);
+    }, 1000);
   } catch (error) {
     console.error(error);
   }

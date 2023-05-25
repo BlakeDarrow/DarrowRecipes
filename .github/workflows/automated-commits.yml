@@ -4,16 +4,12 @@ on:
     paths:
       - 'source/sphinx/recipes/**'
   workflow_dispatch:
-  
-permissions:
-  contents: write
-  pages: write
-  id-token: write
+
+permissions: write-all
   
 jobs:
-  release-recipes:
+  release-recipes-folder:
     runs-on: ubuntu-latest
-    continue-on-error: true
     if: |
       (
         (contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created'))
@@ -21,32 +17,42 @@ jobs:
       )
       || github.event_name == 'workflow_dispatch'
     steps:
-      - name: Set tag_name
-        id: set_tag_name
-        run: echo "::set-output name=tag_name::v$(date +'%m-%d-%Y-%H%M')"
-      - name: Checkout repository
-        uses: actions/checkout@v2
-      - name: Create zip archive
-        run: |
-          zip -j Recipes.zip source/sphinx/recipes/*
-      - name: Upload artifact
-        uses: actions/upload-artifact@v2
-        with:
-          name: All_Recipes
-          path: Recipes.zip
-      - name: Checkout
-        uses: actions/checkout@v3
-      - uses: actions/download-artifact@v2
-        with:
-          name: All_Recipes
-      - name: Release Recipes
-        uses: softprops/action-gh-release@v1
-        with:
-          files: Recipes.zip
-          name: Recipes
-          tag_name: ${{ steps.set_tag_name.outputs.tag_name }}
-      
-  setup:
+    - name: Set file_name
+      id: set_file_name
+      run: echo "::set-output name=file_name::v$(date +'%m-%d-%Y-%H%M')"
+    
+    - name: Checkout repository
+      uses: actions/checkout@v2
+    
+    - name: Create zipped recipe folder
+      run: |
+        zip -j "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip" source/sphinx/recipes/*
+    
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: All_Recipes
+        path: Recipes-${{ steps.set_file_name.outputs.file_name }}.zip
+    
+    - name: Checkout
+      uses: actions/checkout@v3
+    
+    - name: Download artifact
+      uses: actions/download-artifact@v2
+      with:
+        name: All_Recipes
+    
+    - name: Upload recipes to release
+      uses: svenstaro/upload-release-action@v2
+      with:
+        repo_token: ${{ secrets.PAT }}
+        file: "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip"
+        asset_name: "Recipes.zip"
+        tag: Recipes
+        overwrite: true
+        body: "Zipped bundle of all recipes, automatically built when new recipes are added. Last built on ${{ steps.set_file_name.outputs.file_name }}."
+
+  automated-commits:
     if: |
       (contains(github.event.head_commit.message, 'edited') ||
       contains(github.event.head_commit.message, 'created')) || 

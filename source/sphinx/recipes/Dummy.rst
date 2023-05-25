@@ -1,29 +1,24 @@
-Testing Recipe
+Dummy
 ###########################################################
  
 Ingredients
 =========================================================
  
-1. Test
+1
  
 Prep
 =========================================================
  
-1. Test
-2. Test
-3. Test
-4. Test
-5. Test
-6. Test
+1
  
 Directions
 =========================================================
  
-1. Test
+1
  
 ------
  
-#Test
+#1
  
-| Blake edited 'Testing Recipe' at 7:47:17 PM on 5-25-2023.
-| Recipe submitted prior to the generation of logs.
+| This recipe has not been edited.
+| Blake created 'Dummy' at 8:12:09 PM on 5-25-2023.
