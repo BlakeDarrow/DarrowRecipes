@@ -46,14 +46,23 @@ jobs:
           tag_name: ${{ steps.set_tag_name.outputs.tag_name }}
       
   changelog:
-    if: (contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')) && !contains(github.event.head_commit.message, 'testing')
+    if: |
+      (contains(github.event.head_commit.message, 'edited') || 
+      contains(github.event.head_commit.message, 'created')) && 
+      !contains(github.event.head_commit.message, 'testing') ||
+      contains(github.event.head_commit.message, 'build')
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
-    - name: Checkout code
+    - name: Skip changelog
+      if: contains(github.event.head_commit.message, 'build')
+      run: echo "Skipping changelog build steps."
       uses: actions/checkout@v3
     - name: Add build to changelog
-      run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
+      run: |
+        if ! contains(github.event.head_commit.message, 'build'); then
+          sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
+        fi
     - name: Commit changes
       uses: EndBug/add-and-commit@v7.0.0
       with:
