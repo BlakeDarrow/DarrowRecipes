@@ -22,4 +22,7 @@ Put all in crockpot and cook for approximately four hours on low.
  
 ------
  
-#Melanie, #MainCourse
+#Melanie, #MainCourse, #Favorite
+ 
+| Blake edited 'Cream Cheese Chicken' at 11:43:09 PM on 5-24-2023.
+| Recipe submitted prior to the generation of logs.
