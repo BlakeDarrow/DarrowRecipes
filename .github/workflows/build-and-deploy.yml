@@ -106,7 +106,7 @@ jobs:
       with:
         documentation_path: ./source/sphinx
         requirements_path: ./source/sphinx/requirements.txt
-        checkout: false
+        target_branch: gh-pages-test
     
     - name: Checkout
       uses: actions/checkout@v3
