@@ -1,4 +1,4 @@
-Automated Build Log
+Submission Log
 ###################
 
 - Melanie created 'Crock Pot Chicken Tikka Masala' at 10:52:47 AM on 5-23-2023.

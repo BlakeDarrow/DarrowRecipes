@@ -6,7 +6,6 @@ Navigate to the left side panel. You will find a search bar, a submission page, 
 
 You can search for specific recipes, keywords, or tags within the search bar. You can also manually navigate to them by selecting the recipe title in the 'All Recipes' panel on the left of your screen. Alternatively, select from the list below.
 
-
 .. I am using raw html to render the section titles because I am hiding the toctree labels with css so that the column elements line up cleanly.
 .. raw:: html
 
@@ -42,13 +41,14 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 
    <br>
    
-   <h1>Logs</h1>
+   <h1>Automated</h1>
 
 
 .. toctree::
-   :caption: Logs
+   :caption: Automated
    :maxdepth: 3
    :titlesonly:
    :glob:
 
    builds
+   Download All Recipes <https://github.com/BlakeDarrow/DarrowRecipes/releases/latest/download/Recipes.zip>

@@ -19,32 +19,25 @@ jobs:
         && !contains(github.event.head_commit.message, 'testing')
       )
       || github.event_name == 'workflow_dispatch'
-
     steps:
       - name: Set tag_name
         id: set_tag_name
         run: echo "::set-output name=tag_name::v$(date +'%m-%d-%Y-%H%M')"
-
       - name: Checkout repository
         uses: actions/checkout@v2
-
       - name: Create zip archive
         run: |
-          zip Recipes.zip source/sphinx/recipes/*
-
+          zip -j Recipes.zip source/sphinx/recipes/*
       - name: Upload artifact
         uses: actions/upload-artifact@v2
         with:
           name: All_Recipes
           path: Recipes.zip
-
       - name: Checkout
         uses: actions/checkout@v3
-      
       - uses: actions/download-artifact@v2
         with:
           name: All_Recipes
-
       - name: Release Recipes
         uses: softprops/action-gh-release@v1
         with:
@@ -59,10 +52,8 @@ jobs:
     steps:
     - name: Checkout code
       uses: actions/checkout@v3
-
     - name: Add build to changelog
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
-
     - name: Commit changes
       uses: EndBug/add-and-commit@v7.0.0
       with:
@@ -88,13 +79,11 @@ jobs:
           python-version: '3'
           cache: 'pip'
     - uses: actions/checkout@master
-
     - name: Build html from Sphinx
       uses: sphinx-notes/pages@v2
       with:
         documentation_path: ./source/sphinx
         requirements_path: ./source/sphinx/requirements.txt
- 
     - name: Push rst
       uses: ad-m/github-push-action@master
       with:
@@ -102,10 +91,8 @@ jobs:
         branch: gh-pages
         
         name: Deploy static content to Pages
-        
     - name: git-checkout
       uses: actions/checkout@v3
-
     - name: Push html folder
       uses: s0/git-publish-subdir-action@develop
       env:
