@@ -12,7 +12,7 @@ permissions:
   id-token: write
   
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
@@ -47,17 +47,22 @@ jobs:
         MESSAGE: "Build: ({sha}) {msg}" # The commit message
         CLEAR_GLOBS_FILE: "./source/html/files-to-delete" #empty file so that nothing will be deleted on push
 
-    - name: Checkout gh-pages
-      uses: actions/checkout@v3
-      with:
-        ref: gh-pages
-
-    - name: Setup Pages
-      uses: actions/configure-pages@v3
-      
-    - name: Upload artifact
-      uses: actions/upload-pages-artifact@v1
-      with:
-        path: '.'
-    - name: Deploy to GitHub Pages
-      uses: actions/deploy-pages@v1
+  deploy:
+    needs: build
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+        with:
+          ref: gh-pages
+      - name: Setup Pages
+        uses: actions/configure-pages@v3
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v1
+        with:
+          path: '.'
+      - name: Deploy to GitHub Pages
+        uses: actions/deploy-pages@v1
