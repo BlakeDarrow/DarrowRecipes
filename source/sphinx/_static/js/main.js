@@ -596,7 +596,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
       
           id = workflowRuns.data.workflow_runs[0].check_suite_id;
           lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-          maxSec = 75;
+          maxSec = 65; // about how long it takes to run "build-and-deploy"
           dif = calculateDifference(lastRan);
           console.log('Last workflow triggered ' + dif + ' seconds ago.');
         }
@@ -605,7 +605,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             `Build and Deploy status: ${buildStatus}`
           );
 
-          progressValue += 5;
+          progressValue += 3;
           progressBar.style.width = progressValue + "%";
           }
       } catch (error) {
