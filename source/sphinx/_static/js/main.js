@@ -507,10 +507,6 @@ export async function triggerDeleteWorkflowRuns(
   console.log(`Deleted ${runIds.length} workflow runs`);
 }
 
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
-}
-
 function getCurrentTime() {
   var now = new Date();
   
@@ -535,69 +531,100 @@ function calculateDifference(lastRan) {
   var timeDifferenceMin = Math.floor(timeDifferenceSec / 60);
   return timeDifferenceSec
 }
-
 export async function monitorWorkflowStatus(octokit, owner, repo) {
-  try {
-    var progress = document.getElementById("progress");
-    var progressBar = document.getElementById("progress-fill");
-    var progressValue = 1;
-    progressBar.style.width = progressValue + "%";
+
+  var progress = document.getElementById("progress");
+  var progressBar = document.getElementById("progress-fill");
+  var progressValue = 1;
+  progressBar.style.width = progressValue + "%";
+  progressBar.style.display = "block";
+  progress.style.display = "block";
+
+  var workflowRuns = await octokit.actions.listWorkflowRuns({
+    owner: owner,
+    repo: repo,
+    workflow_id: "build-and-deploy.yml",
+    per_page: 1,
+  });
+  var id = workflowRuns.data.workflow_runs[0].check_suite_id;
+  var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+
+  var timer = setInterval(async () => {
     progressBar.style.display = "block";
     progress.style.display = "block";
 
-    var timer = setInterval(async () => {
-      try {
-        var workflowRuns = await octokit.actions.listWorkflowRuns({
+    workflowRuns = await octokit.actions.listWorkflowRuns({
+      owner: owner,
+      repo: repo,
+      workflow_id: "build-and-deploy.yml",
+      per_page: 1,
+    });
+
+    id = workflowRuns.data.workflow_runs[0].check_suite_id;
+    lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+
+    var maxSec = 75;
+    var dif = calculateDifference(lastRan);
+    var status = document.getElementById("status");
+    status.style.display = "block";
+
+    var { data: buildRun } = await octokit.request(
+      "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
+      {
+        owner: owner,
+        repo: repo,
+        check_run_id: id,
+      }
+    );
+    var buildStatus = buildRun.check_runs[0].status;
+
+    console.log(dif);
+
+    if ((((buildStatus === "completed" || buildStatus === "in_progress") && dif <= maxSec))) {
+      // build step complete
+
+      status.innerHTML = "Building website...";
+      console.log("Building website...")
+      progressValue += 1;
+      progressBar.style.width = progressValue + "%";
+
+      var { data: deployRun } = await octokit.request(
+        "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
+        {
           owner: owner,
           repo: repo,
-          workflow_id: "build-and-deploy.yml",
-          per_page: 1,
-        });
-        var id = workflowRuns.data.workflow_runs[0].check_suite_id;
-        var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-        var maxSec = 60;
-        var dif = calculateDifference(lastRan);
-        var status = document.getElementById("status");
-        status.style.display = "block";
-    
-        var { data: latestRun } = await octokit.request(
-          "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
-          {
-            owner: owner,
-            repo: repo,
-            check_run_id: id,
-          }
-        );
-        var buildStatus = latestRun.check_runs[0].status;
-        console.info([dif + ' seconds stale.', workflowRuns, latestRun, "Build: " + buildStatus]);
+          check_run_id: id,
+        }
+      );
 
-        if ((buildStatus === "completed" && dif <= maxSec)) {
-          console.log(`Website published!`);
-          status.innerHTML = "Website published. Changes will soon be able to be seen!";
-          progressBar.style.width = "100%";
-          clearInterval(timer);
-          return
-        }
-        else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
-          console.log('Job in progress...')
-          status.innerHTML = "Deployment pipeline in progress...";
-          progressValue += 1.5;
-          progressBar.style.width = progressValue + "%";
-        }
-        else {
-          console.log('Guessing progress value...')
-          status.innerHTML = "Deployment pipeline in progress...";
-          progressValue += 1;
-          progressBar.style.width = progressValue + "%";
-        }
+      var deployStatus = deployRun.check_runs[1].status;
+      // caught (in promise) TypeError: Cannot read properties of undefined (reading 'status')
+      // cannot figure this out
+ 
+
+      if (deployStatus === "completed") {
+        // deploy step complete
+
+        status.innerHTML = "Recipe fully deployed! You can refresh!";
+        console.log(`Website deployed! You can refresh!`);
+        progressBar.style.width = "100%";
+        clearInterval(timer);
+        return
       }
-      catch (error) {
-      console.error(error);
+    } else {
+      // estimate
+      console.log("Estimating time..." + buildStatus);
+      status.innerHTML = "Publishing recipe...";
+
+      if (progressValue >= 100) {
+        progressValue = 0;
+
       }
-    }, 1000);
-  } catch (error) {
-    console.error(error);
-  }
+      progressValue += 1;
+      progressBar.style.width = progressValue + "%";
+    }
+    
+  }, 1000);
 }
 
 export function setCookie(cname, cvalue, exdays) {

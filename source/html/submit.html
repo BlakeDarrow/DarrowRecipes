@@ -122,6 +122,11 @@
       autosize('Directions');
       var status = document.getElementById("status");
       status.style.display = "none";
+      var progress = document.getElementById("progress");
+      var progressBar = document.getElementById("progress-fill");
+      progressBar.style.width = "0%";
+      progressBar.style.display = "none";
+      progress.style.display = "none";
       console.log("Form reset.")
     });
 
