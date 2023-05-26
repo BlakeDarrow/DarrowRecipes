@@ -542,12 +542,12 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
       owner: owner,
       repo: repo,
       workflow_id: "build-and-deploy.yml",
-      per_page: 1,
+      per_page: 2,
     });
 
     var id = workflowRuns.data.workflow_runs[0].check_suite_id;
     var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-    console.log(workflowRuns);
+
     var maxSec = 60;
     var dif = calculateDifference(lastRan);
     console.log('Last workflow triggered ' + dif + ' seconds ago.');
@@ -572,9 +572,13 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         // console.log(latestRun.check_runs[0]);
         const buildStatus = latestRun.check_runs[0].status;
 
-        if (buildStatus === "completed" && dif <= maxSec) {
+        console.log(
+          `Status: ${buildStatus}`
+        );
+
+        if ((buildStatus === "completed" && dif <= maxSec)) {
           console.log(
-            `Build and Deploy status: ${buildStatus}`
+            `Status: ${buildStatus}`
           );
 
           var status = document.getElementById("status");
@@ -591,27 +595,22 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             workflow_id: "build-and-deploy.yml",
             per_page: 2,
           });
-          console.log(workflowRuns.data.workflow_runs[0]);
+          // console.log(workflowRuns.data.workflow_runs[0]);
       
           id = workflowRuns.data.workflow_runs[0].check_suite_id;
           lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-
           maxSec = 65; // about how long it takes to run "build-and-deploy"
           dif = calculateDifference(lastRan);
-          console.log('Last workflow triggered ' + dif + ' seconds ago.');
+          console.log('Triggered: ' + dif + ' seconds ago.');
         }
         else {
-          console.log(
-            `Build and Deploy status: ${buildStatus}`
-          );
-
-          progressValue += 3;
+          progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
           }
       } catch (error) {
         console.error(error);
       }
-    }, 2000);
+    }, 1000);
   } catch (error) {
     console.error(error);
   }
