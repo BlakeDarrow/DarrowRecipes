@@ -538,20 +538,6 @@ function calculateDifference(lastRan) {
 
 export async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
-    var workflowRuns = await octokit.actions.listWorkflowRuns({
-      owner: owner,
-      repo: repo,
-      workflow_id: "build-and-deploy.yml",
-      per_page: 2,
-    });
-
-    var id = workflowRuns.data.workflow_runs[0].check_suite_id;
-    var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-
-    var maxSec = 60;
-    var dif = calculateDifference(lastRan);
-    console.log('Last workflow triggered ' + dif + ' seconds ago.');
-
     var progress = document.getElementById("progress");
     var progressBar = document.getElementById("progress-fill");
     var progressValue = 1;
@@ -559,9 +545,20 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
     progressBar.style.display = "block";
     progress.style.display = "block";
 
-    const timer = setInterval(async () => {
+    var timer = setInterval(async () => {
       try {
-        const { data: latestRun } = await octokit.request(
+        var workflowRuns = await octokit.actions.listWorkflowRuns({
+          owner: owner,
+          repo: repo,
+          workflow_id: "build-and-deploy.yml",
+          per_page: 1,
+        });
+        var id = workflowRuns.data.workflow_runs[0].check_suite_id;
+        var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+        var maxSec = 60;
+        var dif = calculateDifference(lastRan);
+    
+        var { data: latestRun } = await octokit.request(
           "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
           {
             owner: owner,
@@ -569,44 +566,22 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id,
           }
         );
-        // console.log(latestRun.check_runs[0]);
-        const buildStatus = latestRun.check_runs[0].status;
-
-        console.log(
-          `Status: ${buildStatus}`
-        );
+        var buildStatus = latestRun.check_runs[1].status; // 1 being the deploy step
+        console.info([dif + ' seconds stale.', workflowRuns, latestRun, "Build: " + buildStatus]);
 
         if ((buildStatus === "completed" && dif <= maxSec)) {
-          console.log(
-            `Status: ${buildStatus}`
-          );
-
+          console.log(`Website published!`);
           var status = document.getElementById("status");
           status.style.display = "block";
           status.innerHTML = "Website published. Refresh to see new changes!";
           progressBar.style.width = "100%";
           clearInterval(timer);
         }
-        else if (dif >= maxSec) {
-
-          workflowRuns = await octokit.actions.listWorkflowRuns({
-            owner: owner,
-            repo: repo,
-            workflow_id: "build-and-deploy.yml",
-            per_page: 2,
-          });
-          // console.log(workflowRuns.data.workflow_runs[0]);
-      
-          id = workflowRuns.data.workflow_runs[0].check_suite_id;
-          lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-          maxSec = 65; // about how long it takes to run "build-and-deploy"
-          dif = calculateDifference(lastRan);
-          console.log('Triggered: ' + dif + ' seconds ago.');
-        }
-        else {
+        else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
+          console.log('Waiting to publish...')
           progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
-          }
+        }
       } catch (error) {
         console.error(error);
       }
