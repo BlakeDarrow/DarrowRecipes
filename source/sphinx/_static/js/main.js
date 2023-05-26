@@ -548,6 +548,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
   });
   var id = workflowRuns.data.workflow_runs[0].check_suite_id;
   var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+  var buildStep = false;
 
   var timer = setInterval(async () => {
     progressBar.style.display = "block";
@@ -579,9 +580,13 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
     var buildStatus = buildRun.check_runs[0].status;
 
     console.log(dif);
+    console.log(buildStep)
 
-    if ((((buildStatus === "completed" || buildStatus === "in_progress") && dif <= maxSec))) {
+    // need build bool again...timing out
+
+    if (((buildStatus === "completed" || buildStatus === "in_progress") && dif <= maxSec) || buildStep) {
       // build step complete
+      buildStep = true;
 
       status.innerHTML = "Building website...";
       console.log("Building website...")
@@ -597,23 +602,29 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         }
       );
 
-      var deployStatus = deployRun.check_runs[1].status;
-      // caught (in promise) TypeError: Cannot read properties of undefined (reading 'status')
-      // cannot figure this out
- 
+      if (deployRun.check_runs.length >= 1) {
 
-      if (deployStatus === "completed") {
-        // deploy step complete
-
-        status.innerHTML = "Recipe fully deployed! You can refresh!";
-        console.log(`Website deployed! You can refresh!`);
-        progressBar.style.width = "100%";
-        clearInterval(timer);
-        return
+        var deployStatus = deployRun.check_runs[1].status;
+        // caught (in promise) TypeError: Cannot read properties of undefined (reading 'status')
+        // cannot figure this
+   
+        console.log(deployStatus);
+        if (deployStatus === "completed") {
+          // deploy step complete
+  
+          status.innerHTML = "Recipe fully deployed! You can refresh!";
+          console.log(`Website deployed! You can refresh!`);
+          progressBar.style.width = "100%";
+          clearInterval(timer);
+          return
+        }
+      } else {
+        console.log(deployRun);
       }
+     
     } else {
       // estimate
-      console.log("Estimating time..." + buildStatus);
+      console.log("Estimating time...");
       status.innerHTML = "Publishing recipe...";
 
       if (progressValue >= 100) {
