@@ -557,6 +557,8 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
         var maxSec = 60;
         var dif = calculateDifference(lastRan);
+        var status = document.getElementById("status");
+        status.style.display = "block";
     
         var { data: latestRun } = await octokit.request(
           "GET /repos/{owner}/{repo}/check-suites/{check_run_id}/check-runs",
@@ -571,20 +573,26 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
 
         if ((buildStatus === "completed" && dif <= maxSec)) {
           console.log(`Website published!`);
-          var status = document.getElementById("status");
-          status.style.display = "block";
           status.innerHTML = "Website published. Refresh to see new changes!";
           progressBar.style.width = "100%";
           clearInterval(timer);
           return
         }
         else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
-          console.log('In progress...')
+          console.log('Job in progress...')
+          status.innerHTML = "Website being deployed...";
           progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
         }
-      } catch (error) {
-        console.error(error);
+        else {
+          console.log('Guessing progress value...')
+          status.innerHTML = "Website being deployed...";
+          progressValue += 1;
+          progressBar.style.width = progressValue + "%";
+        }
+      }
+      catch (error) {
+      console.error(error);
       }
     }, 1000);
   } catch (error) {
