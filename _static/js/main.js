@@ -538,8 +538,6 @@ function calculateDifference(lastRan) {
 
 export async function monitorWorkflowStatus(octokit, owner, repo) {
   try {
-    await sleep(5000);
-
     var workflowRuns = await octokit.actions.listWorkflowRuns({
       owner: owner,
       repo: repo,
@@ -591,11 +589,13 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             owner: owner,
             repo: repo,
             workflow_id: "build-and-deploy.yml",
-            per_page: 1,
+            per_page: 2,
           });
+          console.log(workflowRuns.data.workflow_runs[0]);
       
           id = workflowRuns.data.workflow_runs[0].check_suite_id;
           lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
+
           maxSec = 65; // about how long it takes to run "build-and-deploy"
           dif = calculateDifference(lastRan);
           console.log('Last workflow triggered ' + dif + ' seconds ago.');
