@@ -586,6 +586,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
           clearInterval(timer);
         }
         else if (dif >= maxSec) {
+
           workflowRuns = await octokit.actions.listWorkflowRuns({
             owner: owner,
             repo: repo,
@@ -595,7 +596,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
       
           id = workflowRuns.data.workflow_runs[0].check_suite_id;
           lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
-          maxSec = 60;
+          maxSec = 75;
           dif = calculateDifference(lastRan);
           console.log('Last workflow triggered ' + dif + ' seconds ago.');
         }
@@ -610,7 +611,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
       } catch (error) {
         console.error(error);
       }
-    }, 5000);
+    }, 2000);
   } catch (error) {
     console.error(error);
   }
