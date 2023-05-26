@@ -550,7 +550,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         var workflowRuns = await octokit.actions.listWorkflowRuns({
           owner: owner,
           repo: repo,
-          workflow_id: "build-and-deploy.yml",
+          workflow_id: "automated-commits.yml",
           per_page: 1,
         });
         var id = workflowRuns.data.workflow_runs[0].check_suite_id;
@@ -568,25 +568,25 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id,
           }
         );
-        var buildStatus = latestRun.check_runs[0].status; // 1 being the deploy step
+        var buildStatus = latestRun.check_runs[0].status;
         console.info([dif + ' seconds stale.', workflowRuns, latestRun, "Build: " + buildStatus]);
 
         if ((buildStatus === "completed" && dif <= maxSec)) {
           console.log(`Website published!`);
-          status.innerHTML = "Website published. Refresh to see new changes!";
+          status.innerHTML = "Website published. Changes will soon be able to be seen!";
           progressBar.style.width = "100%";
           clearInterval(timer);
           return
         }
         else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
           console.log('Job in progress...')
-          status.innerHTML = "Website being deployed...";
+          status.innerHTML = "Deployment pipeline in progress...";
           progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
         }
         else {
           console.log('Guessing progress value...')
-          status.innerHTML = "Website being deployed...";
+          status.innerHTML = "Deployment pipeline in progress...";
           progressValue += 1;
           progressBar.style.width = progressValue + "%";
         }
