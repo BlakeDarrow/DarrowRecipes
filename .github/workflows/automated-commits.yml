@@ -47,7 +47,7 @@ jobs:
       with:
         repo_token: ${{ secrets.PAT }}
         file: "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip"
-        asset_name: "Recipes"
+        asset_name: "Recipes.zip"
         tag: Recipes
         overwrite: true
         body: "Zipped bundle of all recipes, automatically built when new recipes are added. Last built on ${{ steps.set_file_name.outputs.file_name }}."
