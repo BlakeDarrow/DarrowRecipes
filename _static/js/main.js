@@ -445,8 +445,8 @@ export async function commitFile(
   console.log("Deleted temporary branch.");
   status.innerHTML = "Deleted temporary branch.";
 
-  console.log("Recipe fully committed. Publishing website...");
-  status.innerHTML = "Recipe fully committed. Publishing website...";
+  console.log("Recipe fully committed. Waiting to be deployed...");
+  status.innerHTML = "Recipe fully committed. Waiting to be deployed...";
 
   document.getElementById("file-name").value = "";
   document.getElementById("Ingredients").value = "";
@@ -566,7 +566,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
             check_run_id: id,
           }
         );
-        var buildStatus = latestRun.check_runs[1].status; // 1 being the deploy step
+        var buildStatus = latestRun.check_runs[0].status; // 1 being the deploy step
         console.info([dif + ' seconds stale.', workflowRuns, latestRun, "Build: " + buildStatus]);
 
         if ((buildStatus === "completed" && dif <= maxSec)) {
@@ -576,9 +576,10 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
           status.innerHTML = "Website published. Refresh to see new changes!";
           progressBar.style.width = "100%";
           clearInterval(timer);
+          return
         }
         else if (dif <= maxSec || buildStatus !== "completed") { // last run was less than a minute ago, publishing
-          console.log('Waiting to publish...')
+          console.log('In progress...')
           progressValue += 1.5;
           progressBar.style.width = progressValue + "%";
         }
