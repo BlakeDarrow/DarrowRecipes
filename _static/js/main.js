@@ -550,7 +550,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         var workflowRuns = await octokit.actions.listWorkflowRuns({
           owner: owner,
           repo: repo,
-          workflow_id: "automated-commits.yml",
+          workflow_id: "build-and-deploy.yml",
           per_page: 1,
         });
         var id = workflowRuns.data.workflow_runs[0].check_suite_id;
