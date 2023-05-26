@@ -631,7 +631,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         progressValue = 0;
 
       }
-      progressValue += 1;
+      progressValue += 0.7;
       progressBar.style.width = progressValue + "%";
     }
     
