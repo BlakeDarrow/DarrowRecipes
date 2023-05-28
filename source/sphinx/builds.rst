@@ -2,9 +2,6 @@ Submission Log
 ###################
 
 - Blake edited 'Crockpot Lasagna' at 9:26:43 PM on 5-25-2023.
-- Blake created 'Dummy' at 9:05:05 PM on 5-25-2023.
-- Blake edited 'Dummy' at 8:56:12 PM on 5-25-2023.
-- Blake created 'Dummy' at 8:12:09 PM on 5-25-2023.
 - Blake edited 'Meringue' at 7:09:38 PM on 5-25-2023.
 - Melanie created 'Crock Pot Honey Mustard Chicken' at 9:32:45 AM on 5-25-2023.
 - Blake edited 'Jalepeno Chicken Casserole' at 9:21:53 AM on 5-25-2023.
