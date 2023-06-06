@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
-
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -25,23 +24,23 @@
   <link rel="index" title="Index" href="genindex" />
   <link rel="search" title="Search" href="search" />
   <script type="module">
-    import { authenticateUser } from './_static/js/main.js';
-    import { commitFile } from './_static/js/main.js';
-    import { triggerDeleteWorkflowRuns } from './_static/js/main.js';
-    import { checkCookie } from './_static/js/main.js';
-    import { getCookie } from './_static/js/main.js';
-    import { setCookie } from './_static/js/main.js';
-    import { monitorWorkflowStatus } from './_static/js/main.js';
+
+    // Importing functions and modules from other JavaScript files
+    import { authenticateUser, commitFile, triggerDeleteWorkflowRuns, checkCookie, getCookie, setCookie, monitorWorkflowStatus } from './_static/js/main.js';
     import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
+    // Checking if the "password" cookie exists
     checkCookie("password");
 
+    // Variable for debug mode (not committing to GitHub)
     var testMode = false; // Don't commit to GitHub
     var deleteWorkflowRuns = false;
 
+    // Checking if in debug mode
     if (testMode) {
       console.log("Using debug mode. Commits will NOT be pushed to GitHub!")
 
+      // Displaying debug mode message and progress bar
       var status = document.getElementById("status");
       status.style.display = "block";
       status.innerHTML = "Debug mode...";
@@ -57,8 +56,24 @@
       debugMenu.style.display = "block";
     }
 
+    // Debug mode workflow monitoring
+    if (testMode) {
+      document.getElementById("monitor-workflow").addEventListener("click", async () => {
+        console.log("Attempting to monitor workflow runs...");
+        var passwordId = document.getElementById("password");
+        var password = passwordId.value;
+        passwordId.addEventListener("input", function () {
+          password = password.value;
+        });
+        const octokit = new Octokit({ auth: password });
+        monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
+      });
+    }
+
+    // Checking if auto-login is enabled
     let autoLogin = getCookie("remember-me");
 
+    // If auto-login, attempt to login the user
     if (autoLogin) {
       let passwordCookie = getCookie("password");
 
@@ -74,11 +89,25 @@
         });
 
         console.log("Attempting to authenticate with token...")
+
+        // Actual function to authenticate with Github
         authenticateUser(password);
       }
     }
 
+    // Login functionality
+    document.getElementById("login").addEventListener("click", async () => {
+      var passwordId = document.getElementById("password");
+      var password = passwordId.value;
+      passwordId.addEventListener("input", function () {
+        password = passwordId.value;
+      });
+      authenticateUser(password)
+    });
+
+    // Logout functionality
     document.getElementById("logout").addEventListener("click", async () => {
+      console.log("Attempting to logout user...")
       setCookie("password", "", 365);
       setCookie("remember-me", "False", 365);
       setCookie("username", "", 365);
@@ -92,23 +121,9 @@
       document.getElementById("submittedByValue").value = "";
       document.getElementById("authentication-form").style.display = "block";
       document.getElementById("submit-form").style.display = "none";
-      console.log("Attempting to logout user...")
-
     });
 
-    if (testMode) {
-      document.getElementById("monitor-workflow").addEventListener("click", async () => {
-        console.log("Attempting to monitor workflow runs..");
-        var passwordId = document.getElementById("password");
-        var password = passwordId.value;
-        passwordId.addEventListener("input", function () {
-          password = password.value;
-        });
-        const octokit = new Octokit({ auth: password });
-        monitorWorkflowStatus(octokit,"BlakeDarrow","DarrowRecipes");
-      });
-    }
-
+    // Clearing form inputs
     document.getElementById("clear-file").addEventListener("click", async () => {
       document.getElementById("file-name").value = "";
       document.getElementById("Ingredients").value = "";
@@ -130,15 +145,7 @@
       console.log("Form reset.")
     });
 
-    document.getElementById("login").addEventListener("click", async () => {
-      var passwordId = document.getElementById("password");
-      var password = passwordId.value;
-      passwordId.addEventListener("input", function () {
-        password = passwordId.value;
-      });
-      authenticateUser(password)
-    });
-
+    // Commit file functionality
     document.getElementById("commit-file").addEventListener("click", async () => {
       var passwordId = document.getElementById("password");
       var password = passwordId.value;
@@ -302,33 +309,45 @@
 
   </script>
   <script>
+
+    // Function to check if a given text is present in elements with a specific class
     function checkIfTextIsInClass(inputText) {
+      // Get all elements with class 'toctree-l1'
       const elementsWithClass = document.querySelectorAll(".toctree-l1");
       const recipeExistsMsg = document.getElementById("tooltiptext");
       var inputTextNoWhitespace = inputText.replace(/\s/g, '').toLowerCase();;
+
+      // Iterate over each element
       for (let i = 0; i < elementsWithClass.length; i++) {
         var textContentNoWhitespace = elementsWithClass[i].textContent.replace(/\s/g, '').toLowerCase();;
+
+        // Check if the element's content matches the input text
         if (textContentNoWhitespace === inputTextNoWhitespace) {
           console.log("Recipe exists!");
+          // Display the recipe exists message
           recipeExistsMsg.style.display = "inline-block";
           return true;
         }
       }
+
+      // Hide the recipe exists message
       recipeExistsMsg.style.display = "none";
       return false;
     }
 
-    // https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
+    // Function for auto-expanding textareas
+    // Source: https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
     function autosize(textarea_id, row_limit) {
-      // Set default for row_limit parameter
+      // Set default value for row_limit parameter
       row_limit = parseInt(row_limit ?? '25');
       if (!row_limit) {
         row_limit = 25;
       }
-      // Get the element
+
+      // Get the textarea element
       const textarea = document.getElementById(textarea_id);
 
-      // Set required styles for this to function properly.
+      // Set required styles for this to function properly
       textarea.style.setProperty('resize', 'none');
       textarea.style.setProperty('min-height', '0');
       textarea.style.setProperty('max-height', 'none');
@@ -338,12 +357,10 @@
         // Reset rows attribute to get accurate scrollHeight
         textarea.setAttribute('rows', '1');
 
-        // Get the computed values object reference
+        // Get the computed values of the textarea
         const cs = getComputedStyle(textarea);
 
-        // Force content-box for size accurate line-height calculation
-        // Remove scrollbars, lock width (subtract inline padding and inline border widths)
-        // and remove inline padding and borders to keep width consistent (for text wrapping accuracy)
+        // Set styles to calculate accurate row count
         const inline_padding = parseFloat(cs['padding-left']) + parseFloat(cs['padding-right']);
         const inline_border_width = parseFloat(cs['border-left-width']) + parseFloat(cs['border-right-width']);
         textarea.style.setProperty('overflow', 'hidden', 'important');
@@ -352,40 +369,36 @@
         textarea.style.setProperty('padding-inline', '0');
         textarea.style.setProperty('border-width', '0');
 
-        // Get the base line height, and top / bottom padding.
+        // Get the base line height and top/bottom padding
         const block_padding = parseFloat(cs['padding-top']) + parseFloat(cs['padding-bottom']);
         const line_height =
-          // If line-height is not explicitly set, use the computed height value (ignore padding due to content-box)
-          cs['line-height'] === 'normal' ? parseFloat(cs['height'])
-            // Otherwise (line-height is explicitly set), use the computed line-height value.
-            : parseFloat(cs['line-height']);
+          cs['line-height'] === 'normal' ? parseFloat(cs['height']) : parseFloat(cs['line-height']);
 
-        // Get the scroll height (rounding to be safe to ensure cross browser consistency)
+        // Get the scroll height (rounded for consistency)
         const scroll_height = Math.round(textarea.scrollHeight);
 
-        // Undo overflow, width, border-width, box-sizing & inline padding overrides
+        // Reset styles
         textarea.style.removeProperty('width');
         textarea.style.removeProperty('box-sizing');
         textarea.style.removeProperty('padding-inline');
         textarea.style.removeProperty('border-width');
         textarea.style.removeProperty('overflow');
 
-        // Subtract block_padding from scroll_height and divide that by our line_height to get the row count.
-        // Round to nearest integer as it will always be within ~.1 of the correct whole number.
+        // Calculate the number of rows
         const rows = Math.round((scroll_height - block_padding) / line_height);
 
-        // Set the calculated rows attribute (limited by row_limit)
+        // Set the rows attribute with a limit
         textarea.setAttribute("rows", "" + Math.min(rows, row_limit));
       };
-      setRows(); // trigger once to ensure updates
+
+      setRows(); // Trigger once to ensure updates
       textarea.oninput = setRows;
-      // Trigger the event to set the initial rows value
-      textarea.dispatchEvent(new Event('value', {
-        bubbles: true
-      }));
+      textarea.dispatchEvent(new Event('value', { bubbles: true })); // Trigger the event to set the initial rows value
     }
 
+    // Function to load a recipe's details into form inputs
     function loadRecipe(Name, Ingredients, Prep, Directions, Category, submittedBy) {
+      // Check if the authentication form is displayed
       if (getComputedStyle(document.getElementById("authentication-form")).display === "block") {
         alert("Login to edit this recipe.");
       } else {
@@ -396,7 +409,7 @@
         document.getElementById("Prep").value = Prep.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Directions").value = Directions.split("&bladar&").join("\n").replaceAll(/ +(?= )/g, '').replaceAll("$apo$", "'").replaceAll("^col^", ";").replaceAll('@inch@', '"');
         document.getElementById("Category").value = Category;
-        var author = submittedBy.split(",")
+        var author = submittedBy.split(",");
         author = author.filter(function (element) { return element !== ""; });
         console.log(`User selected '${Name}'.`);
 
@@ -405,28 +418,28 @@
           submittedByValue.value = author[1].replaceAll("^quote^", "'");
         }
 
-        // Set all the textarea to be auto expanding.
+        // Set all the textarea to be auto expanding
         autosize('Ingredients');
         autosize('Prep');
         autosize('Directions');
       }
     }
+
   </script>
 </head>
-
 <body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search">
-          <a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"> DarrowRecipes
-          </a>
+          <a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"> DarrowRecipes</a>
           <div role="search">
             <form id="rtd-search-form" class="wy-form" action="search" method="get">
-              <input type="text" name="q" placeholder="Search docs" />
+              <input type="text" name="q" placeholder="Recursive content search" />
               <input type="hidden" name="check_keywords" value="yes" />
               <input type="hidden" name="area" value="default" />
             </form>
+            <div id="resultContainer"></div>
           </div>
         </div>
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
@@ -434,7 +447,61 @@
             <p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
             <li class="toctree-l1"><a class="reference internal">User not logged in</a></li>
           </ul>
+          <ul>
+            <li class="toctree-l1" id="none-found" style="display: none;"><a class="reference internal">Nothing
+                found</a></li>
+          </ul>
         </div>
+        <script>
+
+          // Add event listener for form submission
+          document.getElementById('rtd-search-form').addEventListener('submit', function (event) {
+            event.preventDefault(); // Prevent form submission
+          });
+
+          // Add event listener for input changes
+          document.getElementById('rtd-search-form').addEventListener('input', function (event) {
+            event.preventDefault(); // Prevent form submission
+
+            // Get the search query and convert it to lowercase
+            var searchQuery = this.elements.q.value.toLowerCase();
+
+            // Get all elements with class 'wy-menu.wy-menu-vertical li'
+            var elements = document.querySelectorAll('.wy-menu.wy-menu-vertical li');
+
+            var results = []; // Array to store matching results
+
+            // Reset visibility of previously hidden elements
+            elements.forEach(function (element) {
+              element.style.display = '';
+            });
+
+            // Iterate over each element
+            for (var i = 0; i < elements.length; i++) {
+              var element = elements[i];
+              var elementContent = element.innerHTML.toLowerCase(); // Convert element's content to lowercase
+
+              if (elementContent.includes(searchQuery)) {
+                // If the element's content includes the search query, add it to the results array
+                results.push(element.innerHTML);
+              } else {
+                // Otherwise, hide the element
+                element.style.display = 'none';
+              }
+            }
+
+            var noRecipesFound = document.querySelector('#none-found');
+
+            if (results.length === 0) {
+              // If no results are found, display the 'none-found' element
+              noRecipesFound.style.display = 'block';
+            } else {
+              // Otherwise, hide the 'none-found' element
+              noRecipesFound.style.display = 'none';
+            }
+          });
+
+        </script>
       </div>
     </nav>
     </nav>
@@ -525,26 +592,24 @@
                 <ol>
                   <!-- <li>For the best recipe format please use bullet points for the Ingredients, and a numbered list for the Prep and Directions.</li>  -->
                   <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
-                  <li>Ensure each element in a list contains a space after the identifier. For example "1. Preheat oven" or "- Preheat oven".</li>
-                  <li>Line breaks between elements are not retained when loading an existing recipe to edit. Please add them back.</li>
+                  <li>Ensure each element in a list contains a space after the identifier. For example "1. Preheat oven"
+                    or "- Preheat oven".</li>
+                  <li>Line breaks between elements are not retained when loading an existing recipe to edit. Please add
+                    them back.</li>
                   <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free
                     to use your name as a tag!</li>
                   <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the
                     screen, select the desired recipe, and the editing form will automatically display the recipe
                     content.</li>
+                  <li>You can filter through all the recipes by searching in the "Recursive content search" box.</li>
                   <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and
                     dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
                   <li>For any questions please reach out to Blake!</li>
-                  <li>For any problems check the <a href="" onclick="toggleDivVisibility(); event.preventDefault();">log</a>.</li>
+                  <li>For any problems check the <a href=""
+                      onclick="toggleDivVisibility(); event.preventDefault();">log</a>.</li>
                   <li>Logout <a href="" id="logout">here.</a></li>
                 </ol>
-                <script>
-                  function toggleDivVisibility() {
-                    const myDiv = document.getElementById('log');
-                    myDiv.style.display = myDiv.style.display === 'none' ? 'block' : 'none';
-                  }
-                </script>
                 <div id="log" style="display:none">
                   <hr>
                   <h1>Log</h1>
@@ -552,54 +617,118 @@
                     <p id="logOutput"></p>
                   </div>
                 </div>
+                <hr>
+                <h1>External Links</h1>
+                <ol>
+                  <li><a href="https://github.com/BlakeDarrow/DarrowRecipes/actions" target="_blank" id="logout">
+                      Workflow Runs.</a></li>
+                  <li><a href="https://github.com/BlakeDarrow/DarrowRecipes" target="_blank" id="logout">Github
+                      Repository.</a></li>
+                </ol>
                 <script>
+
+                  // Show debug menu
+                  function toggleDivVisibility() {
+                    const myDiv = document.getElementById('log');
+                    myDiv.style.display = myDiv.style.display === 'none' ? 'block' : 'none';
+                  }
+
+                  // Save references to the original console.log and console.error functions
                   const originalConsoleLog = console.log;
+                  const originalConsoleError = console.error;
+
+                  // Get the element with ID 'logOutput'
                   const logOutput = document.getElementById('logOutput');
 
-                  console.log = function (message) {
-                    originalConsoleLog.apply(console, arguments);
+                  // Function to format log messages with timestamp
+                  function formatMessage(message) {
+                    // Get the current date and time
+                    const currentDate = new Date();
+                    const options = { timeZone: 'America/Chicago', hour12: true };
+                    const cstTime = currentDate.toLocaleTimeString('en-US', options);
 
-                    if (Array.isArray(message)) {
-                      const arrayContainer = document.createElement('div');
-                      const indentSize = 40;
+                    // Create a new span element with the formatted message
+                    const logMessage = document.createElement('span');
+                    logMessage.textContent = "[" + cstTime + "] " + message;
+                    return logMessage;
+                  }
 
-                      arrayContainer.style.paddingLeft = `${1 * indentSize}px`;
-                      arrayContainer.style.paddingRight = `${1 * indentSize}px`;
+                  // Function to append log/error messages to the output element
+                  function appendMessageToOutput(message, isError) {
+                    // Check if the message is an array
+                    const isArray = Array.isArray(message);
 
-                      const spacer = document.createElement('span');
-                      spacer.textContent = "";
-                      arrayContainer.appendChild(spacer);
+                    // Create a container div element for the message
+                    const container = document.createElement('div');
+                    const indentSize = 0;
 
-                      arrayContainer.appendChild(document.createElement('br'));
+                    // Set padding for indentation
+                    container.style.paddingLeft = `${1 * indentSize}px`;
+                    container.style.paddingRight = `${1 * indentSize}px`;
 
+                    // Set color to red if it's an error message
+                    if (isError) {
+                      container.style.color = "red";
+                    }
+
+                    // Handle array messages
+                    if (isArray) {
+                      const logMessage = formatMessage("");
+                      container.appendChild(logMessage);
+                      container.appendChild(document.createElement('br'));
+                      container.appendChild(document.createElement('br'));
+
+                      // Iterate over each element in the array
                       message.forEach(function (element) {
                         const lines = element.split('\n');
                         lines.forEach(function (line) {
+                          // Create a span element for each line of the message
                           const logMessage = document.createElement('span');
                           logMessage.textContent = line;
-                          arrayContainer.appendChild(logMessage);
-
-                          const spacer2 = document.createElement('p');
-                          spacer2.textContent = "";
-                          arrayContainer.appendChild(spacer2);
+                          container.appendChild(logMessage);
+                          container.appendChild(document.createElement('br'));
                         });
-
                       });
 
-                      logOutput.appendChild(arrayContainer);
+                      container.appendChild(document.createElement('br'));
                     } else {
-                      const currentDate = new Date();
-                      const options = { timeZone: 'America/Chicago', hour12: true };
-                      const cstTime = currentDate.toLocaleTimeString('en-US', options);
-                      const logMessage = document.createElement('span');
-                      logMessage.textContent = "[" + cstTime + "] " + message;
-                      logOutput.appendChild(logMessage);
-                      logOutput.appendChild(document.createElement('br'));
+                      // Handle non-array messages
+                      const logMessage = formatMessage(message);
+                      container.appendChild(logMessage);
                     }
 
+                    // Append the container to the logOutput element
+                    logOutput.appendChild(container);
                     logOutput.scrollTop = logOutput.scrollHeight;
+                  }
+
+                  // Override the console.error function
+                  console.error = function (message) {
+                    // Call the original console.error function
+                    originalConsoleError.apply(console, arguments);
+                    // Append the error message to the output
+                    appendMessageToOutput(message, true);
                   };
 
+                  // Override the console.log function
+                  console.log = function (message) {
+                    // Call the original console.log function
+                    originalConsoleLog.apply(console, arguments);
+                    // Append the log message to the output
+                    appendMessageToOutput(message, false);
+                  };
+
+                  // Handle global errors
+                  window.onerror = function (errorMsg, url, lineNumber, column, errorObj) {
+                    // Create error message with stack trace and location info
+                    const errorMessage = `Error: ${errorMsg}\n`;
+                    const errorStack = `Stack Trace: ${errorObj.stack}\n`;
+                    const errorInfo = `Location: ${url} - Line: ${lineNumber} - Column: ${column}\n`;
+                    const fullErrorMessage = errorMessage + errorStack + errorInfo;
+
+                    // Append the error message to the output
+                    appendMessageToOutput(fullErrorMessage, true);
+                  };
                 </script>
             </div>
           </div>
@@ -616,5 +745,6 @@
       SphinxRtdTheme.Navigation.enable(true);
     });
   </script>
+
 </body>
 </html>

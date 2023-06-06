@@ -53,7 +53,6 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
    builds
    Download All Recipes <https://github.com/BlakeDarrow/DarrowRecipes/releases/latest/download/Recipes.zip>
 
-
 .. raw:: html
 
    <hr>

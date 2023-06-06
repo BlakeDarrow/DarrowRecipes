@@ -9,12 +9,12 @@ export function getRecipes(octokit) {
       '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
     listContainer.innerHTML = header + fileList;
 
-    const elements = document.querySelectorAll('.toctree-l1');
+    const elements = document.querySelectorAll(".toctree-l1");
     elements.forEach((element) => {
-      element.addEventListener('click', () => {
-        const aElement = element.querySelector('.reference.internal');
-        const onclickValue = aElement.getAttribute('onclick');
-        const loadRecipe = onclickValue.replace("loadRecipe(", '').split("','");
+      element.addEventListener("click", () => {
+        const aElement = element.querySelector(".reference.internal");
+        const onclickValue = aElement.getAttribute("onclick");
+        const loadRecipe = onclickValue.replace("loadRecipe(", "").split("','");
         // console.log(loadRecipe);
       });
     });
@@ -37,15 +37,15 @@ async function getRstFileList(octokit) {
       files.map((file) => getRecipeContent(file, octokit))
     );
     console.log("Built map of recipes.");
-    
+
     const fileList = `<ol>${fileNames
       .map((recipeDict) => {
-        return `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`
+        return `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`;
       })
       .join("")}</ol>`;
-    
+
     console.log("Built navigation sidebar containing recipes.");
-    
+
     return fileList;
   } catch (error) {
     console.error(error);
@@ -73,7 +73,7 @@ async function parseRecipe(recipeString) {
     } else if (line.startsWith("------")) {
       section = "tags";
     } else {
-        // Skip over any lines that don't match expected sections
+      // Skip over any lines that don't match expected sections
       if (!section) {
         continue;
       }
@@ -88,13 +88,13 @@ async function parseRecipe(recipeString) {
           ingredients.push(line.trim());
           break;
         case "tags":
-            const tagLine = line.trim().split(/[\s,]+/);
-            const tagWords = tagLine.filter(word => word.startsWith("#"));
-            const validTags = tagWords.filter(tag => tag.length > 1);
-            tags.push(...validTags);
-            section = "afterTags"; // set the section to afterTags
+          const tagLine = line.trim().split(/[\s,]+/);
+          const tagWords = tagLine.filter((word) => word.startsWith("#"));
+          const validTags = tagWords.filter((tag) => tag.length > 1);
+          tags.push(...validTags);
+          section = "afterTags"; // set the section to afterTags
           break;
-      case "afterTags":
+        case "afterTags":
           // concatenate the current line with afterTags and trim
           afterTags += line;
           break;
@@ -106,20 +106,22 @@ async function parseRecipe(recipeString) {
   prep.shift();
   directions.shift();
   afterTags = afterTags.trim(); // need to test with both lines.
-  const formattedAfterTags = afterTags.replaceAll("'", '^quote^').replaceAll("| ", '');
+  const formattedAfterTags = afterTags
+    .replaceAll("'", "^quote^")
+    .replaceAll("| ", "");
   var authorship = formattedAfterTags.split(".");
-  authorship = authorship.filter(function (element) { return element !== ""; });
+  authorship = authorship.filter(function (element) {
+    return element !== "";
+  });
 
   if (authorship.length === 1 && authorship[0].includes("edited")) {
     authorship[0] = "Edited by Current user.";
     authorship[1] = "Recipe submitted prior to the generation of logs.";
-    //console.log("Authorship only contained who edited last.")
-  } else if (authorship.length === 0 ) {
+  } else if (authorship.length === 0) {
     authorship[0] = "Edited by Current user.";
     authorship[1] = "Recipe submitted prior to the generation of logs.";
-    //console.log("No existing edits, and submitted prior to generation of logs.")
   } else {
-    authorship[1] = authorship[1] + "."
+    authorship[1] = authorship[1] + ".";
   }
 
   const formattedIngredients = ingredients
@@ -140,10 +142,8 @@ async function parseRecipe(recipeString) {
     .replaceAll(";", "^col^")
     .replaceAll('"', "@inch@")
     .replaceAll(/\r/g, "");
-  
-  const formattedTags = tags.join(", ").replaceAll("#", "");
 
-  //var debugAuthor = ["Edited by Blake.", "Blake submitted ^quote^Chicken and Sausage Jambalaya^quote^ at 5:35:35 PM on 4-4-2023."];
+  const formattedTags = tags.join(", ").replaceAll("#", "");
 
   const recipe = [
     formattedIngredients,
@@ -153,7 +153,6 @@ async function parseRecipe(recipeString) {
     authorship,
   ];
 
- 
   return recipe;
 }
 
@@ -223,10 +222,9 @@ export async function authenticateUser(password) {
       console.log(`Cookies found, welcome ${username}!`);
     }
     // start with auto-sizing enabled
-    autosize('Ingredients');
-    autosize('Prep');
-    autosize('Directions');
-
+    autosize("Ingredients");
+    autosize("Prep");
+    autosize("Directions");
   } catch (error) {
     if (error.name === "HttpError" && error.status === 401) {
       document.getElementById("error-message").innerHTML = "Invalid token!";
@@ -265,7 +263,6 @@ export async function commitFile(
   workflowID,
   commitDescription
 ) {
-
   document.getElementById("cancel-button").style.display = "block";
 
   if (cancelFlag) {
@@ -274,12 +271,14 @@ export async function commitFile(
   }
 
   if (/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/.test(content)) {
-    var nonLatinChars = content.match(/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g);
+    var nonLatinChars = content.match(
+      /[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g
+    );
     console.log("----------------");
     console.log("Non-Latin characters found: ", nonLatinChars);
     console.log("----------------");
   }
-  
+
   var progress = document.getElementById("progress");
   var progressBar = document.getElementById("progress-fill");
   progressBar.style.width = "0%";
@@ -339,7 +338,7 @@ export async function commitFile(
 
   console.log("Created new blob.");
   status.innerHTML = "Created new blob.";
-  
+
   if (cancelFlag) {
     cancelEvents();
     return;
@@ -412,7 +411,7 @@ export async function commitFile(
     return;
   }
 
-  console.log("User can no longer cancel recipe commit.")
+  console.log("User can no longer cancel recipe commit.");
   document.getElementById("cancel-button").style.display = "none";
 
   await octokit.pulls.merge({
@@ -455,9 +454,9 @@ export async function commitFile(
   document.getElementById("Category").value = "";
   document.getElementById("editedByValue").value = "";
   document.getElementById("submittedByValue").value = "";
-  autosize('Ingredients');
-  autosize('Prep');
-  autosize('Directions');
+  autosize("Ingredients");
+  autosize("Prep");
+  autosize("Directions");
 
   cancelFlag = false;
   console.log("Reset 'cancelFlag'");
@@ -509,13 +508,13 @@ export async function triggerDeleteWorkflowRuns(
 
 function getCurrentTime() {
   var now = new Date();
-  
+
   var currentTimeUTC = now.toISOString();
 
   var datePart = currentTimeUTC.substr(0, 10);
   var timePart = currentTimeUTC.substr(11, 8);
-  
-  var formattedTime = datePart + 'T' + timePart + 'Z';
+
+  var formattedTime = datePart + "T" + timePart + "Z";
 
   return formattedTime;
 }
@@ -529,10 +528,10 @@ function calculateDifference(lastRan) {
   var timeDifferenceMs = date2 - date1;
   var timeDifferenceSec = Math.floor(timeDifferenceMs / 1000);
   var timeDifferenceMin = Math.floor(timeDifferenceSec / 60);
-  return timeDifferenceSec
+  return timeDifferenceSec;
 }
-export async function monitorWorkflowStatus(octokit, owner, repo) {
 
+export async function monitorWorkflowStatus(octokit, owner, repo) {
   var progress = document.getElementById("progress");
   var progressBar = document.getElementById("progress-fill");
   var progressValue = 1;
@@ -549,6 +548,9 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
   var id = workflowRuns.data.workflow_runs[0].check_suite_id;
   var lastRan = workflowRuns.data.workflow_runs[0].run_started_at;
   var buildStep = false;
+  var estimateLogged = false;
+  var buildingLogged = false;
+  var deployLogged = false;
 
   var timer = setInterval(async () => {
     progressBar.style.display = "block";
@@ -579,17 +581,20 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
     );
     var buildStatus = buildRun.check_runs[0].status;
 
-    console.log(dif);
-    console.log(buildStep)
-
-    // need build bool again...timing out
-
-    if (((buildStatus === "completed" || buildStatus === "in_progress") && dif <= maxSec) || buildStep) {
+    if (
+      ((buildStatus === "completed" || buildStatus === "in_progress") &&
+        dif <= maxSec) ||
+      buildStep
+    ) {
       // build step complete
       buildStep = true;
 
       status.innerHTML = "Building website...";
-      console.log("Building website...")
+      if (!buildingLogged) {
+        console.log("Building website...");
+        buildingLogged = true;
+      }
+
       progressValue += 1;
       progressBar.style.width = progressValue + "%";
 
@@ -603,38 +608,37 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
       );
 
       if (deployRun.check_runs.length >= 1) {
-
         var deployStatus = deployRun.check_runs[1].status;
-        // caught (in promise) TypeError: Cannot read properties of undefined (reading 'status')
-        // cannot figure this
-   
-        console.log(deployStatus);
+
+        if (!deployLogged) {
+          console.log(deployStatus);
+          deployLogged = true;
+        }
+
         if (deployStatus === "completed") {
           // deploy step complete
-  
+
           status.innerHTML = "Recipe fully deployed! You can refresh!";
           console.log(`Website deployed! You can refresh!`);
           progressBar.style.width = "100%";
           clearInterval(timer);
-          return
+          return;
         }
-      } else {
-        console.log(deployRun);
       }
-     
     } else {
       // estimate
-      console.log("Estimating time...");
+      if (!estimateLogged) {
+        console.log("Estimating time...");
+        estimateLogged = true;
+      }
       status.innerHTML = "Publishing recipe...";
 
       if (progressValue >= 100) {
         progressValue = 0;
-
       }
       progressValue += 0.7;
       progressBar.style.width = progressValue + "%";
     }
-    
   }, 1000);
 }
 
