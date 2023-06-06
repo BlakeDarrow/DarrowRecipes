@@ -2,8 +2,6 @@ Submission Log
 ###################
 
 - Camryn Darrow created 'Crock Pot Pulled Pork' at 12:48:18 PM on 5-29-2023.
-- Blake created 'Toast' at 12:34:49 PM on 5-28-2023.
-- Blake created 'Toast' at 12:24:07 PM on 5-28-2023.
 - Blake edited 'Crockpot Lasagna' at 9:26:43 PM on 5-25-2023.
 - Blake edited 'Meringue' at 7:09:38 PM on 5-25-2023.
 - Melanie created 'Crock Pot Honey Mustard Chicken' at 9:32:45 AM on 5-25-2023.
