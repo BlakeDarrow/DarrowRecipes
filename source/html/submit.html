@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html class="writer-html5" lang="en">
+
 <head>
   <meta charset="utf-8" />
   <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
@@ -26,7 +27,7 @@
   <script type="module">
 
     // Importing functions and modules from other JavaScript files
-    import { authenticateUser, commitFile, triggerDeleteWorkflowRuns, checkCookie, getCookie, setCookie, monitorWorkflowStatus } from './_static/js/main.js';
+    import { authenticateUser, commitFile, checkCookie, getCookie, setCookie, monitorWorkflowStatus } from './_static/js/main.js';
     import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
     // Checking if the "password" cookie exists
@@ -34,7 +35,6 @@
 
     // Variable for debug mode (not committing to GitHub)
     var testMode = false; // Don't commit to GitHub
-    var deleteWorkflowRuns = false;
 
     // Checking if in debug mode
     if (testMode) {
@@ -123,6 +123,12 @@
       document.getElementById("submit-form").style.display = "none";
     });
 
+    // Reset username
+    document.getElementById("clear-username").addEventListener("click", async () => {
+      setCookie("username", "", 365);
+      console.log("Reset commit author.")
+    });
+
     // Clearing form inputs
     document.getElementById("clear-file").addEventListener("click", async () => {
       document.getElementById("file-name").value = "";
@@ -147,164 +153,172 @@
 
     // Commit file functionality
     document.getElementById("commit-file").addEventListener("click", async () => {
-      var passwordId = document.getElementById("password");
-      var password = passwordId.value;
-      passwordId.addEventListener("input", function () {
-        password = password.value;
-      });
+      var hasAuthor = true;
 
-      var CategoryInput = document.getElementById("Category");
-      var Category = CategoryInput.value;
-      CategoryInput.addEventListener("input", function () {
-        Category = contentInput.value;
-      });
-
-      var formattedCategory = Category.replaceAll(/\s/g, '').split(',').map(i => '#' + i).join(', ');
-
-      var nameInput = document.getElementById("file-name");
-      var name = nameInput.value;
-      nameInput.addEventListener("input", function () {
-        name = nameInput.value;
-      });
-
-      var extension = ".rst"
-
-      var sourceFolder = "source/sphinx/recipes/"
-
-      var filepath = sourceFolder + name + extension;
-
-      var DirectionsInput = document.getElementById("Directions");
-      var Directions = DirectionsInput.value;
-      DirectionsInput.addEventListener("input", function () {
-        Directions = DirectionsInput.value.replaceAll(/\r/g, "");
-      });
-
-      var PrepInput = document.getElementById("Prep");
-      var Prep = PrepInput.value;
-      PrepInput.addEventListener("input", function () {
-        Prep = PrepInput.value.replaceAll(/\r/g, "");
-      });
-
-      var IngredientsInput = document.getElementById("Ingredients");
-      var Ingredients = IngredientsInput.value;
-      IngredientsInput.addEventListener("input", function () {
-        Ingredients = IngredientsInput.value.replaceAll(/\r/g, "");
-      });
-
-      var nameFormat = "###########################################################"
-      var categoryFormat = "========================================================="
-      var spacerFormat = " "
-      var tagSpacer = "------"
-      var allowCommit = true
-      var errorMessage = "error"
-      var now = new Date();
-      var options = { timeZone: "America/Chicago" };
-      var cstDate = now.toLocaleString("en-US", options);
-      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
-      var username = getCookie("username");
-      var newRecipe = false;
-      var commitMessage = "Empty";
-
-      var submittedByValue = document.getElementById("submittedByValue");
-      if (submittedByValue.value === "") {
-        if (!checkIfTextIsInClass(name)) {
-          console.log("New recipe being submitted!")
-          console.log("----------")
-          newRecipe = true;
-        }
-      }
-      var editedByValue = document.getElementById("editedByValue");
-      var editedBy = `Empty`;
-      var submittedBy = "";
-      if (newRecipe) {
-        submittedBy = `${username} created '${name}' at ${time}.`;
-        editedBy = "This recipe has not been edited."
-        submittedByValue.value = submittedBy;
-        editedByValue.value = "This recipe has not been edited."
-        commitMessage = submittedBy;
-      } else {
-        editedBy = `${username} edited '${name}' at ${time}.`;
-        editedByValue.value = editedBy;
-        submittedBy = submittedByValue.value;
-        commitMessage = editedBy;
+      //Check if there is an active commit author cookie. Its possible the user missed this prompt.
+      if (getCookie("username") === "" || getCookie("username") === "null") {
+        console.log("No username entered at login. Prompting again...");
+        var userInput = prompt("Please enter your name:");
+        setCookie("username", userInput, 365);
       }
 
-      var content = name + '\n'
-        + nameFormat + '\n'
-        + spacerFormat + '\n'
-        + 'Ingredients\n'
-        + categoryFormat + '\n'
-        + spacerFormat + '\n'
-        + Ingredients + '\n'
-        + spacerFormat + '\n'
-        + 'Prep\n'
-        + categoryFormat + '\n'
-        + spacerFormat + '\n'
-        + Prep + '\n'
-        + spacerFormat + '\n'
-        + 'Directions\n'
-        + categoryFormat + '\n'
-        + spacerFormat + '\n'
-        + Directions + '\n'
-        + spacerFormat + '\n'
-        + tagSpacer + '\n'
-        + spacerFormat + '\n'
-        + formattedCategory + '\n'
-        + spacerFormat + '\n'
-        + "| " + editedBy + '\n'
-        + "| " + submittedBy;
-
-      if (name === "") {
-        allowCommit = false;
-        errorMessage = "No recipe name provided.";
+      //Also possible the user just hits "OK" without inputting any text. I really just need to rework this to be form input with password.
+      if (getCookie("username") === "" || getCookie("username") === "null") {
+        hasAuthor = false;
+        alert("No commit author! You must commit with a name. Please try again!");
       }
 
-      if (Ingredients === "" && Prep === "" && Directions === "") {
-        allowCommit = false;
-        errorMessage = "The recipe is blank.";
-      }
+      //Only continue to build recipe if there is a commit author
+      if (hasAuthor) {
+        var passwordId = document.getElementById("password");
+        var password = passwordId.value;
+        passwordId.addEventListener("input", function () {
+          password = password.value;
+        });
 
-      function isValidString(str) {
-        var validChars = /^[\s\S]*$/;
-        return validChars.test(str);
-      }
+        var CategoryInput = document.getElementById("Category");
+        var Category = CategoryInput.value;
+        CategoryInput.addEventListener("input", function () {
+          Category = contentInput.value;
+        });
 
-      if (!isValidString(content)) {
-        allowCommit = false;
-        errorMessage = "The recipe contains invalid characters.";
-      }
+        var formattedCategory = Category.replaceAll(/\s/g, '').split(',').map(i => '#' + i).join(', ');
+        var nameInput = document.getElementById("file-name");
+        var name = nameInput.value;
+        nameInput.addEventListener("input", function () {
+          name = nameInput.value;
+        });
 
-      var commitBody = "Automated recipe build";
+        var extension = ".rst"
+        var sourceFolder = "source/sphinx/recipes/"
+        var filepath = sourceFolder + name + extension;
 
-      var destinationName = "BlakeDarrow/DarrowRecipes";
+        var DirectionsInput = document.getElementById("Directions");
+        var Directions = DirectionsInput.value;
+        DirectionsInput.addEventListener("input", function () {
+          Directions = DirectionsInput.value.replaceAll(/\r/g, "");
+        });
 
-      let workflowID = 44429210;
+        var PrepInput = document.getElementById("Prep");
+        var Prep = PrepInput.value;
+        PrepInput.addEventListener("input", function () {
+          Prep = PrepInput.value.replaceAll(/\r/g, "");
+        });
 
-      var filepath = filepath.replaceAll(/\s/g, "");
+        var IngredientsInput = document.getElementById("Ingredients");
+        var Ingredients = IngredientsInput.value;
+        IngredientsInput.addEventListener("input", function () {
+          Ingredients = IngredientsInput.value.replaceAll(/\r/g, "");
+        });
 
-      if (allowCommit) {
-        if (testMode) {
-          console.log("User would send:")
-          console.log([content]);
+        var nameFormat = "###########################################################"
+        var categoryFormat = "========================================================="
+        var spacerFormat = " "
+        var tagSpacer = "------"
+        var allowCommit = true
+        var errorMessage = "error"
+        var now = new Date();
+        var options = { timeZone: "America/Chicago" };
+        var cstDate = now.toLocaleString("en-US", options);
+        var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
+        var username = getCookie("username");
+        var newRecipe = false;
+        var commitMessage = "Empty";
 
-          if (deleteWorkflowRuns) {
-
-            triggerDeleteWorkflowRuns(destinationName, password, workflowID);
-
+        var submittedByValue = document.getElementById("submittedByValue");
+        if (submittedByValue.value === "") {
+          if (!checkIfTextIsInClass(name)) {
+            console.log("Recipe doest not yet exist in GitHub. New recipe!")
+            newRecipe = true;
           }
-
+        }
+        var editedByValue = document.getElementById("editedByValue");
+        var editedBy = `Empty`;
+        var submittedBy = "";
+        if (newRecipe) {
+          submittedBy = `${username} created '${name}' at ${time}.`;
+          editedBy = "This recipe has not been edited."
+          submittedByValue.value = submittedBy;
+          editedByValue.value = "This recipe has not been edited."
+          commitMessage = submittedBy;
         } else {
-
-          console.log("User wants to send:")
-          console.log([content]);
-          commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitBody);
-
+          editedBy = `${username} edited '${name}' at ${time}.`;
+          editedByValue.value = editedBy;
+          submittedBy = submittedByValue.value;
+          commitMessage = editedBy;
         }
 
-      } else {
-        alert(`Error: ${errorMessage}`);
-      }
+        //Super dirty way to build recipe .rst
+        //Probably should reconsider this with some sort of json formula?
+        var content = name + '\n'
+          + nameFormat + '\n'
+          + spacerFormat + '\n'
+          + 'Ingredients\n'
+          + categoryFormat + '\n'
+          + spacerFormat + '\n'
+          + Ingredients + '\n'
+          + spacerFormat + '\n'
+          + 'Prep\n'
+          + categoryFormat + '\n'
+          + spacerFormat + '\n'
+          + Prep + '\n'
+          + spacerFormat + '\n'
+          + 'Directions\n'
+          + categoryFormat + '\n'
+          + spacerFormat + '\n'
+          + Directions + '\n'
+          + spacerFormat + '\n'
+          + tagSpacer + '\n'
+          + spacerFormat + '\n'
+          + formattedCategory + '\n'
+          + spacerFormat + '\n'
+          + "| " + editedBy + '\n'
+          + "| " + submittedBy;
 
+        if (name === "") {
+          allowCommit = false;
+          errorMessage = "No recipe name provided.";
+        }
+
+        if (Ingredients === "" && Prep === "" && Directions === "") {
+          allowCommit = false;
+          errorMessage = "The recipe is blank.";
+        }
+
+        function isValidString(str) {
+          var validChars = /^[\s\S]*$/;
+          return validChars.test(str);
+        }
+
+        if (!isValidString(content)) {
+          allowCommit = false;
+          errorMessage = "The recipe contains invalid characters.";
+        }
+
+        var commitBody = "Automated recipe build";
+
+        var destinationName = "BlakeDarrow/DarrowRecipes";
+
+        let workflowID = 44429210;
+
+        var filepath = filepath.replaceAll(/\s/g, "");
+
+        if (allowCommit) {
+          if (testMode) { //Debug mode. Nothing sent to github
+            console.log(getCookie("username") + " would commit:")
+            console.log([content]);
+          } else { //Commit from input to GitHub
+            console.log(getCookie("username") + " wants to commit:")
+            console.log([content]);
+            commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitBody);
+          }
+        } else {
+          alert(`Error: ${errorMessage}`);
+        }
+      }
+      else{
+        console.error("Did not commit file. No author.")
+      }
     });
 
   </script>
@@ -335,8 +349,7 @@
       return false;
     }
 
-    // Function for auto-expanding textareas
-    // Source: https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
+    // Function for auto-expanding textareas. Source: https://stackoverflow.com/questions/7745741/auto-expanding-textarea/24824750#24824750
     function autosize(textarea_id, row_limit) {
       // Set default value for row_limit parameter
       row_limit = parseInt(row_limit ?? '25');
@@ -427,6 +440,7 @@
 
   </script>
 </head>
+
 <body class="wy-body-for-nav">
   <div class="wy-grid-for-nav">
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
@@ -444,6 +458,7 @@
         </div>
         <div class="wy-menu wy-menu-vertical" data-spy="affix" role="navigation" aria-label="Navigation menu">
           <ul class="current" id="file-list-container">
+            <!--Recipes will be populated under here.-->
             <p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
             <li class="toctree-l1"><a class="reference internal">User not logged in</a></li>
           </ul>
@@ -547,6 +562,7 @@
                   <label for="submittedByValue">Submitted by:</label>
                   <input type="text" id="submittedByValue" name="submittedByValue" value=""><br><br>
                   <button type="button" id="monitor-workflow">Monitor Workflow</button>
+                  <button type="button" id="clear-username">Clear username</button>
                   <hr>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">
@@ -626,7 +642,6 @@
                       Repository.</a></li>
                 </ol>
                 <script>
-
                   // Show debug menu
                   function toggleDivVisibility() {
                     const myDiv = document.getElementById('log');
@@ -747,4 +762,5 @@
   </script>
 
 </body>
+
 </html>
