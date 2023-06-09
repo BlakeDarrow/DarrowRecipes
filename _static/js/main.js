@@ -1,6 +1,7 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
 document.getElementById("cancel-button").addEventListener("click", cancelCommit);
+let cancelFlag = false;
 
 export function getRecipes(octokit) {
   getRstFileList(octokit).then((fileList) => {
@@ -193,11 +194,8 @@ export async function authenticateUser(password) {
     });
 
     console.log("...successfully authenticated to GitHub!");
-
     const response = await octokit.users.getAuthenticated();
-
     getRecipes(octokit);
-
     const rememberMe = document.getElementById("remember-me");
 
     if (rememberMe.checked) {
@@ -211,13 +209,13 @@ export async function authenticateUser(password) {
     document.getElementById("submit-form").style.display = "block";
     document.getElementById("authentication-form").style.display = "none";
 
-    if (getCookie("username") === "") {
+    if (getCookie("username") === "" || getCookie("username") === "null") {
       console.log("Prompting for username...");
       var userInput = prompt("Please enter your name:");
       setCookie("username", userInput, 365);
     }
 
-    if (getCookie("username") !== "") {
+    if (getCookie("username") !== "" && getCookie("username") !== "null" ) {
       var username = getCookie("username");
       console.log(`Cookies found, welcome ${username}!`);
     }
@@ -237,8 +235,6 @@ export async function authenticateUser(password) {
     }
   }
 }
-
-let cancelFlag = false;
 
 function cancelCommit(event) {
   event.preventDefault();
@@ -274,9 +270,8 @@ export async function commitFile(
     var nonLatinChars = content.match(
       /[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g
     );
-    console.log("----------------");
-    console.log("Non-Latin characters found: ", nonLatinChars);
-    console.log("----------------");
+    console.log("Non-Latin characters found in recipe.")
+    console.log(nonLatinChars);
   }
 
   var progress = document.getElementById("progress");
@@ -461,49 +456,6 @@ export async function commitFile(
   cancelFlag = false;
   console.log("Reset 'cancelFlag'");
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
-}
-
-async function getAllWorkflowRuns(destinationName, password, workflowId) {
-  const octokit = new Octokit({ auth: password });
-  const response = await octokit.actions.listWorkflowRunsForRepo({
-    owner: destinationName.split("/")[0],
-    repo: destinationName.split("/")[1],
-    workflow_id: workflowId,
-  });
-  const runIds = await response.data.workflow_runs.map((run) => run.id);
-  return runIds;
-}
-
-async function deleteWorkflowRuns(
-  runIds,
-  destinationName,
-  password,
-  workflowId
-) {
-  const octokit = new Octokit({ auth: password });
-  for (const id of runIds) {
-    await octokit.actions.deleteWorkflowRun({
-      owner: destinationName.split("/")[0],
-      repo: destinationName.split("/")[1],
-      run_id: id,
-    });
-    console.log(`Deleted ${id} run`);
-  }
-}
-
-export async function triggerDeleteWorkflowRuns(
-  destinationName,
-  password,
-  workflowId
-) {
-  console.log("Attempting to delete workflow runs...");
-  const runIds = await getAllWorkflowRuns(
-    destinationName,
-    password,
-    workflowId
-  );
-  await deleteWorkflowRuns(runIds, destinationName, password, workflowId);
-  console.log(`Deleted ${runIds.length} workflow runs`);
 }
 
 function getCurrentTime() {
