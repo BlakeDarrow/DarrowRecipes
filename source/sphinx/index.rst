@@ -2,17 +2,17 @@
 How to Use
 ##############
 
-Navigate to the left side panel. You will find a search bar, a submission page, and a list of recipes. 
+| Navigate to the left side panel. You will find a search bar, a submission page, and a list of recipes. 
+|
+| You can search for specific recipes, keywords, or tags within the search bar. You can also manually navigate to them by selecting the recipe title in the 'All Recipes' panel on the left of your screen. 
+| Alternatively, select from the list below.
 
-You can search for specific recipes, keywords, or tags within the search bar. You can also manually navigate to them by selecting the recipe title in the 'All Recipes' panel on the left of your screen. Alternatively, select from the list below.
-
-.. I am using raw html to render the section titles because I am hiding the toctree labels with css so that the column elements line up cleanly.
 .. raw:: html
 
    <hr>
 
-   <h1>Submission</h1>
-
+Submission
+~~~~~~~~~~~~
 
 .. toctree::
    :caption: Submission
@@ -22,12 +22,26 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 
    submit
 
+..
+   _tags: Not sure if I want to go down this rabbit hole and complicate things. 
+
+   .. toctree::
+      :caption: Common Tags
+      :maxdepth: 3
+      :titlesonly:
+      :hidden:
+      :glob:
+
+      Favorite <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Favorite&check_keywords=yes&area=default>
+      Crockpot <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Crockpot&check_keywords=yes&area=default>
+      Dessert <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Dessert&check_keywords=yes&area=default>
+
 .. raw:: html
 
    <br>
-   
-   <h1>All Recipes</h1>
 
+All Recipes
+~~~~~~~~~~~~
 
 .. toctree::
    :caption: All Recipes
@@ -40,9 +54,9 @@ You can search for specific recipes, keywords, or tags within the search bar. Yo
 .. raw:: html
 
    <br>
-   
-   <h1>Automated</h1>
 
+Automated
+~~~~~~~~~~~~
 
 .. toctree::
    :caption: Automated
