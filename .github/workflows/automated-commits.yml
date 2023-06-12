@@ -3,6 +3,8 @@ on:
   push:
     paths:
       - 'source/sphinx/recipes/**'
+    branches:
+      - main
   workflow_dispatch:
 
 permissions: write-all
