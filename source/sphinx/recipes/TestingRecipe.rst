@@ -16,6 +16,7 @@ Prep
 5. Test
 6. Test
 7. Test
+jalapeño
  
 Directions
 =========================================================
@@ -26,5 +27,5 @@ Directions
  
 #Test
  
-| Blake edited 'Testing Recipe' at 10:48:56 PM on 6-11-2023.
+| Blake edited 'Testing Recipe' at 10:57:35 PM on 6-11-2023.
 | Recipe submitted prior to the generation of logs.
