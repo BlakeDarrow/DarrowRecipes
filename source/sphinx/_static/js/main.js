@@ -265,13 +265,25 @@ export async function commitFile(
     cancelEvents();
     return;
   }
+  const standardAlphabetChars = /^[a-zA-Z0-9`~!@#$%^&*()-_=+[\]{}|;:'",.<>/?\\ ]*$/;
+  const inputString = content.replace(/\n/g, "");
+  
+  let nonStandardChars = [];
 
-  if (/[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/.test(content)) {
-    var nonLatinChars = content.match(
-      /[^\u0020-\u007F\u00A0-\u024F\u1E00-\u1EFF]/g
-    );
-    console.log("Non-Latin characters found in recipe.")
-    console.log(nonLatinChars);
+  for (let i = 0; i < inputString.length; i++) {
+    const char = inputString[i];
+    
+    // Check if the character is not a standard alphabet character
+    if (!standardAlphabetChars.test(char) && !nonStandardChars.includes(char)) {
+      nonStandardChars.push(char);
+    }
+  }
+
+  if (nonStandardChars.length > 0) {
+    console.error("Invalid input: '" + nonStandardChars.join(',') + "'");
+    document.getElementById("cancel-button").style.display = "none";
+    alert("Invalid input!\n\n '" + nonStandardChars.join(',') + "'\n\nPlease delete these characters and try again.\n\nFor any problems, scroll down to the help section, select 'log', and then 'Export logs to GitHub'.");
+    return
   }
 
   var progress = document.getElementById("progress");
