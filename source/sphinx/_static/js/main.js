@@ -458,7 +458,22 @@ export async function commitFile(
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
-function getCurrentTime() {
+export async function commitLogs(message, password) {
+  const octokit = new Octokit({
+    auth: password,
+  });
+
+  var issueNumber = 248;
+
+  const response = await octokit.issues.createComment({
+    owner: 'BlakeDarrow',
+    repo: 'DarrowRecipes',
+    issue_number: issueNumber,
+    body: message
+  });
+}
+
+export function getCurrentTime() {
   var now = new Date();
 
   var currentTimeUTC = now.toISOString();

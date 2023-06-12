@@ -8,6 +8,18 @@
   transform: translate(-50%, -50%);
 }
 
+li {
+  color: #404040;
+  font-weight: 300 !important;
+}
+span {
+  font-weight: 300 !important;
+}
+
+h1 {
+  color: #404040;
+}
+
 .darrow form {
   width: 100%;
   height: auto;
@@ -158,11 +170,6 @@
 .scrollable-div {
   height: 300px;
   overflow: auto;
-  border-radius: 5px;
-  margin: 2px;
-  padding: 10px;
-  color: #404040;
-  box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.2), 0 5px 5px 0 rgba(0, 0, 0, 0.24);
 }
 
 /* For webkit-based browsers */
@@ -250,8 +257,11 @@ html[data-theme="dark"] .hiddenDebug input {
   color: #000;
 }
 
-html[data-theme="dark"] .scrollable-div {
-  background-color: #101010 !important;
+html[data-theme="dark"] li {
   color: #d9d9d9;
-  box-shadow: 0 0 1px 0 #d9d9d9;
 }
+
+html[data-theme="dark"] h1 {
+  color: #d9d9d9;
+}
+

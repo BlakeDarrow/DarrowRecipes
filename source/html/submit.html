@@ -27,7 +27,7 @@
   <script type="module">
 
     // Importing functions and modules from other JavaScript files
-    import { authenticateUser, commitFile, checkCookie, getCookie, setCookie, monitorWorkflowStatus } from './_static/js/main.js';
+    import { authenticateUser, commitFile, checkCookie, getCookie, setCookie, monitorWorkflowStatus, commitLogs, getCurrentTime} from './_static/js/main.js';
     import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
     // Checking if the "password" cookie exists
@@ -321,6 +321,28 @@
       }
     });
 
+    // Comment test log to the GitHub issue.
+    document.getElementById("test-log").addEventListener("click", async () => {
+      var message = "Submission log test. " + getCurrentTime();
+      commitLogs(message, password);
+      console.log("Submitted test log to GitHub issue.")
+    });
+
+    // Comment logs to the GitHub issue.
+    document.getElementById("export-logs").addEventListener("click", async () => {
+      const logOutput = document.getElementById('logOutput');
+      const spanElements = logOutput.getElementsByTagName('span');
+
+      let stringFromSpans = '';
+      for (let i = 0; i < spanElements.length; i++) {
+        stringFromSpans += spanElements[i].innerText + "\n";
+      }
+
+      console.log("Submitting logs to the GitHub issue...")
+      commitLogs(stringFromSpans, password);
+      console.log("Submitted logs.")
+    });
+
   </script>
   <script>
 
@@ -468,7 +490,6 @@
           </ul>
         </div>
         <script>
-
           // Add event listener for form submission
           document.getElementById('rtd-search-form').addEventListener('submit', function (event) {
             event.preventDefault(); // Prevent form submission
@@ -563,6 +584,7 @@
                   <input type="text" id="submittedByValue" name="submittedByValue" value=""><br><br>
                   <button type="button" id="monitor-workflow">Monitor Workflow</button>
                   <button type="button" id="clear-username">Clear username</button>
+                  <button type="button" id="test-log">Submit test log</button>
                   <hr>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">
@@ -621,25 +643,35 @@
                   <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and
                     dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
-                  <li>For any questions please reach out to Blake!</li>
+                  <!-- <li>For any questions please reach out to Blake!</li> -->
                   <li>For any problems check the <a href=""
-                      onclick="toggleDivVisibility(); event.preventDefault();">log</a>.</li>
+                      onclick="toggleDivVisibility(); event.preventDefault();">log</a> and export them to GitHub.</li>
                   <li>Logout <a href="" id="logout">here.</a></li>
                 </ol>
-                <div id="log" style="display:none">
+                <div id="log" style="display:block">
                   <hr>
                   <h1>Log</h1>
+                  <form>
                   <div class="scrollable-div">
                     <p id="logOutput"></p>
                   </div>
+                    <div class="darrow">
+                      <hr>
+                      <div class="button_group">
+                        <button type="button" id="export-logs">Export logs to GitHub</button>
+                      </div>
+                    </div>
+                  </form>
                 </div>
                 <hr>
                 <h1>External Links</h1>
                 <ol>
-                  <li><a href="https://github.com/BlakeDarrow/DarrowRecipes/actions" target="_blank" id="logout">
-                      Workflow Runs.</a></li>
                   <li><a href="https://github.com/BlakeDarrow/DarrowRecipes" target="_blank" id="logout">Github
-                      Repository.</a></li>
+                      Repository</a></li>
+                  <li><a href="https://github.com/BlakeDarrow/DarrowRecipes/actions" target="_blank" id="logout">
+                      Workflow Runs</a></li>
+                  <li><a href="https://github.com/BlakeDarrow/DarrowRecipes/issues/247" target="_blank" id="logout">User Submitted
+                      Logs</a></li>
                 </ol>
                 <script>
                   // Show debug menu
