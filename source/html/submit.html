@@ -361,6 +361,34 @@
 
       deleteFile(password, deleteTarget, commitMessage)
     });
+  
+    // Delete selected recipe
+    document.getElementById("delete").addEventListener("click", async () => {
+      const confirm = document.getElementById('darrow-confirm-delete');
+      confirm.style.display = "none";
+
+      const main = document.getElementById('main-form');
+      main.style.display = "block";
+
+      var nameInput = document.getElementById('recipe-title-delete');
+      var name = nameInput.innerText;
+
+      var reBuildName = name.replaceAll(" ","") + ".rst";
+      var path = "source/sphinx/recipes/"
+      var reBuilt = path + reBuildName
+      var fileNameWithExtension = reBuilt.substring(reBuilt.lastIndexOf("/") + 1);
+      var fileNameWithoutExtension = fileNameWithExtension.substring(0, fileNameWithExtension.lastIndexOf("."));
+      var now = new Date();
+      var options = { timeZone: "America/Chicago" };
+      var cstDate = now.toLocaleString("en-US", options);
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
+      var username = getCookie("username");
+      var deletedBy = `${username} deleted '${fileNameWithoutExtension}' at ${time}.`;
+      var commitMessage = deletedBy;
+      console.log(`User will attempt to delete the '${name}' recipe.`);
+
+      deleteFile(password, reBuilt, commitMessage)
+    });
   </script>
   <script>
     //Duplicate from main.js
@@ -403,34 +431,6 @@
       main.style.display = "block";
 
       console.log("User canceled the deletion of a recipe.");
-    }
-
-    function confirmDelete() {
-      const confirm = document.getElementById('darrow-confirm-delete');
-      confirm.style.display = "none";
-
-      const main = document.getElementById('main-form');
-      main.style.display = "block";
-
-      var nameInput = document.getElementById('file-name');
-      var name = nameInput.value;
-
-      var reBuildName = name.replaceAll(" ","") + ".rst";
-      var path = "source/sphinx/recipes/"
-      var reBuilt = path + reBuildName
-      var fileNameWithExtension = reBuilt.substring(reBuilt.lastIndexOf("/") + 1);
-      var fileNameWithoutExtension = fileNameWithExtension.substring(0, fileNameWithExtension.lastIndexOf("."));
-      var now = new Date();
-      var options = { timeZone: "America/Chicago" };
-      var cstDate = now.toLocaleString("en-US", options);
-      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
-      var username = getCookie("username");
-      var deletedBy = `${username} deleted '${fileNameWithoutExtension}' at ${time}.`;
-      var commitMessage = deletedBy;
-      console.log(`User will attempt to delete the '${name}' recipe.`);
-
-      deleteFile(password, reBuilt, commitMessage)
-
     }
 
     // Function to check if a given text is present in elements with a specific class
@@ -678,13 +678,14 @@
                 <div class="darrow" id="submit-form" style="display:none">
                   <div class="darrow-confirm" id="darrow-confirm-delete" style="display: none">
                     <form>
-                      <h1 id="recipe-title-delete"></h1>
-                      <hr>
+
                       <label for="delete">Are you sure you want to permanently delete this recipe?</label>
+                      <hr>
+                      <h1 id="recipe-title-delete"></h1>
                       <hr>
                       <div class="button_group">
                         <br>
-                        <button type="button" id="delete"onclick="confirmDelete()">Delete</button>
+                        <button type="button" id="delete">Delete</button>
                         <button type="button" id="cancel" onclick="cancelConfirm()">Cancel</button>
                         <br>
                       </div>
