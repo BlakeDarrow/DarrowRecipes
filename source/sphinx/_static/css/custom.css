@@ -1,5 +1,6 @@
 @import "theme.css";
 
+
 .form-group {
   position: absolute;
   top: 50%;
@@ -19,6 +20,20 @@ span {
 h1 {
   color: #404040;
 }
+
+.material-icons{
+  font-size: 16px;
+}
+
+#delete-recipe {
+  width: 16px !important;
+}
+
+#clear-file {
+  width: 16px !important;
+}
+
+
 
 .darrow form {
   width: 100%;
@@ -94,6 +109,22 @@ h1 {
   border: 1px solid #bfbfbf;
 }
 
+.toctree-l1 {
+  display: flex;
+  align-items: center;
+}
+
+
+.material-symbols-outlined {
+  position: relative;
+  color: #d9d9d9;
+  font-size: large !important;
+  text-align: center;
+  padding: auto;
+  width:auto;
+  display: none !important;
+}
+
 .button_group {
   width: 100%;
   display: flex;
@@ -112,14 +143,7 @@ h1 {
   min-width: 50px;
 }
 
-#commit-file {
-  flex-basis: 80%;
-}
 
-#clear-file,
-#cancel-button {
-  flex-basis: 20%;
-}
 
 .darrow form button:hover {
   background: #bfbfbf;

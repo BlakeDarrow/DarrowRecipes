@@ -1,6 +1,8 @@
 import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
-document.getElementById("cancel-button").addEventListener("click", cancelCommit);
+document
+  .getElementById("cancel-button")
+  .addEventListener("click", cancelCommit);
 let cancelFlag = false;
 
 export function getRecipes(octokit) {
@@ -41,10 +43,14 @@ async function getRstFileList(octokit) {
 
     const fileList = `<ol>${fileNames
       .map((recipeDict) => {
-        return `<li class="toctree-l1"><a class="reference internal" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">${recipeDict[0]}</a></li>`;
+        return `<li class="toctree-l1">
+          <a class="reference internal" style= "padding-right:50px" onclick="loadRecipe('${recipeDict[0]}','${recipeDict[1]}','${recipeDict[2]}','${recipeDict[3]}','${recipeDict[4]}','${recipeDict[5]}')">
+          ${recipeDict[0]}
+          </a>
+        </li>`;
       })
       .join("")}</ol>`;
-
+    
     console.log("Built navigation sidebar containing recipes.");
 
     return fileList;
@@ -215,7 +221,7 @@ export async function authenticateUser(password) {
       setCookie("username", userInput, 365);
     }
 
-    if (getCookie("username") !== "" && getCookie("username") !== "null" ) {
+    if (getCookie("username") !== "" && getCookie("username") !== "null") {
       var username = getCookie("username");
       console.log(`Cookies found, welcome ${username}!`);
     }
@@ -265,14 +271,15 @@ export async function commitFile(
     cancelEvents();
     return;
   }
-  const standardAlphabetChars = /^[a-zA-Z0-9`~!@#$%^&*()-_=+[\]{}|;:'",.<>/?\\ ]*$/;
+  const standardAlphabetChars =
+    /^[a-zA-Z0-9`~!@#$%^&*()-_=+[\]{}|;:'",.<>/?\\ ]*$/;
   const inputString = content.replace(/\n/g, "");
-  
+
   let nonStandardChars = [];
 
   for (let i = 0; i < inputString.length; i++) {
     const char = inputString[i];
-    
+
     // Check if the character is not a standard alphabet character
     if (!standardAlphabetChars.test(char) && !nonStandardChars.includes(char)) {
       nonStandardChars.push(char);
@@ -280,10 +287,14 @@ export async function commitFile(
   }
 
   if (nonStandardChars.length > 0) {
-    console.error("Invalid input: '" + nonStandardChars.join(',') + "'");
+    console.error("Invalid input: '" + nonStandardChars.join(",") + "'");
     document.getElementById("cancel-button").style.display = "none";
-    alert("Invalid input!\n\n '" + nonStandardChars.join(',') + "'\n\nPlease delete these characters and try again.\n\nFor any problems, scroll down to the help section, select 'log', and then 'Export logs to GitHub'.");
-    return
+    alert(
+      "Invalid input!\n\n '" +
+        nonStandardChars.join(",") +
+        "'\n\nPlease delete these characters and try again.\n\nFor any problems, scroll down to the help section, select 'log', and then 'Export logs to GitHub'."
+    );
+    return;
   }
 
   var progress = document.getElementById("progress");
@@ -410,7 +421,7 @@ export async function commitFile(
     title: filepath,
     body: "automated merge",
   });
-  console.log("Created pull request");
+  console.log("Created pull request.");
   status.innerHTML = "Created pull request.";
 
   if (cancelFlag) {
@@ -470,6 +481,102 @@ export async function commitFile(
   await monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
 }
 
+export async function deleteFile(password, filepath, commitMessage) {
+  var destinationName = "BlakeDarrow/DarrowRecipes";
+  const defaultBranch = "main";
+  const newBranch = `delete-file-${Date.now()}`;
+  console.log(`Begin deletion of ${filepath}...`);
+
+  const octokit = new Octokit({
+    auth: password,
+  });
+
+  // Get latest
+  const {
+    data: { sha: latestCommitSha },
+  } = await octokit.repos.getCommit({
+    owner: destinationName.split("/")[0],
+    repo: destinationName.split("/")[1],
+    ref: defaultBranch,
+  });
+  console.log("Fetching...");
+
+  // Create new branch
+  const {
+    data: { createRef },
+  } = await octokit.git.createRef({
+    owner: destinationName.split("/")[0],
+    repo: destinationName.split("/")[1],
+    ref: `refs/heads/${newBranch}`,
+    sha: latestCommitSha,
+  });
+  console.log("Created new branch...");
+
+  octokit.repos
+    .getContent({
+      owner: destinationName.split("/")[0],
+      repo: destinationName.split("/")[1],
+      ref: createRef,
+      path: filepath,
+    })
+    .then((response) => {
+      const fileData = response.data;
+      const fileSHA = fileData.sha;
+
+      // Delete the file
+      octokit.repos
+        .deleteFile({
+          owner: destinationName.split("/")[0],
+          repo: destinationName.split("/")[1],
+          branch: newBranch,
+          path: filepath,
+          message: commitMessage,
+          sha: fileSHA,
+        })
+        .then(() => {
+          octokit.pulls.create({
+            owner: destinationName.split("/")[0],
+            repo: destinationName.split("/")[1],
+            head: newBranch,
+            base: defaultBranch,
+            title: filepath,
+            body: "automated merge",
+          })
+          .then((pullResponse) => {
+            const pullRequestNumber = pullResponse.data.number;
+  
+            if (true) {
+              octokit.pulls.merge({
+                owner: destinationName.split("/")[0],
+                repo: destinationName.split("/")[1],
+                pull_number: pullRequestNumber,
+                commit_title: commitMessage,
+              });
+  
+              console.log("Recipe deletion sent to main branch.");
+              
+              octokit.git.deleteRef({
+                owner: destinationName.split("/")[0],
+                repo: destinationName.split("/")[1],
+                ref: `heads/${newBranch}`,
+              });
+              console.log("Deleted temporary branch.");
+            }
+          })
+          .catch((error) => {
+            console.error(error);
+          });
+        })
+        .catch((error) => {
+          console.error(error);
+        });
+    })
+    .catch((error) => {
+      console.error(error);
+    });
+
+}
+
 export async function commitLogs(message, password) {
   const octokit = new Octokit({
     auth: password,
@@ -478,10 +585,10 @@ export async function commitLogs(message, password) {
   var issueNumber = 248;
 
   const response = await octokit.issues.createComment({
-    owner: 'BlakeDarrow',
-    repo: 'DarrowRecipes',
+    owner: "BlakeDarrow",
+    repo: "DarrowRecipes",
     issue_number: issueNumber,
-    body: message
+    body: message,
   });
 }
 

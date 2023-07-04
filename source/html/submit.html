@@ -11,6 +11,7 @@
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
   <link rel="stylesheet" href="_static/dark_mode_css/general.css" type="text/css" />
   <link rel="stylesheet" href="_static/dark_mode_css/dark.css" type="text/css" />
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Icons">
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
   <script data-url_root="./" id="documentation_options" src="_static/documentation_options.js"></script>
   <script src="_static/jquery.js"></script>
@@ -27,7 +28,7 @@
   <script type="module">
 
     // Importing functions and modules from other JavaScript files
-    import { authenticateUser, commitFile, checkCookie, getCookie, setCookie, monitorWorkflowStatus, commitLogs, getCurrentTime} from './_static/js/main.js';
+    import { authenticateUser, commitFile, checkCookie, getCookie, setCookie, monitorWorkflowStatus, commitLogs, getCurrentTime, deleteFile} from './_static/js/main.js';
     import { Octokit } from "https://cdn.skypack.dev/@octokit/rest";
 
     // Checking if the "password" cookie exists
@@ -343,8 +344,94 @@
       console.log("Submitted logs.")
     });
 
+    // Delete testing recipe
+    document.getElementById("delete-test").addEventListener("click", async () => {
+      var deleteTarget = "source/sphinx/recipes/TestingRecipe.rst"
+
+      var fileNameWithExtension = deleteTarget.substring(deleteTarget.lastIndexOf("/") + 1);
+      var fileNameWithoutExtension = fileNameWithExtension.substring(0, fileNameWithExtension.lastIndexOf("."));
+      var now = new Date();
+      var options = { timeZone: "America/Chicago" };
+      var cstDate = now.toLocaleString("en-US", options);
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
+      var username = getCookie("username");
+        
+      var deletedBy = `${username} deleted '${fileNameWithoutExtension}' at ${time}.`;
+      var commitMessage = deletedBy;
+
+      deleteFile(password, deleteTarget, commitMessage)
+    });
   </script>
   <script>
+    //Duplicate from main.js
+    function getCookie(cname) {
+      let name = cname + "=";
+      let decodedCookie = decodeURIComponent(document.cookie);
+      let ca = decodedCookie.split(";");
+      for (let i = 0; i < ca.length; i++) {
+        let c = ca[i];
+        while (c.charAt(0) == " ") {
+          c = c.substring(1);
+        }
+        if (c.indexOf(name) == 0) {
+          return c.substring(name.length, c.length);
+        }
+      }
+      return "";
+    }
+
+    // Function to prompt user to either confirm deletion or cancel
+    function deleteRecipe() {
+      const confirm = document.getElementById('darrow-confirm-delete');
+      confirm.style.display = "block";
+
+      const main = document.getElementById('main-form');
+      main.style.display = "none";
+
+      var recipeTitle = document.getElementById("file-name");
+      var headingElement = document.getElementById("recipe-title-delete");
+      headingElement.innerHTML = recipeTitle.value;
+
+    }
+
+    // Confirmation cancelled
+    function cancelConfirm() {
+      const confirm = document.getElementById('darrow-confirm-delete');
+      confirm.style.display = "none";
+
+      const main = document.getElementById('main-form');
+      main.style.display = "block";
+
+      console.log("User canceled the deletion of a recipe.");
+    }
+
+    function confirmDelete() {
+      const confirm = document.getElementById('darrow-confirm-delete');
+      confirm.style.display = "none";
+
+      const main = document.getElementById('main-form');
+      main.style.display = "block";
+
+      var nameInput = document.getElementById('file-name');
+      var name = nameInput.value;
+
+      var reBuildName = name.replaceAll(" ","") + ".rst";
+      var path = "source/sphinx/recipes/"
+      var reBuilt = path + reBuildName
+      var fileNameWithExtension = reBuilt.substring(reBuilt.lastIndexOf("/") + 1);
+      var fileNameWithoutExtension = fileNameWithExtension.substring(0, fileNameWithExtension.lastIndexOf("."));
+      var now = new Date();
+      var options = { timeZone: "America/Chicago" };
+      var cstDate = now.toLocaleString("en-US", options);
+      var time = `${cstDate.split(',')[1].trim()} on ${cstDate.split(',')[0].replace(/\//g, '-')}`;
+      var username = getCookie("username");
+      var deletedBy = `${username} deleted '${fileNameWithoutExtension}' at ${time}.`;
+      var commitMessage = deletedBy;
+      console.log(`User will attempt to delete the '${name}' recipe.`);
+
+      // deleteFile(password, reBuilt, commitMessage)
+
+    }
 
     // Function to check if a given text is present in elements with a specific class
     function checkIfTextIsInClass(inputText) {
@@ -585,10 +672,27 @@
                   <button type="button" id="monitor-workflow">Monitor Workflow</button>
                   <button type="button" id="clear-username">Clear username</button>
                   <button type="button" id="test-log">Submit test log</button>
+                  <button type="button" id="delete-test">Delete testing recipe</button>
                   <hr>
                 </div>
                 <div class="darrow" id="submit-form" style="display:none">
-                  <form action="#">
+                  <div class="darrow-confirm" id="darrow-confirm-delete" style="display: none">
+                    <form>
+                      <h1 id="recipe-title-delete"></h1>
+                      <hr>
+                      <label for="delete">Are you sure you want to permanently delete this recipe?</label>
+                      <hr>
+                      <div class="button_group">
+                        <br>
+                        <button type="button" id="delete"onclick="confirmDelete()">Delete</button>
+                        <button type="button" id="cancel" onclick="cancelConfirm()">Cancel</button>
+                        <br>
+                      </div>
+                    </form>
+                    <br>
+                  </div>
+
+                  <form id="main-form" action="#">
                     <label for="file-name">Recipe Name:</label>
                     <span id="recipe-exists-msg" class="tooltip" style="display: block">
                       <span class="tooltiptext" id="tooltiptext" style="display: none">This recipe name exists. Are you
@@ -610,10 +714,12 @@
                     <input type="text" id="Category" name="Category" value="" placeholder=""
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')">
                     <hr>
+                    
                     <div class="button_group">
                       <button type="button" id="commit-file">Publish Recipe</button>
-                      <button type="button" id="clear-file">Reset</button>
                       <button type="button" id="cancel-button" style="display: none;">Cancel</button>
+                      <button type="button" id="clear-file"><i class="material-icons">cached</i></button>
+                      <button type="button" id="delete-recipe" onclick="deleteRecipe()"><i class="material-icons">delete_forever</i></button>
                     </div>
                     <span>
                       <div class="status" id="status" style="display: none;"></div>
