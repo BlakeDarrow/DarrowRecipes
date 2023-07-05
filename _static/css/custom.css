@@ -33,8 +33,6 @@ h1 {
   width: 16px !important;
 }
 
-
-
 .darrow form {
   width: 100%;
   height: auto;
@@ -114,6 +112,9 @@ h1 {
   align-items: center;
 }
 
+#delete {
+  background-color: rgb(113, 0, 0);
+}
 
 .material-symbols-outlined {
   position: relative;
@@ -143,11 +144,9 @@ h1 {
   min-width: 50px;
 }
 
-
-
 .darrow form button:hover {
   background: #bfbfbf;
-  transition: background-color 0.3s ease-in-out;
+  transition: all ease-in-out 0.5s;
 }
 
 .hiddenDebug {
@@ -244,17 +243,21 @@ html[data-theme="dark"] #cancel-button[disabled] {
 }
 
 html[data-theme="dark"] .darrow form {
-  background-color: #101010;
+  background-color: #0d0d0d;
   color: #d9d9d9;
-  box-shadow: 0 0 1px 0 #d9d9d9;
+  box-shadow: 0 0 0px 0 #d9d9d9;
 }
 
 html[data-theme="dark"] .darrow form label {
   color: #d9d9d9;
 }
 html[data-theme="dark"] .darrow form button {
-  background-color: #0b152d;
+  background-color: #343434;
   color: #d9d9d9;
+}
+html[data-theme="dark"] .darrow form button:hover {
+  background-color: #141414 !important;
+  transition: all ease-in-out 0.5s;
 }
 html[data-theme="dark"] .darrow form input {
   background-color: #d9d9d9;
