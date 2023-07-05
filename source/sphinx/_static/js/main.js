@@ -704,7 +704,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         if (deployStatus === "completed") {
           // deploy step complete
 
-          status.innerHTML = "Recipe fully deployed! You can refresh!";
+          status.innerHTML = "Changes fully deployed! You can refresh!";
           console.log(`Website deployed! You can refresh!`);
           progressBar.style.width = "100%";
           clearInterval(timer);
@@ -717,7 +717,7 @@ export async function monitorWorkflowStatus(octokit, owner, repo) {
         console.log("Estimating time...");
         estimateLogged = true;
       }
-      status.innerHTML = "Publishing recipe...";
+      status.innerHTML = "Committing changes...";
 
       if (progressValue >= 100) {
         progressValue = 0;

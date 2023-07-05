@@ -378,8 +378,17 @@
       
       if (name !== "" && name !== "No Recipe Selected"){
         console.log(`User will attempt to delete the '${name}' recipe.`);
-        deleteFile(password, reBuilt, commitMessage)
+        const octokit = new Octokit({
+            auth: password,
+          });
 
+        if (testMode){
+          console.log("Test mode, not deleting.")
+        } else {
+          deleteFile(password, reBuilt, commitMessage)
+          monitorWorkflowStatus(octokit, "BlakeDarrow", "DarrowRecipes");
+        }
+      
         var searchText = nameInput.innerHTML;
         var elements = document.getElementsByClassName("toctree-l1");
         for (var i = 0; i < elements.length; i++) {
@@ -763,8 +772,8 @@
                     <div class="button_group">
                       <button type="button" id="commit-file">Publish Recipe</button>
                       <button type="button" id="cancel-button" style="display: none;">Cancel</button>
-                      <button type="button" id="clear-file"><i class="material-icons">replay</i></button>
-                      <button type="button" id="delete-recipe" onclick="deleteRecipe()"><i class="material-icons">delete</i></button>
+                      <button type="button" id="clear-file"><i class="material-icons">format_clear</i></button>
+                      <button type="button" id="delete-recipe" onclick="deleteRecipe()"><i class="material-icons">delete_forever</i></button>
                     </div>
                     <span>
                       <div class="status" id="status" style="display: none;"></div>
