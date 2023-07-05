@@ -1,6 +1,7 @@
 Submission Log
 ###################
 
+- Camryn created 'Coffee Chocolate Chip Cookies' at 9:14:33 PM on 7-4-2023.
 - Camryn created 'Stewed Okra' at 9:17:41 PM on 7-2-2023.
 - Blake edited 'Greek chicken bowl' at 4:09:44 PM on 6-11-2023.
 - Melanie created 'Greek chicken bowl' at 7:55:18 PM on 6-10-2023.
