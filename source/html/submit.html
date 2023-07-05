@@ -5,7 +5,7 @@
   <meta charset="utf-8" />
   <meta name="generator" content="Docutils 0.17.1: http://docutils.sourceforge.net/" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Recipe Submission</title>
+  <title>Recipe Dashboard</title>
   <link rel="stylesheet" href="_static/pygments.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/theme.css" type="text/css" />
   <link rel="stylesheet" href="_static/css/custom.css" type="text/css" />
@@ -132,16 +132,7 @@
 
     // Clearing form inputs
     document.getElementById("clear-file").addEventListener("click", async () => {
-      document.getElementById("file-name").value = "";
-      document.getElementById("Ingredients").value = "";
-      document.getElementById("Prep").value = "";
-      document.getElementById("Directions").value = "";
-      document.getElementById("Category").value = "";
-      document.getElementById("editedByValue").value = "";
-      document.getElementById("submittedByValue").value = "";
-      autosize('Ingredients');
-      autosize('Prep');
-      autosize('Directions');
+      clearForm();
       var status = document.getElementById("status");
       status.style.display = "none";
       var progress = document.getElementById("progress");
@@ -372,7 +363,6 @@
 
       var nameInput = document.getElementById('recipe-title-delete');
       var name = nameInput.innerText;
-
       var reBuildName = name.replaceAll(" ","") + ".rst";
       var path = "source/sphinx/recipes/"
       var reBuilt = path + reBuildName
@@ -385,12 +375,69 @@
       var username = getCookie("username");
       var deletedBy = `${username} deleted '${fileNameWithoutExtension}' at ${time}.`;
       var commitMessage = deletedBy;
-      console.log(`User will attempt to delete the '${name}' recipe.`);
+      
+      if (name !== "" && name !== "No Recipe Selected"){
+        console.log(`User will attempt to delete the '${name}' recipe.`);
+        deleteFile(password, reBuilt, commitMessage)
 
-      deleteFile(password, reBuilt, commitMessage)
+        var searchText = nameInput.innerHTML;
+        var elements = document.getElementsByClassName("toctree-l1");
+        for (var i = 0; i < elements.length; i++) {
+          var element = elements[i];
+          var text = element.innerHTML;
+          var anchorTags = element.getElementsByTagName("a");
+
+          for (var j = 0; j < anchorTags.length; j++) {
+            var anchorTag = anchorTags[j];
+            var anchorText = anchorTag.textContent;
+            const normalizedSearchText = searchText.replaceAll(/\s/g, "").toLowerCase();
+            const normalizedAnchorText = anchorText.replaceAll(/\s/g, "").toLowerCase();
+
+            if (normalizedAnchorText.includes(normalizedSearchText)) {
+              anchorTag.style.display = "none";
+              anchorTag.innerText = "marked-for-deletion";
+            }
+          }
+        }
+
+        clearForm();
+      } else {
+        console.log("No recipe found to delete.")
+      } 
+
     });
+  
+    // Confirmation cancelled
+    document.getElementById("cancel-confirm").addEventListener("click", async () => {
+      const confirm = document.getElementById('darrow-confirm-delete');
+      confirm.style.display = "none";
+
+      const main = document.getElementById('main-form');
+      main.style.display = "block";
+
+      console.log("User canceled the deletion of a recipe.");
+
+      autosize('Ingredients');
+      autosize('Prep');
+      autosize('Directions');
+    });
+
   </script>
   <script>
+    // Clear form
+    function clearForm(){
+      document.getElementById("file-name").value = "";
+      document.getElementById("Ingredients").value = "";
+      document.getElementById("Prep").value = "";
+      document.getElementById("Directions").value = "";
+      document.getElementById("Category").value = "";
+      document.getElementById("editedByValue").value = "";
+      document.getElementById("submittedByValue").value = "";
+      autosize('Ingredients');
+      autosize('Prep');
+      autosize('Directions');
+    }
+
     //Duplicate from main.js
     function getCookie(cname) {
       let name = cname + "=";
@@ -410,6 +457,7 @@
 
     // Function to prompt user to either confirm deletion or cancel
     function deleteRecipe() {
+      window.scrollTo(0, 0);
       const confirm = document.getElementById('darrow-confirm-delete');
       confirm.style.display = "block";
 
@@ -418,19 +466,15 @@
 
       var recipeTitle = document.getElementById("file-name");
       var headingElement = document.getElementById("recipe-title-delete");
-      headingElement.innerHTML = recipeTitle.value;
 
-    }
+      if (recipeTitle.value === ""){
+        headingElement.innerHTML = "No Recipe Selected"
+        var deleteBtn = document.getElementById("delete").style.display = "none";
 
-    // Confirmation cancelled
-    function cancelConfirm() {
-      const confirm = document.getElementById('darrow-confirm-delete');
-      confirm.style.display = "none";
-
-      const main = document.getElementById('main-form');
-      main.style.display = "block";
-
-      console.log("User canceled the deletion of a recipe.");
+      } else {
+        var deleteBtn = document.getElementById("delete").style.display = "block";
+        headingElement.innerHTML = recipeTitle.value;
+      }
     }
 
     // Function to check if a given text is present in elements with a specific class
@@ -638,7 +682,7 @@
           <div role="navigation" aria-label="Page navigation">
             <ul class="wy-breadcrumbs">
               <li><a href="https://blakedarrow.github.io/DarrowRecipes/" class="icon icon-home"></a> &raquo;</li>
-              <li>Recipe Submission</li>
+              <li>Recipe Dashboard</li>
               <li class="wy-breadcrumbs-aside">
               </li>
             </ul>
@@ -647,7 +691,7 @@
           <div role="main" class="document" itemscope="itemscope" itemtype="http://schema.org/Article">
             <div itemprop="articleBody">
               <section id="publish">
-                <h1>Recipe Submission</h1>
+                <h1>Recipe Dashboard</h1>
                 <div class="darrow" id="form-group" style="display:block">
                   <div id="authentication-form" style="display:block">
                     <form action="#">
@@ -685,8 +729,8 @@
                       <hr>
                       <div class="button_group">
                         <br>
-                        <button type="button" id="delete">Delete</button>
-                        <button type="button" id="cancel" onclick="cancelConfirm()">Cancel</button>
+                        <button type="button" id="delete">Delete Recipe</button>
+                        <button type="button" id="cancel-confirm">Cancel</button>
                         <br>
                       </div>
                     </form>
@@ -719,8 +763,8 @@
                     <div class="button_group">
                       <button type="button" id="commit-file">Publish Recipe</button>
                       <button type="button" id="cancel-button" style="display: none;">Cancel</button>
-                      <button type="button" id="clear-file"><i class="material-icons">cached</i></button>
-                      <button type="button" id="delete-recipe" onclick="deleteRecipe()"><i class="material-icons">delete_forever</i></button>
+                      <button type="button" id="clear-file"><i class="material-icons">replay</i></button>
+                      <button type="button" id="delete-recipe" onclick="deleteRecipe()"><i class="material-icons">delete</i></button>
                     </div>
                     <span>
                       <div class="status" id="status" style="display: none;"></div>

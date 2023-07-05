@@ -14,7 +14,7 @@ jobs:
     runs-on: ubuntu-latest
     if: |
       (
-        (contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created'))
+        (contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')) || contains(github.event.head_commit.message, 'deleted'))
         && !contains(github.event.head_commit.message, 'testing')
       )
       || github.event_name == 'workflow_dispatch'
@@ -57,6 +57,7 @@ jobs:
   automated-commits:
     if: |
       (contains(github.event.head_commit.message, 'edited') ||
+      (contains(github.event.head_commit.message, 'deleted') ||
       contains(github.event.head_commit.message, 'created')) || 
       contains(github.event.head_commit.message, 'build') ||
       github.event_name == 'workflow_dispatch'
@@ -75,7 +76,7 @@ jobs:
           cache: 'pip'
 
     - name: Add automated submission to changelog
-      if: "(contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')) && !contains(github.event.head_commit.message, 'testing')" #If we are manually building, skip the changelog steps
+      if: "(contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')) || (contains(github.event.head_commit.message, 'deleted') && !contains(github.event.head_commit.message, 'testing')" #If we are manually building, skip the changelog steps
       run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
 
     - name: Add last build date to index
