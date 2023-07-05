@@ -12,7 +12,7 @@ Dressing/marinade
 - 1 garlic clove minced
 - 2 tsp dried oregano
 - 1 tsp dried basil
-- salt and pepper to taste
+- salt and pepper to taste 
 Quinoa Bowls
 - 1 1/2 cup quinoa uncooked (or rice)
 - 4 chicken breast boneless skinless
@@ -41,5 +41,5 @@ Directions
  
 #Melanie, #MainCourse
  
-| Camryn edited 'Greek Chicken Bowl' at 9:37:47 PM on 7-4-2023.
+| Camryn edited 'Greek Chicken Bowl' at 9:44:05 PM on 7-4-2023.
 | Melanie created 'Greek chicken bowl' at 7:55:18 PM on 6-10-2023.
