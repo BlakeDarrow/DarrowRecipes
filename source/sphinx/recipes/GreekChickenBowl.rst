@@ -16,7 +16,7 @@ Dressing/marinade
 Quinoa Bowls 
 - 1 1/2 cup quinoa uncooked (or rice)
 - 4 chicken breast boneless skinless
--1 English cucumber diced
+- 1 English cucumber diced
 - 4 Roma tomatoes chopped
 - 1 red onion medium diced
 - 1 cup feta cheese crumbled
@@ -41,5 +41,5 @@ Directions
  
 #Melanie, #MainCourse
  
-| Camryn edited 'Greek Chicken Bowl' at 9:48:32 PM on 7-4-2023.
+| Camryn edited 'Greek Chicken Bowl' at 9:53:02 PM on 7-4-2023.
 | Melanie created 'Greek chicken bowl' at 7:55:18 PM on 6-10-2023.
