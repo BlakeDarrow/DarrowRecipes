@@ -1,2 +1,2 @@
-Submit or edit a recipe 
-#######################
+Dashboard
+#########
