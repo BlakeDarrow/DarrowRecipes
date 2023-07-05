@@ -9,7 +9,7 @@ export function getRecipes(octokit) {
   getRstFileList(octokit).then((fileList) => {
     const listContainer = document.getElementById("file-list-container");
     var header =
-      '<p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>';
+      '<p class="caption" role="heading"><span class="caption-text">Select a Recipe to Edit</span></p>';
     listContainer.innerHTML = header + fileList;
 
     const elements = document.querySelectorAll(".toctree-l1");
@@ -70,7 +70,26 @@ async function parseRecipe(recipeString) {
 
   for (const line of lines) {
     if (line.trim() === "") {
-      continue;
+      // Preserve empty lines within sections
+      if (section) {
+        switch (section) {
+          case "directions":
+            directions.push(line);
+            break;
+          case "prep":
+            prep.push(line);
+            break;
+          case "ingredients":
+            ingredients.push(line);
+            break;
+          case "tags":
+            afterTags += line;
+            break;
+          case "afterTags":
+            afterTags += line;
+            break;
+        }
+      }
     } else if (line.startsWith("Directions")) {
       section = "directions";
     } else if (line.startsWith("Prep")) {
@@ -86,13 +105,13 @@ async function parseRecipe(recipeString) {
       }
       switch (section) {
         case "directions":
-          directions.push(line.trim());
+          directions.push(line);
           break;
         case "prep":
-          prep.push(line.trim());
+          prep.push(line);
           break;
         case "ingredients":
-          ingredients.push(line.trim());
+          ingredients.push(line);
           break;
         case "tags":
           const tagLine = line.trim().split(/[\s,]+/);
@@ -102,17 +121,30 @@ async function parseRecipe(recipeString) {
           section = "afterTags"; // set the section to afterTags
           break;
         case "afterTags":
-          // concatenate the current line with afterTags and trim
           afterTags += line;
           break;
       }
     }
   }
+  
+  const leadAmount = 2; // Number of elements to remove from the beginning
 
-  ingredients.shift();
-  prep.shift();
-  directions.shift();
-  afterTags = afterTags.trim(); // need to test with both lines.
+  for (let i = 0; i < leadAmount; i++) {
+    ingredients.shift(); // Remove element from the beginning of ingredients array
+    prep.shift(); // Remove element from the beginning of prep array
+    directions.shift(); // Remove element from the beginning of directions array
+  }
+  
+  const trailAmount = 1; // Number of elements to remove from the end
+  
+  [ingredients, prep, directions].forEach((array) => {
+    if (array.length >= trailAmount) {
+      array.splice(array.length - trailAmount, trailAmount); // Remove elements from the end of the array
+    }
+  });
+  
+  afterTags = afterTags.trim(); // Trim leading and trailing whitespace from afterTags string
+  
   const formattedAfterTags = afterTags
     .replaceAll("'", "^quote^")
     .replaceAll("| ", "");
