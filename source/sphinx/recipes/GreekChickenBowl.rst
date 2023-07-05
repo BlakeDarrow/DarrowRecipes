@@ -4,7 +4,8 @@ Greek Chicken Bowl
 Ingredients
 =========================================================
  
-Dressing/marinade 
+Dressing/marinade
+
 - 1/4 cup olive oil
 - 2 lemons juiced
 - 1 tbsp honey (or maple syrup)
@@ -12,8 +13,10 @@ Dressing/marinade
 - 1 garlic clove minced
 - 2 tsp dried oregano
 - 1 tsp dried basil
-- salt and pepper to taste 
-Quinoa Bowls 
+- salt and pepper to taste
+
+Quinoa Bowls
+
 - 1 1/2 cup quinoa uncooked (or rice)
 - 4 chicken breast boneless skinless
 - 1 English cucumber diced
@@ -41,5 +44,5 @@ Directions
  
 #Melanie, #MainCourse
  
-| Camryn edited 'Greek Chicken Bowl' at 9:53:02 PM on 7-4-2023.
+| Blake edited 'Greek Chicken Bowl' at 9:55:25 PM on 7-4-2023.
 | Melanie created 'Greek chicken bowl' at 7:55:18 PM on 6-10-2023.
