@@ -140,7 +140,6 @@
       progressBar.style.width = "0%";
       progressBar.style.display = "none";
       progress.style.display = "none";
-      console.log("Form reset.")
     });
 
     // Commit file functionality
@@ -438,6 +437,7 @@
   <script>
     // Clear form
     function clearForm(){
+      window.scrollTo(0, 0);
       document.getElementById("file-name").value = "";
       document.getElementById("Ingredients").value = "";
       document.getElementById("Prep").value = "";
@@ -448,6 +448,21 @@
       autosize('Ingredients');
       autosize('Prep');
       autosize('Directions');
+      var Ingredients = document.getElementById(document.getElementById("Ingredients"));
+      var Prep = document.getElementById(document.getElementById("Prep"));
+      var Direction = document.getElementById(document.getElementById("Directions"));
+
+      var elements = ["Ingredients", "Prep", "Directions"];
+
+      for (var i = 0; i < elements.length; i++) {
+        var element = document.getElementById(elements[i]);
+
+        element.style.backgroundColor = null;
+        element.style.color = null;
+        element.style.border = null;
+        element.style.boxShadow = null;
+      }
+      console.log("Recipe cleared.")
     }
 
     //Duplicate from main.js

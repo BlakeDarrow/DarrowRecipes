@@ -113,7 +113,10 @@ h1 {
 }
 
 #delete {
-  background-color: rgb(113, 0, 0);
+  background-color:  rgb(210, 0, 0);
+}
+#delete:hover{
+  background-color: rgb(250, 0, 0);
 }
 
 .material-symbols-outlined {
@@ -145,7 +148,7 @@ h1 {
 }
 
 .darrow form button:hover {
-  background: #bfbfbf;
+  background: #6a6565;
   transition: all ease-in-out 0.5s;
 }
 
@@ -292,3 +295,9 @@ html[data-theme="dark"] h1 {
   color: #d9d9d9;
 }
 
+html[data-theme="dark"] #delete {
+  background-color: rgb(120, 0, 0);
+}
+html[data-theme="dark"] #delete:hover{
+  background-color: rgb(80, 0, 0) !important;
+}
