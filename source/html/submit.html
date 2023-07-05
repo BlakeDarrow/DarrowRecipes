@@ -435,6 +435,24 @@
 
   </script>
   <script>
+
+    $(document).ready(() => {
+      $('#themeSwitcher').click(customSwitchTheme);
+    });
+
+    // Update invalid form input color on theme switch
+    const customSwitchTheme = () => {
+      var Ingredients = document.getElementById('Ingredients');
+      var Prep = document.getElementById('Prep');
+      var Directions = document.getElementById('Directions');
+
+      var inputEvent = new Event('input');
+
+      Ingredients.dispatchEvent(inputEvent);
+      Prep.dispatchEvent(inputEvent);
+      Directions.dispatchEvent(inputEvent);
+    };
+
     // Clear form
     function clearForm(){
       window.scrollTo(0, 0);
@@ -775,16 +793,16 @@
                         oninput="this.value = this.value.replace(/[^A-Za-z- 0-9]/g, ''); checkIfTextIsInClass(this.value)"
                         placeholder=""><br><br>
                     </span>
-                    <label for=" Ingredients">Ingredients:</label>
+                    <label for=" Ingredients" id="Ingredients_label" >Ingredients:</label>
                     <textarea id="Ingredients" name="Ingredients" value="" placeholder=""
                       oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
-                    <label for="Prep">Prep:</label>
+                    <label for="Prep" id="Prep_label">Prep:</label>
                     <textarea id="Prep" name="Prep" value="" placeholder=""
                       oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
-                    <label for="Directions">Directions:</label>
+                    <label for="Directions" id="Directions_label">Directions:</label>
                     <textarea id="Directions" name="Directions" value="" placeholder=""
                       oninput="this.value = this.value.replace(/’/g, '\'')"></textarea><br><br>
-                    <label for="Category">Tags:</label>
+                    <label for="Category" id="Category_label">Tags:</label>
                     <input type="text" id="Category" name="Category" value="" placeholder=""
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')">
                     <hr>
@@ -825,6 +843,18 @@
 
                     function listFormattedIncorrectly(isListFormatted, elementID, log){
                       var element = document.getElementById(elementID);
+                      var targetColor = "";
+                      var targetBackColor = "";
+                      // var elementLabel = document.getElementById(elementID + "_label");
+
+                      if (localStorage.getItem('theme') === 'dark') {
+                        targetBackColor = "rgb(120, 0, 0)"
+                        targetColor = "#d9d9d9"
+                      
+                      } else {
+                        targetBackColor = "rgb(210, 0, 0)"
+                        targetColor = "#fff"
+                      }
 
                       if (isListFormatted) {
                         if (log){
@@ -839,10 +869,8 @@
                         if (log) {
                           console.log(`${elementID} list formatting is incorrect.`);
                         }
-
-                        
-                        element.style.backgroundColor = "rgb(113, 0, 0)";
-                        element.style.color = "white";
+                        element.style.backgroundColor = targetBackColor;
+                        element.style.color = targetColor;
                         element.style.border = "0px";
                         element.style.boxShadow ="inset 0 0px 0px #ddd";
                       }
