@@ -1,14 +1,14 @@
 name: Automated Commits
-on: 
+on:
   push:
     paths:
-      - 'source/sphinx/recipes/**'
+      - "source/sphinx/recipes/**"
     branches:
       - main
   workflow_dispatch:
 
 permissions: write-all
-  
+
 jobs:
   release-recipes-folder:
     runs-on: ubuntu-latest
@@ -19,75 +19,80 @@ jobs:
       )
       || github.event_name == 'workflow_dispatch'
     steps:
-    - name: Set file_name
-      id: set_file_name
-      run: echo "::set-output name=file_name::v$(date +'%m-%d-%Y-%H%M')"
-    
-    - name: Checkout repository
-      uses: actions/checkout@v2
-    
-    - name: Create zipped recipe folder
-      run: |
-        zip -j "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip" source/sphinx/recipes/*
-    
-    - name: Upload artifact
-      uses: actions/upload-artifact@v2
-      with:
-        name: All_Recipes
-        path: Recipes-${{ steps.set_file_name.outputs.file_name }}.zip
-    
-    - name: Checkout
-      uses: actions/checkout@v3
-    
-    - name: Download artifact
-      uses: actions/download-artifact@v2
-      with:
-        name: All_Recipes
-    
-    - name: Upload recipes to release
-      uses: svenstaro/upload-release-action@v2
-      with:
-        repo_token: ${{ secrets.PAT }}
-        file: "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip"
-        asset_name: "Recipes.zip"
-        tag: Recipes
-        overwrite: true
-        body: "Zipped bundle of all recipes, automatically built when new recipes are added. Last built on ${{ steps.set_file_name.outputs.file_name }}."
+      - name: Set file_name
+        id: set_file_name
+        run: echo "::set-output name=file_name::v$(date +'%m-%d-%Y-%H%M')"
+
+      - name: Checkout repository
+        uses: actions/checkout@v2
+
+      - name: Create zipped recipe folder
+        run: |
+          zip -j "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip" source/sphinx/recipes/*
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: All_Recipes
+          path: Recipes-${{ steps.set_file_name.outputs.file_name }}.zip
+
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Download artifact
+        uses: actions/download-artifact@v2
+        with:
+          name: All_Recipes
+
+      - name: Upload recipes to release
+        uses: svenstaro/upload-release-action@v2
+        with:
+          repo_token: ${{ secrets.PAT }}
+          file: "Recipes-${{ steps.set_file_name.outputs.file_name }}.zip"
+          asset_name: "Recipes.zip"
+          tag: Recipes
+          overwrite: true
+          body: "Zipped bundle of all recipes, automatically built when new recipes are added. Last built on ${{ steps.set_file_name.outputs.file_name }}."
 
   automated-commits:
     if: |
-      (contains(github.event.head_commit.message, 'edited') ||
-      (contains(github.event.head_commit.message, 'deleted') ||
-      contains(github.event.head_commit.message, 'created')) || 
+      contains(github.event.head_commit.message, 'edited') ||
+      contains(github.event.head_commit.message, 'deleted') ||
+      contains(github.event.head_commit.message, 'created') || 
       contains(github.event.head_commit.message, 'build') ||
       github.event_name == 'workflow_dispatch'
 
     runs-on: ubuntu-latest
     continue-on-error: true
     steps:
+      - uses: actions/checkout@master
+        with:
+          fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
 
-    - uses: actions/checkout@master
-      with:
-        fetch-depth: 0 # otherwise, you will failed to push refs to dest repo
+      - uses: actions/setup-python@v4
+        with:
+          python-version: "3"
+          cache: "pip"
 
-    - uses: actions/setup-python@v4
-      with:
-          python-version: '3'
-          cache: 'pip'
+      - name: Add automated submission to changelog
+        if: |
+          (
+          contains(github.event.head_commit.message, 'edited') || 
+          contains(github.event.head_commit.message, 'created') || 
+          contains(github.event.head_commit.message, 'deleted')
+          ) && !contains(github.event.head_commit.message, 'testing')
 
-    - name: Add automated submission to changelog
-      if: "(contains(github.event.head_commit.message, 'edited') || contains(github.event.head_commit.message, 'created')) || (contains(github.event.head_commit.message, 'deleted') && !contains(github.event.head_commit.message, 'testing')" #If we are manually building, skip the changelog steps
-      run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
+        run: sed -i "4i- ${{ github.event.head_commit.message }}" source/sphinx/builds.rst
 
-    - name: Add last build date to index
-      run: |
-        export TZ="America/Chicago"
-        sed -i '$c\'"Last built at $(date +'%l:%M:%S %p on %-m-%-d-%Y.')" source/sphinx/index.rst
+      - name: Add last build date to index
+        run: |
+          export TZ="America/Chicago"
+          sed -i '$c\'"Last built at $(date +'%l:%M:%S %p on %-m-%-d-%Y.')" source/sphinx/index.rst
 
-    - name: Commit automated changes
-      uses: EndBug/add-and-commit@v7.0.0
-      with:
-        message: "Automated updates"
-        add: "['source/sphinx/builds.rst','source/sphinx/index.rst']"
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Commit automated changes
+        uses: EndBug/add-and-commit@v7.0.0
+        with:
+          message: "Automated updates"
+          add: "['source/sphinx/builds.rst','source/sphinx/index.rst']"
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

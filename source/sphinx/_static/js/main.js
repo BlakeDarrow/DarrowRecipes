@@ -485,7 +485,6 @@ export async function deleteFile(password, filepath, commitMessage) {
   var destinationName = "BlakeDarrow/DarrowRecipes";
   const defaultBranch = "main";
   const newBranch = `delete-file-${Date.now()}`;
-  console.log(`Begin deletion of ${filepath}...`);
 
   const octokit = new Octokit({
     auth: password,
