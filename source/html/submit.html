@@ -300,6 +300,9 @@
             console.log(getCookie("username") + " would commit:")
             console.log([content]);
           } else { //Commit from input to GitHub
+            listFormattedIncorrectly(checkListFormatting(document.getElementById("Ingredients").value), "Ingredients", true)
+            listFormattedIncorrectly(checkListFormatting(document.getElementById("Prep").value), "Prep", true)
+            listFormattedIncorrectly(checkListFormatting(document.getElementById("Directions").value), "Directions", true)
             console.log(getCookie("username") + " wants to commit:")
             console.log([content]);
             commitFile(filepath, content, commitMessage, destinationName, password, workflowID, commitBody);
@@ -597,9 +600,11 @@
         autosize('Ingredients');
         autosize('Prep');
         autosize('Directions');
+        listFormattedIncorrectly(checkListFormatting(document.getElementById("Ingredients").value), "Ingredients", true)
+        listFormattedIncorrectly(checkListFormatting(document.getElementById("Prep").value), "Prep", true)
+        listFormattedIncorrectly(checkListFormatting(document.getElementById("Directions").value), "Directions", true)
       }
     }
-
   </script>
 </head>
 
@@ -768,7 +773,7 @@
                     <input type="text" id="Category" name="Category" value="" placeholder=""
                       oninput="this.value = this.value.replace(/[^A-Za-z,-/ 0-9]/g, '')">
                     <hr>
-                    
+
                     <div class="button_group">
                       <button type="button" id="commit-file">Publish Recipe</button>
                       <button type="button" id="cancel-button" style="display: none;">Cancel</button>
@@ -782,6 +787,101 @@
                       <div class="progress" style="width: 5%; display: block;" id="progress-fill"></div>
                   </form>
                   <script>
+                    document.getElementById('Ingredients').addEventListener('input', function (event) {
+                      const inputValue = event.target.value;
+                      const isListFormatted = checkListFormatting(inputValue);
+
+                      listFormattedIncorrectly(isListFormatted, "Ingredients", false)
+                    });
+
+                    document.getElementById('Prep').addEventListener('input', function (event) {
+                      const inputValue = event.target.value;
+                      const isListFormatted = checkListFormatting(inputValue);
+
+                      listFormattedIncorrectly(isListFormatted, "Prep", false)
+                    });
+
+                    document.getElementById('Directions').addEventListener('input', function (event) {
+                      const inputValue = event.target.value;
+                      const isListFormatted = checkListFormatting(inputValue);
+
+                      listFormattedIncorrectly(isListFormatted, "Directions", false)
+                    });
+
+                    function listFormattedIncorrectly(isListFormatted, elementID, log){
+                      var element = document.getElementById(elementID);
+
+                      if (isListFormatted) {
+                        if (log){
+                          console.log(`${elementID} list formatting is correct.`);
+                        }
+                        element.style.backgroundColor = null;
+                        element.style.color = null;
+                        element.style.border = null;
+                        element.style.boxShadow = null;
+
+                      } else {
+                        if (log) {
+                          console.log(`${elementID} list formatting is incorrect.`);
+                        }
+
+                        
+                        element.style.backgroundColor = "rgb(113, 0, 0)";
+                        element.style.color = "white";
+                        element.style.border = "0px";
+                        element.style.boxShadow ="inset 0 0px 0px #ddd";
+                      }
+                    }
+
+                    function checkListFormatting(string) {
+                      const lines = string.split("\n");
+
+                      const validPrefixes = ["-",];
+                      var allLinesCorrect = [];
+
+                      for (let number = 1; number <= 100; number++) {
+                        validPrefixes.push(number + ".");
+                      }
+
+                      let lastLine = "None";
+
+                      for (const line of lines) {
+                        var lineCorrect = true;
+
+
+                        if (validPrefixes.some(prefix => line.trim().startsWith(prefix))){ // if lines are a list
+                      
+                          // Check if the line in a list and the last line is not a list element
+                          if (lastLine !== "None" && !validPrefixes.some(prefix => lastLine.trim().startsWith(prefix)) && validPrefixes.some(prefix => line.trim().startsWith(prefix))) {
+                            lineCorrect = false;
+                          }
+
+                          // Check if the first element in a list has a empty line before it
+                          if (lastLine !== "None" && lastLine.trim().length === 0 && validPrefixes.some(prefix => line.trim().startsWith(prefix))) {
+                            lineCorrect = true;
+                          } 
+
+                          // Check if the list symbol has a space following it
+                          if (validPrefixes.some(prefix => line.trim().startsWith(prefix)) && !validPrefixes.some(prefix => line.trim().startsWith(prefix + " "))) {
+                            lineCorrect = false;
+                          }
+
+                          allLinesCorrect.push(lineCorrect);
+                        }
+
+                        // Check if last list element has a trailing empty line
+                        var startsWithStandardChar = /^[a-zA-Z^~`!@#$%^&*()\_=+[\]{}\\|;:'",<.>/?]/.test(line.trim());
+                        if (startsWithStandardChar && validPrefixes.some(prefix => lastLine.trim().startsWith(prefix))) {
+                            lineCorrect = false;
+                            allLinesCorrect.push(lineCorrect);
+                        } 
+
+                        lastLine = line;
+                      }
+
+                      return allLinesCorrect.every(element=> element === true);
+                    }
+
                   </script>
                 </div>
                 <br><br>
@@ -792,16 +892,12 @@
                   <li>If you're making a multi-line list, remember to use bullet points or ordered lists.</li>
                   <li>Ensure each element in a list contains a space after the identifier. For example "1. Preheat oven"
                     or "- Preheat oven".</li>
-                  <li>Line breaks between elements are not retained when loading an existing recipe to edit. Please add
-                    them back.</li>
+
                   <li>Remember to separate tags with commas and a space, and '#' will be automatically added. Feel free
                     to use your name as a tag!</li>
                   <li>To edit an existing recipe, simply go to the 'All Recipes' panel on the left-hand side of the
                     screen, select the desired recipe, and the editing form will automatically display the recipe
                     content.</li>
-                  <li>You can filter through all the recipes by searching in the "Recursive recipe search" box.</li>
-                  <li>Only certain characters are allowed in the recipe name. This includes letters, numbers, and
-                    dashes.</li>
                   <li>Editing an existing recipe name will create a new recipe, not change the name!</li>
                   <!-- <li>For any questions please reach out to Blake!</li> -->
                   <li>For any problems check the <a href=""
