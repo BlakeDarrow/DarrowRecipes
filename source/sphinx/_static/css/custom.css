@@ -127,7 +127,7 @@ h1 {
 
 .material-symbols-outlined {
   position: relative;
-  color: #d9d9d9;
+  color: #bfbfbf;
   font-size: large !important;
   text-align: center;
   padding: auto;
@@ -222,7 +222,7 @@ h1 {
 
 /* Handle on hover */
 ::-webkit-scrollbar-thumb:hover {
-  background: #d9d9d9; /* Color of the scrollbar handle when hovered */
+  background: #bfbfbf; /* Color of the scrollbar handle when hovered */
 }
 
 /* Track */
@@ -253,52 +253,52 @@ html[data-theme="dark"] #cancel-button[disabled] {
 
 html[data-theme="dark"] .darrow form {
   background-color: #0d0d0d;
-  color: #d9d9d9;
-  box-shadow: 0 0 0px 0 #d9d9d9;
+  color: #bfbfbf;
+  box-shadow: 0 0 0px 0 #bfbfbf;
 }
 
 html[data-theme="dark"] .darrow form label {
-  color: #d9d9d9;
+  color: #bfbfbf;
 }
 html[data-theme="dark"] .darrow form button {
   background-color: #343434;
-  color: #d9d9d9;
+  color: #bfbfbf;
 }
 html[data-theme="dark"] .darrow form button:hover {
   background-color: #141414 !important;
   transition: all ease-in-out 0.5s;
 }
 html[data-theme="dark"] .darrow form input {
-  background-color: #d9d9d9;
+  background-color: #bfbfbf;
   color: #000;
 }
 html[data-theme="dark"] .darrow form textarea {
-  background-color: #d9d9d9;
+  background-color: #bfbfbf;
   color: #000;
 }
 html[data-theme="dark"] .darrow input {
-  background-color: #d9d9d9;
+  background-color: #bfbfbf;
 }
 
 html[data-theme="dark"] .tooltip .tooltiptext span {
-  color: #d9d9d9 !important;
+  color: #bfbfbf !important;
 }
 
 html[data-theme="dark"] .hiddenDebug label {
-  color: #d9d9d9 !important;
+  color: #bfbfbf !important;
 }
 
 html[data-theme="dark"] .hiddenDebug input {
-  background-color: #d9d9d9 !important;
+  background-color: #bfbfbf !important;
   color: #000;
 }
 
 html[data-theme="dark"] li {
-  color: #d9d9d9;
+  color: #bfbfbf;
 }
 
 html[data-theme="dark"] h1 {
-  color: #d9d9d9;
+  color: #bfbfbf;
 }
 
 html[data-theme="dark"] #delete {
