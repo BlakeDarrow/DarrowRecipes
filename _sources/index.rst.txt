@@ -22,19 +22,17 @@ Submission
 
    submit
 
-..
-   _tags: Not sure if I want to go down this rabbit hole and complicate things. 
 
-   .. toctree::
-      :caption: Common Tags
-      :maxdepth: 3
-      :titlesonly:
-      :hidden:
-      :glob:
+.. toctree::
+   :caption: Common Tags
+   :maxdepth: 3
+   :titlesonly:
+   :hidden:
+   :glob:
 
-      Favorite <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Favorite&check_keywords=yes&area=default>
-      Crockpot <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Crockpot&check_keywords=yes&area=default>
-      Dessert <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Dessert&check_keywords=yes&area=default>
+   Favorite <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Favorite&check_keywords=yes&area=default>
+   Crockpot <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Crockpot&check_keywords=yes&area=default>
+   Dessert <https://blakedarrow.github.io/DarrowRecipes/search.html?q=Dessert&check_keywords=yes&area=default>
 
 .. raw:: html
 

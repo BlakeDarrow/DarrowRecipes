@@ -9,9 +9,6 @@
       <link rel="stylesheet" href="../_static/css/theme.css" type="text/css" />
       <link rel="stylesheet" href="../_static/dark_mode_css/general.css" type="text/css" />
       <link rel="stylesheet" href="../_static/dark_mode_css/dark.css" type="text/css" />
-  <!--[if lt IE 9]>
-    <script src="../_static/js/html5shiv.min.js"></script>
-  <![endif]-->
   
         <script src="../_static/jquery.js"></script>
         <script src="../_static/_sphinx_javascript_frameworks_compat.js"></script>
@@ -25,7 +22,27 @@
     <link rel="index" title="Index" href="../genindex.html" />
     <link rel="search" title="Search" href="../search.html" />
     <link rel="next" title="Zucchini Bread" href="ZucchiniBread.html" />
-    <link rel="prev" title="Walnut Ham Linguine" href="WalnutHamLinguine.html" /> 
+    <link rel="prev" title="Walnut Ham Linguine" href="WalnutHamLinguine.html" />
+    <!--Fraction div is on custom stylesheet -->
+    <link rel="stylesheet" href="../_static/css/fraction.css" type="text/css" />
+    <script>
+    // Replacement of numbers that match n/n. Duplicate function found on submit.html
+    $(document).ready(function() {
+      var pattern = /(\d+)\/(\d+)/g;
+    
+      $('body').find('*').addBack().contents().each(function() {
+        if (this.nodeType === 3) {
+          var text = $(this).text();
+          if (pattern.test(text)) {
+            var replacedText = text.replace(pattern, '<span class="fraction" top="$1" bottom="$2"></span>');
+            $(this).replaceWith(replacedText);
+          }
+        }
+      });
+    });
+    </script> 
+    
+
 </head>
 
 <body class="wy-body-for-nav"> 
@@ -33,11 +50,7 @@
     <nav data-toggle="wy-nav-shift" class="wy-nav-side">
       <div class="wy-side-scroll">
         <div class="wy-side-nav-search" >
-
-          
-          
-          <a href="../index.html" class="icon icon-home">
-            DarrowRecipes
+            <a href="../index.html" class="icon icon-home"> DarrowRecipes
           </a>
 <div role="search">
   <form id="rtd-search-form" class="wy-form" action="../search.html" method="get">
@@ -50,6 +63,12 @@
               <p class="caption" role="heading"><span class="caption-text">Submission</span></p>
 <ul>
 <li class="toctree-l1"><a class="reference internal" href="../submit.html">Dashboard</a></li>
+</ul>
+<p class="caption" role="heading"><span class="caption-text">Common Tags</span></p>
+<ul>
+<li class="toctree-l1"><a class="reference external" href="https://blakedarrow.github.io/DarrowRecipes/search.html?q=Favorite&amp;check_keywords=yes&amp;area=default">Favorite</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://blakedarrow.github.io/DarrowRecipes/search.html?q=Crockpot&amp;check_keywords=yes&amp;area=default">Crockpot</a></li>
+<li class="toctree-l1"><a class="reference external" href="https://blakedarrow.github.io/DarrowRecipes/search.html?q=Dessert&amp;check_keywords=yes&amp;area=default">Dessert</a></li>
 </ul>
 <p class="caption" role="heading"><span class="caption-text">All Recipes</span></p>
 <ul class="current">
@@ -201,8 +220,12 @@
           
         </div>
       </div>
+
+
+
     </section>
   </div>
+
   <script>
       jQuery(function () {
           SphinxRtdTheme.Navigation.enable(false);
