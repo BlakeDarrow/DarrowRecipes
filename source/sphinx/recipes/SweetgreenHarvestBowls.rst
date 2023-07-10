@@ -4,13 +4,16 @@ Sweetgreen Harvest Bowls
 Ingredients
 =========================================================
  
-- MARINATE
+MARINATE
+
 - 1 # chicken breasts, cubed
 - 1/3 c coconut aminos
 - 1 tsp garlic powder
 - 1 tsp ground ginger
 - 1/2 tsp red pepper flakes (more if like spicy)
-- BOWL
+
+BOWL
+
 - 2 to 3 c rice
 - 2 small sweet potatoes
 - 1 # brussel sprouts, trimmed and halved
@@ -20,7 +23,9 @@ Ingredients
 - 8 oz baby kale
 - 1 1/2 Tbsp avocado/olive oil
 - salt and pepper to taste
-- DRESSING
+
+DRESSING
+
 - 1/4 c balsamic ( I use flavored like apple or peach- white)
 - 2 Tbsp almond butter
 - 1-2 tsp water
@@ -39,3 +44,6 @@ When chicken has been marinated; roast in oven on baking sheet lined in parchmen
 ------
  
 #MainCourse, #Melanie, #Favorite
+ 
+| Blake edited 'Sweetgreen Harvest Bowls' at 8:08:21 PM on 7-9-2023.
+| Recipe submitted prior to the generation of logs.
