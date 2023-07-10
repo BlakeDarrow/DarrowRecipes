@@ -8,11 +8,11 @@ li {
     padding: 0.3em 0;
     text-align: center;
     vertical-align: middle;
-    margin-bottom: 0 !important;
-    margin-top: 0 !important;
+    margin-bottom: 0;
+    margin-top: 0;
     line-height: 2.5em !important;
     max-height: 2.5em !important;
-    transform: translate(0, -0.3em);
+    transform: translate(0, -0.35em);
 
     &:before {
       border-bottom: 1px solid #404040;
@@ -21,6 +21,7 @@ li {
       line-height: 1.25em;
       padding: 0 -0.12em;
       margin-top: 0em;
+      margin-bottom: 0.12em;
     }
     &:after {
       content: attr(bottom);
@@ -28,6 +29,7 @@ li {
       line-height: 1.25em;
       padding: 0 0.12em;
       margin-bottom: 0em;
+      margin-top: 0.12em;
     }
   }
   
