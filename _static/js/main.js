@@ -507,6 +507,7 @@ export async function commitFile(
   autosize("Ingredients");
   autosize("Prep");
   autosize("Directions");
+  window.scrollTo(0, 0);
 
   cancelFlag = false;
   console.log("Reset 'cancelFlag'");
