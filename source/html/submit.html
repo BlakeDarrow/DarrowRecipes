@@ -217,12 +217,12 @@
         var commitMessage = "Empty";
 
         var submittedByValue = document.getElementById("submittedByValue");
-        if (submittedByValue.value === "") {
-          if (!checkIfTextIsInClass(name)) {
+        if (!checkIfTextIsInClass(name)) {
             console.log("Recipe doest not yet exist in GitHub. New recipe!")
+            document.getElementById("editedByValue").value = "";
             newRecipe = true;
-          }
-        }
+          } // if this is a copy, keep original author? - if just changing name?
+
         var editedByValue = document.getElementById("editedByValue");
         var editedBy = `Empty`;
         var submittedBy = "";
@@ -298,6 +298,7 @@
           if (testMode) { //Debug mode. Nothing sent to github
             console.log(getCookie("username") + " would commit:")
             console.log([content]);
+            clearForm();
           } else { //Commit from input to GitHub
             listFormattedIncorrectly(checkListFormatting(document.getElementById("Ingredients").value), "Ingredients", true)
             listFormattedIncorrectly(checkListFormatting(document.getElementById("Prep").value), "Prep", true)
