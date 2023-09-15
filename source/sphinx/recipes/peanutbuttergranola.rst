@@ -31,7 +31,7 @@ Stir in dry ingredients and mix until well combined.
  
 ------
  
-#
+#baldwin, #granola, #breakfast, #snack, #norefinedsugar
  
-| This recipe has not been edited.
+| kayla edited 'peanut butter granola' at 6:04:20 PM on 9-15-2023.
 | kayla created 'peanut butter granola' at 6:01:12 PM on 9-15-2023.
