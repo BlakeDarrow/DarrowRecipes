@@ -32,14 +32,14 @@ Directions
 1. In a medium bowl, whisk flour, cocoa powder, baking soda, and salt. Set aside. 
 2. In the bowl of an electric mixer add the coconut oil, honey or maple syrup, vanilla, egg, and mix on medium low until smooth and combined. 
 3. Add in the zucchini, banana or your substitute and the milk . And mix again.
- 4. Slowly add in the dry ingredients and mix until just combined. 
+4. Slowly add in the dry ingredients and mix until just combined. 
 5. Gently fold in chocolate chips.
- 6. Evenly divide batter into prepare liners.
- 7. bake 22 to 25 minutes or until the toothpick inserted into middle comes out clean. After five minutes remove muffins and transfer to wire rack to finish cooling. Enjoy. 
+6. Evenly divide batter into prepare liners.
+7. bake 22 to 25 minutes or until the toothpick inserted into middle comes out clean. After five minutes remove muffins and transfer to wire rack to finish cooling. Enjoy. 
  
 ------
  
 #Dairyfree, #melanie
  
-| Mel edited 'Double chocolate zucchini muffins' at 12:36:03 PM on 8-3-2024.
+| Mel edited 'Double chocolate zucchini muffins' at 12:57:13 PM on 8-3-2024.
 | Melanie created 'Double chocolate zucchini muffins ' at 8:39:41 PM on 7-15-2024.
