@@ -1,6 +1,7 @@
 Submission Log
 ###################
 
+- Mel created 'Pickled Jaleaenos' at 11:44:28 AM on 9-2-2024.
 - Mel edited 'Pickled Cocktail Onions' at 11:39:32 AM on 9-2-2024.
 - Mel edited 'Quick Pickled Cucumbers - Refrigerator Pickles' at 11:37:34 AM on 9-2-2024.
 - Mel edited 'Pickled Cocktail Onions' at 11:36:33 AM on 9-2-2024.
