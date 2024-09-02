@@ -4,14 +4,14 @@ Pickled Cocktail Onions
 Ingredients
 =========================================================
  
-- 18 oz peal onion
+- 18 oz pearl onion
 - 1 tsp coriander seeds
 - 1/2 c water
 - 1/4 c white vinegar
 - 1/4 c apple cider vinegar
 - 3 Tbsp sugar
 - 1 Tbsp coarse sale
- - OPTIONAL 1/4 tsp red pepper flakes
+-  OPTIONAL 1/4 tsp red pepper flakes
  
 Prep
 =========================================================
@@ -29,5 +29,5 @@ Directions
  
 #Melanie
  
-| Mel edited 'Pickled Cocktail Onions' at 11:36:33 AM on 9-2-2024.
+| Mel edited 'Pickled Cocktail Onions' at 11:39:32 AM on 9-2-2024.
 | Mel created 'Pickled Cocktail Onions' at 6:05:34 PM on 9-1-2024.
