@@ -29,5 +29,5 @@ Directions
  
 #Easy
  
-| This recipe has not been edited.
+| Camryn Darrow edited 'Chicken Alfredo' at 8:44:05 PM on 9-16-2024.
 | Camryn Darrow created 'Chicken Alfredo' at 8:13:09 PM on 9-16-2024.
