@@ -1,6 +1,7 @@
 Submission Log
 ###################
 
+- Melanie created 'BBQ Chicken Crockpot' at 6:30:52 PM on 8-10-2025.
 - Melanie created 'Peanut Butter Granola Bars' at 6:26:03 PM on 8-10-2025.
 - Melanie created 'Red Cabbage Coleslaw-No Mayo' at 6:13:47 PM on 8-10-2025.
 - Melanie edited 'Chicken taquitos' at 4:52:39 PM on 8-9-2025.
